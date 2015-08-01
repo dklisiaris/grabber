@@ -1,0 +1,36 @@
+<template name="sidebar">
+  
+  <!-- START LEFT SIDEBAR NAV-->
+  <aside id="left-sidebar-nav">
+    <ul id="slide-out" class="side-nav fixed leftside-navigation">
+      <li class="user-details">
+        <div class="row">
+          <div class="col col s11 m11 l11">
+            <a class="waves-effect light-blue white-text btn new-folder">
+            <b>New</b></a>
+          </div>
+        </div>
+      </li>
+      <li class="li-hover">
+        <div class="divider"></div>
+      </li>
+<!-- 
+      <li class="bold"><a href="index.html" class="waves-effect waves-blue"><i class="mdi-action-home"></i> All bookmarks</a>
+      </li>
+
+      <li class="li-hover">
+        <div class="divider"></div>
+      </li>
+      <li class="bold"><a href="app-email.html" class="waves-effect waves-blue"><i class="mdi-action-grade"></i> Popular</a>
+      </li>
+      <li class="li-hover">
+        <div class="divider"></div>
+      </li>
+       -->
+      {{#each folders}}
+        {{> folder}}
+      {{/each}}
+    </ul>
+  </aside>
+  <!-- END LEFT SIDEBAR NAV-->
+</template>

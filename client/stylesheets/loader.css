@@ -1,0 +1,71 @@
+#loader-diamond {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 120px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: column nowrap;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+#loader-diamond .diamond {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  background: #03a9f4;
+  -webkit-transform: translateY(0) rotate(45deg) scale(0);
+      -ms-transform: translateY(0) rotate(45deg) scale(0);
+          transform: translateY(0) rotate(45deg) scale(0);
+  -webkit-animation: diamonds 1500ms linear infinite;
+          animation: diamonds 1500ms linear infinite;
+}
+#loader-diamond .diamond:nth-child(1) {
+  -webkit-animation-delay: -1000ms;
+          animation-delay: -1000ms;
+}
+#loader-diamond .diamond:nth-child(2) {
+  -webkit-animation-delay: -2000ms;
+          animation-delay: -2000ms;
+}
+#loader-diamond .diamond:nth-child(3) {
+  -webkit-animation-delay: -3000ms;
+          animation-delay: -3000ms;
+}
+#loader-diamond .diamond:nth-child(4) {
+  -webkit-animation-delay: -4000ms;
+          animation-delay: -4000ms;
+}
+
+@-webkit-keyframes diamonds {
+  50% {
+    -webkit-transform: translateY(-50px) rotate(45deg) scale(1);
+            transform: translateY(-50px) rotate(45deg) scale(1);
+  }
+  100% {
+    -webkit-transform: translateY(-100px) rotate(45deg) scale(0);
+            transform: translateY(-100px) rotate(45deg) scale(0);
+  }
+}
+
+@keyframes diamonds {
+  50% {
+    -webkit-transform: translateY(-50px) rotate(45deg) scale(1);
+            transform: translateY(-50px) rotate(45deg) scale(1);
+  }
+  100% {
+    -webkit-transform: translateY(-100px) rotate(45deg) scale(0);
+            transform: translateY(-100px) rotate(45deg) scale(0);
+  }
+}

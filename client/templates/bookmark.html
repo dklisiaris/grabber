@@ -1,0 +1,41 @@
+<template name="bookmark">
+  <div class="grid-item">
+    <div id="profile-card" class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <a href="{{url}}" target="_blank" class="clickable-url">
+          <img src="{{thumbnail}}" alt="thumbnail">
+        </a>
+      </div>
+      <div class="card-content">
+        <ul id="{{dropdownClass}}" class="dropdown-content z-depth-1">
+          <li>
+            <a href="{{url}}" target="_blank" class="-text clickable-url"><i class="mdi-action-visibility"></i> View</a>
+          </li>
+          <li>
+            <a href="#!" class="-text refresh-bookmark"><i class="mdi-navigation-refresh"></i> Refresh</a>
+          </li>
+          <li>
+            <a href="#!" class="-text select-bookmark"><i class="mdi-action-done"></i> Select</a>
+          </li>
+          <li>
+            <a href="#!" data-activates="chat-out" class="-text edit-bookmark"><i class="mdi-editor-mode-edit"></i> Edit</a>
+          </li>
+          <li>
+            <a href="#!" class="-text remove-bookmark"><i class="mdi-action-delete"></i> Remove</a>
+          </li>
+        </ul>
+        <a class="dropdown-button btn-floating btn-move-up waves-effect grey do-something hidden right" data-activates="{{dropdownClass}}">
+          <i class="mdi-navigation-more-vert"></i>
+        </a>
+
+        <div class="row">
+          <div class="col s12 min-height-45">
+            <span class="card-title grey-text text-darken-4">{{shortTitle}}</span>
+          </div>
+        </div>     
+        <p class="truncate grey-text">{{url}}</p>
+
+      </div>
+    </div>
+  </div>
+</template>
