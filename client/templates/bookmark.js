@@ -3,11 +3,14 @@ var SELECTED_BOOKMARK_KEY = 'selectedBoomark';
 Template.bookmark.helpers({
   thumbnail: function () {
     defaultImage = "http://demo.geekslabs.com/materialize/v1.1/images/user-bg.jpg";
-    console.log(this.image);    
+    // console.log(this.image);    
 
     return (this.image === undefined || this.image === null || this.image === '') ? defaultImage : this.image;        
   },
   shortTitle: function () { 
+    if(this.title == null) { 
+      return null; 
+    }
     shortTitle = this.title.substring(0, 37);
     return (this.title.length > 37) ? shortTitle + '...' : shortTitle;        
   },

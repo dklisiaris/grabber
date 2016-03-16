@@ -96,6 +96,11 @@ $(function() {
     accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
   });
 
+  
+  $(".button-collapse").click(function() {
+    sideNav('show');
+  });
+
   // Pikadate datepicker
   $('.datepicker').pickadate({
     selectMonths: true, // Creates a dropdown to control month

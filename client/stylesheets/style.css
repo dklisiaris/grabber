@@ -34,7 +34,7 @@ footer {
 }
 .card .card-content .card-title{
   line-height: 0;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;  
 }
 .card {
@@ -182,11 +182,11 @@ h1 span.logo-text{
   display: none;
 }
 header .brand-logo {
-  margin: 5px 0px;
+  /*margin: 5px 0px;*/
   /*padding: 0 42px;
   padding: 0px 10px 0 75px;*/
   
-  padding: 0 20px;
+  padding: 0 28px;
 }
 @media only screen and (max-width: 992px) {
   nav .nav-wrapper {
@@ -194,6 +194,9 @@ header .brand-logo {
   }
   nav .nav-wrapper a.page-title {
     font-size: 36px;
+  }
+  nav {
+    height: 56px;
   }
 }
 li.search-out:hover{
@@ -209,6 +212,26 @@ li.search-out:hover{
  border-bottom: 1px solid #fff !important; 
  box-shadow:none;
 }
+
+nav{
+  height: 56px;
+}
+
+@media only screen and (min-width: 992px){
+  nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+      height: 48px;
+      line-height: 48px;
+  }
+}
+
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 56px;
+    line-height: 56px;
+}
+
+.button-collapse{
+  margin-left: 10px;
+}
 /*=================================================================================
     Sidebar
 ====================================================================================*/
@@ -217,7 +240,7 @@ li.search-out:hover{
 ------------------------------------------*/
 
 ul.side-nav.fixed {
-  top: 64px;
+  top: 56px;
 }
 @media only screen and (max-width: 992px) {
   ul.side-nav.fixed {

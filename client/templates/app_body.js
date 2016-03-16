@@ -242,7 +242,7 @@ Template.appBody.onRendered(function () {
   // Materialize sideNav  
 
   //Main Left Sidebar Menu
-  $('.sidebar-collapse').sideNav({
+  $('.button-collapse').sideNav({
     edge: 'left', // Choose the horizontal origin      
   });
   
@@ -344,6 +344,7 @@ Template.appBody.onRendered(function () {
   if (is_touch_device()) {
     $('#nav-mobile').css({
       overflow: 'auto'
-    })
+    });
+    $('.hidden').css('visibility','visible').css({opacity:1});
   }
 });
