@@ -1,0 +1,34 @@
+{
+  "name": "boomabu",
+  "version": "0.0.2",
+  "description": "Boomabu is a bookmark manager with social features.",
+  "main": "index.js",
+  "dependencies": {
+    "meteor-node-stubs": "^0.2.3",
+    "qtip": "0.0.4",
+    "qtip2": "^3.0.2",
+    "sweetalert": "^1.1.3",
+    "tooltipster": "^1.0.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dklisiaris/boomabu.git"
+  },
+  "keywords": [
+    "bookmarks",
+    "links",
+    "homepage",
+    "collections",
+    "manager"
+  ],
+  "author": "Dimitris Klisiaris",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dklisiaris/boomabu/issues"
+  },
+  "homepage": "https://github.com/dklisiaris/boomabu"
+}

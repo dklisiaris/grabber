@@ -1,0 +1,43 @@
+<template name="header">
+  <!-- START HEADER -->
+  <header id="header" class="page-topbar">
+    <!-- start header nav-->
+    <div class="navbar-fixed">
+      <nav class="light-blue">
+        <div class="nav-wrapper">
+          <h1 class="logo-wrapper hide-on-small-and-down">
+            <a href="/" class="brand-logo darken-1">
+              <img src="../img/logo_white.png" alt="boomabu logo" height="30">
+            </a>                         
+          </h1>
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+          <ul class="right">        
+            {{#if currentUser}}
+<!--             <li>
+              <a href="/settings" class="waves-effect waves-block waves-light"><b>Settings</b></a>
+            </li> -->
+            <li>
+              <a href="{{pathFor 'logout'}}" class="waves-effect waves-block waves-light logout">
+                <b>Logout</b> ({{username}})
+              </a>
+            </li>   
+            {{else}}
+            <li>
+              <a href="{{pathFor 'login'}}" class="waves-effect waves-block waves-light"><b>Log In</b></a>
+            </li>
+            <li>
+              <a href="{{pathFor 'signup'}}" class="waves-effect waves-block waves-light"><b>Sign Up</b></a>
+            </li>
+            {{/if}}         
+            <!-- Dropdown Trigger -->                        
+            <li class="no-display"><a href="#" data-activates="chat-out" class="waves-effect waves-block waves-light chat-collapse"><i class="mdi-communication-chat"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <!-- end header nav-->
+  </header>
+  <!-- END HEADER -->
+</template>

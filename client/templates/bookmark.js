@@ -14,6 +14,9 @@ Template.bookmark.helpers({
     shortTitle = this.title.substring(0, 37);
     return (this.title.length > 37) ? shortTitle + '...' : shortTitle;        
   },
+  shortUrl:function () {
+    return this.url.replace(/.*?:\/\//g,"").replace("www.","");
+  },
   dropdownClass: function () { 
     return 'dropdown-' + this._id;       
   }

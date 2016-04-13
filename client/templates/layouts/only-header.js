@@ -1,0 +1,3 @@
+Template.onlyHeader.onRendered(function () {
+
+})

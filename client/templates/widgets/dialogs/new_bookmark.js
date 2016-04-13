@@ -1,3 +1,5 @@
+import swal from 'sweetalert/dist/sweetalert.min';
+
 Template.newBookmark.events({
   "click .js-add-new-bookmark": function() {
     swal({
@@ -6,7 +8,7 @@ Template.newBookmark.events({
       type: "input",
       showCancelButton: true,
       confirmButtonColor: "#03a9f4",
-      closeOnConfirm: false,
+      closeOnConfirm: true,
       animation: "slide-from-top",
       inputPlaceholder: "Write/Paste a url"
     }, function(inputValue) {
@@ -16,12 +18,12 @@ Template.newBookmark.events({
         return false
       }
       var url = inputValue;
-      var currentFolder = Router.current().params._id;
+      var currentFolderId = FlowRouter.getParam('_id');
 
-      Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {      
+      Meteor.call("addBookmark", url, currentFolderId, function(err, bookmarkId) {      
         Meteor.call("refreshBookmark", bookmarkId);
       });
-
+      return inputValue;
     });
   }
 });

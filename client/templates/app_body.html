@@ -13,58 +13,25 @@
         <!--start container-->
         <div class="container">
           <div class="section">
-            {{#if editing}}
-              <form class="js-edit-form folder-edit-form">
-                <div class="row">
-                  <div class="col s10 m8 l6">
-                    <input type="text" name="name" value="{{name}}">
-                  </div>
-                  <div class="col s2 m4 l6">
-                    <a href="#" class="js-cancel btn-floating waves-effect waves-light">
-                      <i class="mdi-content-clear js-cancel" title="Cancel"></i>
-                    </a>
-                  </div>
-                </div>
-              </form>
-            {{else}}
-              <div class="row">
-                <div class="col s10 m8 l6">              
-                <h5 class="js-edit-folder clickable">{{name}} <small>({{privacy private}})</small></h5>
-                </div>
-                <div class="col s2 m4 l6">
-                  <a href="#" class="js-delete-folder btn-floating waves-effect waves-light red right tooltipped" data-position="top" data-delay="20" data-tooltip="Delete Folder">
-                    <i class="mdi-action-delete"></i>
-                  </a>  
-                  
-                  {{#if private}}
-                  <a href="#" class="js-toggle-privacy btn-floating waves-effect waves-light light-green right tooltipped" data-position="top" data-delay="20" data-tooltip="Make folder public">
-                    <i class="mdi-action-lock-outline"></i>
-                  </a>   
-                  {{else}}
-                  <a href="#" class="js-toggle-privacy btn-floating waves-effect waves-light light-green right tooltipped" data-position="top" data-delay="20" data-tooltip="Make folder private">
-                    <i class="mdi-action-lock-open"></i>
-                  </a> 
-                  {{/if}}              
-                </div>
-              </div>
-            {{/if}}
 
+            {{> folderActions}}
+
+            {{#if isEqual currentRouteName 'folder'}}
             <form class="new-bookmark">
               <input type="text" name="bookmark" placeholder="Click to add a new URL address" />
-            </form>                   
-            <div id="grid">
-              {{#with _id}}
-                {{#each bookmarks this}}        
-                  {{> bookmark}}
-                {{/each}}
-              {{/with}}             
-            </div>
-                              
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
+            </form>
+            {{/if}}
             
-            <!--work collections end-->
+            {{#if Template.subscriptionsReady}}                   
+            <div id="grid">
+              {{#each bookmarks}}        
+                {{> bookmark}}
+              {{/each}}
+            </div>
+            {{else}}
+              {{> loader}}
+            {{/if}}
+
           </div>
 
           <!-- Floating Action Button -->
@@ -76,63 +43,7 @@
       </section>
       <!-- END CONTENT -->
       <!-- //////////////////////////////////////////////////////////////////////////// -->
-      <!-- START RIGHT SIDEBAR NAV-->
-      <aside id="right-sidebar-nav">
-        <ul id="chat-out" class="side-nav rightside-navigation">
-          <li class="li-hover">
-            <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
-          </li>
-          
-          <li class="li-hover">
-            <div class="row">
-              <form class="col s12" id="update-bookmark-form">
-                <div class="row">
-                  <div class="col s12">
-                    <img src="{{selectedBookmark.image}}" height="300" alt="thumbnail">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="title" type="text" class="validate" value="{{selectedBookmark.title}}">
-                    <label for="title" class="active">Title</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="url" type="text" class="validate" value="{{selectedBookmark.url}}">
-                    <label for="url" class="active">URL</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input id="image" type="text" class="validate" value="{{selectedBookmark.image}}">
-                    <label for="image" class="active">Image URL</label>
-                  </div>
-                </div>
-                <div class="row">                  
-                  <div class="input-field col s12">
-                    <label class="active">Folder</label>
-                    <select name="folder" class="browser-default">                      
-                      {{#each folders}}
-                        <option value="{{this._id}}" selected="{{isSelected this._id selectedBookmark.folderId}}">{{this.name}}</option>
-                      {{/each}}                      
-                    </select>
-                  </div>                
-                </div>
-                <div class="row">
-                  <div class="input-field col s12">
-                    <button class="btn light-blue waves-effect waves-light right" type="submit" name="update-bookmark">Save
-                      <i class="mdi-content-send right"></i>
-                    </button>
-                  </div>
-                </div>             
-              </form>
-            </div>
-          </li>
-         
-        </ul>
-      </aside>
-      <!-- LEFT RIGHT SIDEBAR NAV-->
+      {{> editPanel selectedBookmark=selectedBookmark}}
     </div>
     <!-- END WRAPPER -->
   </div>

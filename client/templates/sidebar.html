@@ -27,9 +27,13 @@
         <div class="divider"></div>
       </li>
        -->
-      {{#each folders}}
-        {{> folder}}
-      {{/each}}
+      {{#if Template.subscriptionsReady}}
+        {{#each folders}}
+          {{> folder}}
+        {{/each}}
+      {{else}}
+        {{> loader}}
+      {{/if}}
     </ul>
   </aside>
   <!-- END LEFT SIDEBAR NAV-->

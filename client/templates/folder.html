@@ -1,5 +1,10 @@
 <template name="folder">
-  <li class="bold"><a href="/folders/{{this._id}}" class="waves-effect waves-blue clickable-folder">
-    <i class="mdi-file-folder"></i> {{this.name}}</a>
+  <li class="bold">
+    <a href="/folders/{{this._id}}" class="waves-effect waves-blue clickable-folder">
+      <div>
+        <img style="vertical-align:middle;" src="{{icon_url}}" height="25">
+        <span style=""> {{this.name}}</span>
+      </div>
+  </a>
   </li>
 </template>

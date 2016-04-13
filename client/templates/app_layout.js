@@ -1,3 +1,0 @@
-Template.appLayout.onRendered(function () {
-
-})

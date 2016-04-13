@@ -13,10 +13,14 @@ var validURL = function(str) {
 }
 
 UI.registerHelper('isSelected', function(key, value){    
-  var isSelected = (key === value) ? 'true' : 'false';
+  var isSelected = (key === value) ? 'selected' : '';
   return isSelected;
 });
 
 UI.registerHelper('privacy', function(privacy){
   return privacy? 'Private' : 'Public';
+});
+
+UI.registerHelper('isEqual', function(obj1, obj2){
+  return obj1 === obj2 ? true : false;
 });

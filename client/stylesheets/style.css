@@ -284,6 +284,9 @@ ul.side-nav li {
 ul.side-nav .collapsible-header {
   margin: 0;
 }
+.side-nav li {
+  line-height: 10px;
+}
 .caption {
   font-size: 1.25rem;
   font-weight: 300;

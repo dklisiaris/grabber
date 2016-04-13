@@ -1,25 +1,9 @@
-var EDITING_KEY = 'editingFolder';
-Session.setDefault(EDITING_KEY, false);
-
 var SELECTED_BOOKMARK_KEY = 'selectedBoomark';
 Session.setDefault(SELECTED_BOOKMARK_KEY, null);
 
 Template.appBody.helpers({
-  folders: function () {
-    return Folders.find({}, {sort: {createdAt: -1}});
-  },
-  // currentFolder: function () {    
-  //   folderId =  Router.current().params.query.f;
-  //   return folderId === undefined ? null : Folders.findOne({_id: folderId});
-  // },
-  editing: function() {
-    return Session.get(EDITING_KEY);
-  },
-  bookmarksReady: function() {
-    return Router.current().bookmarksHandle.ready();
-  },
-
-  bookmarks: function(folderId) {
+  bookmarks: function() {
+    let folderId = FlowRouter.getParam('_id');
     return Bookmarks.find({folderId: folderId}, {sort: {createdAt : -1}});
   },
 
@@ -31,62 +15,20 @@ Template.appBody.helpers({
 
 });
 
-var editFolder = function(folder, template) {
-  Session.set(EDITING_KEY, true);
-  
-  // force the template to redraw based on the reactive change
-  Tracker.flush();
-  template.$('.js-edit-form input[type=text]').focus();
-};
-
-var saveFolder = function(folder, template) {
-  Session.set(EDITING_KEY, false);  
-  Meteor.call("renameFolder", folder._id, template.$('[name=name]').val());
-};
-
-var deleteFolder = function(folder) {
-  if (! Meteor.user()) {
-    return alert("Please sign in or create an account to delete folders.");
-  }
-
-  if (folder.createdBy !== Meteor.userId()) {
-    return alert("You can delete only your own folders.");
-  }
-
-  if (Folders.find({createdBy: Meteor.userId()}).count() === 1) {
-    return alert("Sorry, you cannot delete the final folder!");
-  }
-
-  var message = "Are you sure you want to delete the folder " + folder.name + "?";
-  if (confirm(message)) {
-    // we must remove each item individually from the client
-    Bookmarks.find({folderId: folder._id}).forEach(function(bookmark) {      
-      Meteor.call("removeBookmark", bookmark._id);
-    });    
-    Meteor.call("removeFolder", folder._id);
-
-    
-    Meteor.setTimeout(function(){ Router.go('home'); }, 10);
-    return true;
-  } else {
-    return false;
-  }
-};
-
-var toggleFolderPrivacy = function(folder) {
-  if (! Meteor.user()) {
-    return alert("Please sign in or create an account to make private folders.");
-  }
-  if (folder.createdBy === Meteor.userId()) {    
-    Meteor.call("setPrivacy", folder._id, !folder.private);
-  }
-};
-
 Template.appBody.events({
+  "click .new-folder": function (event) {
+    if(Meteor.userId()){
+      Meteor.call("addFolder", Folders.defaultName(), null, true, function(err, folderId) {      
+        Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);      
+      });      
+    } else {
+      Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
+    }
+  },
   "submit .new-bookmark": function (event) {
     // This function is called when the new task form is submitted
     var url = event.target.bookmark.value;
-    var currentFolder = Router.current().params._id;
+    var currentFolder = FlowRouter.getParam('_id');
 
     Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {      
       Meteor.call("refreshBookmark", bookmarkId);
@@ -117,57 +59,6 @@ Template.appBody.events({
     return false;
   },
 
-  "click .new-folder": function (event) {
-    if(Meteor.userId()){
-      Meteor.call("addFolder", Folders.defaultName(), 'Description', true, function(err, folderId) {      
-        Meteor.setTimeout(function(){ Router.go('/folders/' + folderId); }, 10);      
-      });      
-    } else {
-      Meteor.setTimeout(function(){ Router.go('/signin'); }, 10);
-    }
-    
-  },
-
-  'click .js-cancel': function() {
-    Session.set(EDITING_KEY, false);
-  },
-
-  'click .js-toggle-privacy': function() {
-    toggleFolderPrivacy(this);
-  },
-
-  'blur input[type=text]': function(event, template) {
-    // if we are still editing (we haven't just clicked the cancel button)
-    if (Session.get(EDITING_KEY))
-      saveFolder(this, template);
-  },
-
-  'submit .js-edit-form': function(event, template) {
-    event.preventDefault();
-    saveFolder(this, template);
-  },
-  
-  // handle mousedown otherwise the blur handler above will swallow the click
-  // on iOS, we still require the click event so handle both
-  'mousedown .js-cancel, click .js-cancel': function(event) {
-    event.preventDefault();
-    Session.set(EDITING_KEY, false);
-  },
-
-  'change .folder-edit': function(event, template) {
-    if ($(event.target).val() === 'edit') {
-      editFolder(this, template);
-    }
-    event.target.selectedIndex = 0;
-  },
-  
-  'click .js-edit-folder': function(event, template) {
-    editFolder(this, template);
-  }, 
-
-  'click .js-delete-folder': function(event, template) {
-    deleteFolder(this, template);    
-  } 
 });
 
 Template.appBody.onRendered(function () {  
@@ -347,4 +238,13 @@ Template.appBody.onRendered(function () {
     });
     $('.hidden').css('visibility','visible').css({opacity:1});
   }
+});
+
+Template.appBody.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    if(FlowRouter.getRouteName() === 'folder'){
+      self.subscribe('bookmarks', FlowRouter.getParam('_id'));
+    } 
+  });
 });

@@ -1,2 +1,4 @@
 # Ignore npm packages
 /packages/*
+/node_modules/*
+settings.json
