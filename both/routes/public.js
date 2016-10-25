@@ -9,6 +9,14 @@ publicRoutes.route('/login', {
   }
 });
 
+publicRoutes.route('/signin', {
+  name: 'signin',
+  action: function(params, queryParams) {
+    BlazeLayout.render('onlyHeader', {yield: "reactLogin"});
+  }
+});
+
+
 publicRoutes.route('/signup', {
   name: 'signup',
   action: function(params, queryParams) {

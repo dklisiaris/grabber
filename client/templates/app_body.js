@@ -7,7 +7,7 @@ Template.appBody.helpers({
     return Bookmarks.find({folderId: folderId}, {sort: {createdAt : -1}});
   },
 
-  selectedBookmark: function() {    
+  selectedBookmark: function() {
     if(Session.get(SELECTED_BOOKMARK_KEY) !== null){
       return Bookmarks.findOne({_id: Session.get(SELECTED_BOOKMARK_KEY)});
     }
@@ -18,9 +18,9 @@ Template.appBody.helpers({
 Template.appBody.events({
   "click .new-folder": function (event) {
     if(Meteor.userId()){
-      Meteor.call("addFolder", Folders.defaultName(), null, true, function(err, folderId) {      
-        Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);      
-      });      
+      Meteor.call("addFolder", Folders.defaultName(), null, true, function(err, folderId) {
+        Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);
+      });
     } else {
       Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
     }
@@ -30,10 +30,10 @@ Template.appBody.events({
     var url = event.target.bookmark.value;
     var currentFolder = FlowRouter.getParam('_id');
 
-    Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {      
+    Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {
       Meteor.call("refreshBookmark", bookmarkId);
     });
-    
+
     // Clear form
     event.target.bookmark.value = "";
 
@@ -42,35 +42,35 @@ Template.appBody.events({
   },
 
   "submit #update-bookmark-form": function (event, template) {
-    var data = {      
+    var data = {
       title: event.target.title.value,
       url: event.target.url.value,
       image: event.target.image.value,
       folderId: event.target.folder.value
     };
-    
+
     var bookmarkId = Session.get(SELECTED_BOOKMARK_KEY);
-    
+
     Meteor.call("updateBookmark", bookmarkId, data);
 
     new freewall('#grid').fitWidth();
-    $('.chat-collapse').sideNav('hide'); 
+    $('.chat-collapse').sideNav('hide');
 
     return false;
   },
 
 });
 
-Template.appBody.onRendered(function () {  
+Template.appBody.onRendered(function () {
   var window_width = $(window).width();
 
   /*Preloader*/
-  $(window).load(function() {
+  $(window).on('load', function() {
     setTimeout(function() {
-      $('body').addClass('loaded');      
+      $('body').addClass('loaded');
     }, 200);
-  });  
-  
+  });
+
   $('.show-search').click(function() {
     $('.search-out').fadeToggle( "50", "linear" );
   });
@@ -88,10 +88,10 @@ Template.appBody.onRendered(function () {
   // Check Uncheck function
   function checkbox_check(el){
       if (!$(el).is(':checked')) {
-          $(el).next().css('text-decoration', 'none'); // or addClass            
+          $(el).next().css('text-decoration', 'none'); // or addClass
       } else {
           $(el).next().css('text-decoration', 'line-through'); //or addClass
-      }    
+      }
   }
 
   /*----------------------
@@ -130,13 +130,13 @@ Template.appBody.onRendered(function () {
     delay: 50
   });
 
-  // Materialize sideNav  
+  // Materialize sideNav
 
   //Main Left Sidebar Menu
   $('.button-collapse').sideNav({
-    edge: 'left', // Choose the horizontal origin      
+    edge: 'left', // Choose the horizontal origin
   });
-  
+
   //Main Left Sidebar Chat
   $('.chat-collapse').sideNav({
     menuWidth: 360,
@@ -157,7 +157,7 @@ Template.appBody.onRendered(function () {
 
   // Perfect Scrollbar
   $('select').not('.disabled').material_select();
-    var leftnav = $(".page-topbar").height();  
+    var leftnav = $(".page-topbar").height();
     var leftnavHeight = window.innerHeight - leftnav;
   $('.leftside-navigation').height(leftnavHeight).perfectScrollbar({
     suppressScrollX: true
@@ -205,8 +205,8 @@ Template.appBody.onRendered(function () {
       $(this).toggleClass('flow-text');
     })
   });
-  
-  
+
+
   //Toggle Containers on page
   var toggleContainersButton = $('#container-toggle-button');
   toggleContainersButton.click(function() {
@@ -245,6 +245,6 @@ Template.appBody.onCreated(function() {
   self.autorun(function() {
     if(FlowRouter.getRouteName() === 'folder'){
       self.subscribe('bookmarks', FlowRouter.getParam('_id'));
-    } 
+    }
   });
 });
