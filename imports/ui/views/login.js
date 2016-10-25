@@ -25,8 +25,7 @@ export class Login extends React.Component {
                type="Email"
                id="user_email"
                placeholder="Email"
-               required="true"
-               defaultValue="john@boomabu.com"/>
+               required="true"/>
            </div>
            <div className="field">
              <input
@@ -34,8 +33,7 @@ export class Login extends React.Component {
                type="password"
                id="user_password"
                placeholder="Password"
-               required="true"
-               defaultValue="12345678"/>
+               required="true"/>
            </div>
            <button type="submit">Sign in</button>
          </form>

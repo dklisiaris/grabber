@@ -1,11 +1,11 @@
 <template name="appBody">
-  
+
   <!-- //////////////////////////////////////////////////////////////////////////// -->
   <!-- START MAIN -->
   <div id="main">
     <!-- START WRAPPER -->
     <div class="wrapper">
-      {{> sidebar}}
+      <!-- {{> sidebar}} -->
       <!-- //////////////////////////////////////////////////////////////////////////// -->
       <!-- START CONTENT -->
       <section id="content">
@@ -21,10 +21,10 @@
               <input type="text" name="bookmark" placeholder="Click to add a new URL address" />
             </form>
             {{/if}}
-            
-            {{#if Template.subscriptionsReady}}                   
+
+            {{#if Template.subscriptionsReady}}
             <div id="grid">
-              {{#each bookmarks}}        
+              {{#each bookmarks}}
                 {{> bookmark}}
               {{/each}}
             </div>
@@ -38,6 +38,8 @@
           {{> newBookmark}}
           <!-- Floating Action Button end -->
 
+          <div>{{> React component=FoldersComponent foldersCollection=folders }}</div>
+
         </div>
         <!--end container-->
       </section>
@@ -48,5 +50,5 @@
     <!-- END WRAPPER -->
   </div>
   <!-- END MAIN -->
-  
+
 </template>

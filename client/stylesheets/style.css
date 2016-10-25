@@ -4,10 +4,10 @@
 /*body {
   background-color: #fcfcfc;
 }*/
-#main,
+/*#main,
 footer {
   padding-left: 240px;
-}
+}*/
 .margin {
   margin: 0;
 }
@@ -175,20 +175,20 @@ li.li-hover:hover{
 /*----------------------------------------
     Page Header
 ------------------------------------------*/
-h1.logo-wrapper{
+/*h1.logo-wrapper{
   margin: 0px 0px;
 }
 h1 span.logo-text{
   display: none;
-}
-header .brand-logo {
-  /*margin: 5px 0px;*/
-  /*padding: 0 42px;
-  padding: 0px 10px 0 75px;*/
+}*/
+/*header .brand-logo {
+  //margin: 5px 0px;
+  //padding: 0 42px;
+  //padding: 0px 10px 0 75px;
 
   padding: 0 28px;
-}
-@media only screen and (max-width: 992px) {
+}*/
+/*@media only screen and (max-width: 992px) {
   nav .nav-wrapper {
     text-align: center;
   }
@@ -231,7 +231,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
 
 .button-collapse{
   margin-left: 10px;
-}
+}*/
 /*=================================================================================
     Sidebar
 ====================================================================================*/

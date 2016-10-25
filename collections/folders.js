@@ -40,7 +40,7 @@ FoldersSchema = new SimpleSchema({
     autoValue: function() {
       if ( this.isInsert ) {
         return new Date();
-      } 
+      }
     }
   }
 });
@@ -51,7 +51,7 @@ Folders.attachSchema(FoldersSchema);
 Folders.defaultName = function() {
   var nextLetter = '1', nextName = 'New Folder ' + nextLetter;
   while (Folders.findOne({name: nextName})) {
-    // not going to be too smart here, can go past Z    
+    // not going to be too smart here, can go past Z
     nextLetter = parseInt(_.last(nextName.split(' '))) + 1;
     nextName = 'New Folder ' + nextLetter;
   }
@@ -64,16 +64,16 @@ Meteor.methods({
     // if (! validURL(url) ) {
     //   throw new Meteor.Error("Your url is invalid");
     // }
-        
+
     return Folders.insert({
       name: name,
-      description: description,            
+      description: description,
       private: privacy,
       views: 0,
       createdBy: Meteor.userId(),
       createdAt: new Date()
-    });  
-  },  
+    });
+  },
 
   removeFolder: function (folderId) {
     Folders.remove(folderId);
@@ -83,7 +83,7 @@ Meteor.methods({
     Folders.update(folderId, {$set: {name: newName}});
   },
 
-  setPrivacy: function (folderId, isPrivate) {    
+  setPrivacy: function (folderId, isPrivate) {
     Folders.update(folderId, {$set: {private: isPrivate}});
   },
 

@@ -8,7 +8,14 @@ const authenticatedRoutes = FlowRouter.group({
 authenticatedRoutes.route('/folders/:_id', {
   name: 'folder',
   action: function(params, queryParams) {
-    BlazeLayout.render('default', {yield: "appBody"});
+    BlazeLayout.render('onlyHeader', {yield: "appBody"});
+  }
+});
+
+authenticatedRoutes.route('/folders', {
+  name: 'folders',
+  action: function(params, queryParams) {
+    BlazeLayout.render('onlyHeader', {yield: "folders"});
   }
 });
 
@@ -22,7 +29,7 @@ authenticatedRoutes.route('/folders/:_id', {
 authenticatedRoutes.route('/logout',{
   name: 'logout',
   action: function(){
-    Meteor.logout();  
+    Meteor.logout();
     Meteor.setTimeout(function(){ FlowRouter.redirect('/'); }, 10);
   }
 });

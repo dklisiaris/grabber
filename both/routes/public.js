@@ -12,7 +12,7 @@ publicRoutes.route('/login', {
 publicRoutes.route('/signin', {
   name: 'signin',
   action: function(params, queryParams) {
-    BlazeLayout.render('onlyHeader', {yield: "reactLogin"});
+    BlazeLayout.render('noHeader', {yield: "reactLogin"});
   }
 });
 
@@ -27,6 +27,6 @@ publicRoutes.route('/signup', {
 publicRoutes.route('/', {
   name: 'home',
   action: function(params, queryParams) {
-    BlazeLayout.render('default', {yield: "appBody"});
+    BlazeLayout.render('onlyHeader', {yield: "appBody"});
   }
 });

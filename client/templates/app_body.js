@@ -1,6 +1,9 @@
 var SELECTED_BOOKMARK_KEY = 'selectedBoomark';
 Session.setDefault(SELECTED_BOOKMARK_KEY, null);
 
+import './app_body.html';
+import {FoldersView} from '/imports/ui/views/folders';
+
 Template.appBody.helpers({
   bookmarks: function() {
     let folderId = FlowRouter.getParam('_id');
@@ -13,18 +16,27 @@ Template.appBody.helpers({
     }
   },
 
+  FoldersComponent() {
+    return FoldersView;
+  },
+  folders: function () {
+    return Folders.find({}, {sort: {views: -1}});
+  }
+
 });
 
+const createNewFolder = () => {
+  if(Meteor.userId()){
+    Meteor.call("addFolder", Folders.defaultName(), null, true, function(err, folderId) {
+      Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);
+    });
+  } else {
+    Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
+  }
+}
+
 Template.appBody.events({
-  "click .new-folder": function (event) {
-    if(Meteor.userId()){
-      Meteor.call("addFolder", Folders.defaultName(), null, true, function(err, folderId) {
-        Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);
-      });
-    } else {
-      Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
-    }
-  },
+  "click .new-folder": createNewFolder,
   "submit .new-bookmark": function (event) {
     // This function is called when the new task form is submitted
     var url = event.target.bookmark.value;
@@ -65,7 +77,7 @@ Template.appBody.onRendered(function () {
   var window_width = $(window).width();
 
   /*Preloader*/
-  $(window).on('load', function() {
+  $(window).load(function() {
     setTimeout(function() {
       $('body').addClass('loaded');
     }, 200);
