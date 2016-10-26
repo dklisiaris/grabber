@@ -52,6 +52,9 @@ html {
 
           h3 {
             margin-bottom: 0;
+            display: inline-block;
+            position: relative;
+            top: -10px;
           }
 
           .header-btn {
@@ -59,14 +62,15 @@ html {
             border-radius: $base-border-radius;
             width: 30px;
             height: 30px;
+            display: inline-block;
             // opacity: .2;
             opacity: 1;
-            display: block;
             position: relative;
             border: 1px solid rgba(#fff, .5);
             color: rgba(#fff, .5);
             line-height: 1em;
             font-size: .9em;
+            margin-left: 5px;
             .fa {
               @include transform(translate(-50%, -50%));
               position: absolute;
