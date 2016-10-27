@@ -111,73 +111,73 @@ Template.appBody.onRendered(function () {
   ------------------------*/
 
   // Materialize Slider
-  $('.slider').slider({
-    full_width: true
-  });
+  // $('.slider').slider({
+  //   full_width: true
+  // });
 
-  // Materialize Dropdown
-  $('.dropdown-button').dropdown({
-    inDuration: 300,
-    outDuration: 125,
-    constrain_width: true, // Does not change width of dropdown to that of the activator
-    hover: false, // Activate on click
-    alignment: 'left', // Aligns dropdown to left or right edge (works with constrain_width)
-    gutter: 0, // Spacing from edge
-    belowOrigin: true // Displays dropdown below the button
-  });
+  // // Materialize Dropdown
+  // $('.dropdown-button').dropdown({
+  //   inDuration: 300,
+  //   outDuration: 125,
+  //   constrain_width: true, // Does not change width of dropdown to that of the activator
+  //   hover: false, // Activate on click
+  //   alignment: 'left', // Aligns dropdown to left or right edge (works with constrain_width)
+  //   gutter: 0, // Spacing from edge
+  //   belowOrigin: true // Displays dropdown below the button
+  // });
 
-  // Materialize Tabs
-  $('.tab-demo').show().tabs();
-  $('.tab-demo-active').show().tabs();
+  // // Materialize Tabs
+  // $('.tab-demo').show().tabs();
+  // $('.tab-demo-active').show().tabs();
 
-  // Materialize Parallax
-  $('.parallax').parallax();
-  $('.modal-trigger').leanModal();
+  // // Materialize Parallax
+  // $('.parallax').parallax();
+  // $('.modal-trigger').leanModal();
 
-  // Materialize scrollSpy
-  $('.scrollspy').scrollSpy();
+  // // Materialize scrollSpy
+  // $('.scrollspy').scrollSpy();
 
-  // Materialize tooltip
-  $('.tooltipped').tooltip({
-    delay: 50
-  });
+  // // Materialize tooltip
+  // $('.tooltipped').tooltip({
+  //   delay: 50
+  // });
 
-  // Materialize sideNav
+  // // Materialize sideNav
 
-  //Main Left Sidebar Menu
-  $('.button-collapse').sideNav({
-    edge: 'left', // Choose the horizontal origin
-  });
+  // //Main Left Sidebar Menu
+  // $('.button-collapse').sideNav({
+  //   edge: 'left', // Choose the horizontal origin
+  // });
 
-  //Main Left Sidebar Chat
-  $('.chat-collapse').sideNav({
-    menuWidth: 360,
-    edge: 'right',
-  });
-  $('.chat-close-collapse').click(function() {
-    $('.chat-collapse').sideNav('hide');
-  });
-  $('.chat-collapsible').collapsible({
-    accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-  });
+  // //Main Left Sidebar Chat
+  // $('.chat-collapse').sideNav({
+  //   menuWidth: 360,
+  //   edge: 'right',
+  // });
+  // $('.chat-close-collapse').click(function() {
+  //   $('.chat-collapse').sideNav('hide');
+  // });
+  // $('.chat-collapsible').collapsible({
+  //   accordion: false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+  // });
 
-  // Pikadate datepicker
-  $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-  });
+  // // Pikadate datepicker
+  // $('.datepicker').pickadate({
+  //   selectMonths: true, // Creates a dropdown to control month
+  //   selectYears: 15 // Creates a dropdown of 15 years to control year
+  // });
 
   // Perfect Scrollbar
-  $('select').not('.disabled').material_select();
-    var leftnav = $(".page-topbar").height();
-    var leftnavHeight = window.innerHeight - leftnav;
-  $('.leftside-navigation').height(leftnavHeight).perfectScrollbar({
-    suppressScrollX: true
-  });
-    var righttnav = $("#chat-out").height();
-  $('.rightside-navigation').height(righttnav).perfectScrollbar({
-    suppressScrollX: true
-  });
+  // $('select').not('.disabled').material_select();
+  //   var leftnav = $(".page-topbar").height();
+  //   var leftnavHeight = window.innerHeight - leftnav;
+  // $('.leftside-navigation').height(leftnavHeight).perfectScrollbar({
+  //   suppressScrollX: true
+  // });
+  //   var righttnav = $("#chat-out").height();
+  // $('.rightside-navigation').height(righttnav).perfectScrollbar({
+  //   suppressScrollX: true
+  // });
 
   // Fullscreen
   function toggleFullScreen() {

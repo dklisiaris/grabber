@@ -1,6 +1,7 @@
 <template name="bookmark">
   <div class="grid-item">
-    <div id="profile-card" class="card">
+    <div>{{>React component=BookmarkComponent id=_id title=shortTitle url=url thumbnail=thumbnail}}</div>
+<!--     <div id="profile-card" class="card">
       <div class="card-image waves-effect waves-block waves-light">
         <a href="{{url}}" target="_blank" class="clickable-url">
           <img src="{{thumbnail}}" alt="thumbnail" height="100%">
@@ -32,10 +33,10 @@
           <div class="col s12 min-height-45">
             <span class="card-title grey-text text-darken-4">{{shortTitle}}</span>
           </div>
-        </div>     
+        </div>
         <p class="truncate grey-text">{{shortUrl}}</p>
 
       </div>
-    </div>
+    </div> -->
   </div>
 </template>

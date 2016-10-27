@@ -14,7 +14,7 @@
         <div class="container">
           <div class="section">
 
-            {{> folderActions}}
+            <!-- {{> folderActions}} -->
 
             {{#if isEqual currentRouteName 'folder'}}
             <form class="new-bookmark">
@@ -23,11 +23,11 @@
             {{/if}}
 
             {{#if Template.subscriptionsReady}}
-            <div id="grid">
-              {{#each bookmarks}}
-                {{> bookmark}}
-              {{/each}}
-            </div>
+              <div id="grid">
+                {{#each bookmarks}}
+                  {{> bookmark}}
+                {{/each}}
+              </div>
             {{else}}
               {{> loader}}
             {{/if}}
@@ -35,17 +35,17 @@
           </div>
 
           <!-- Floating Action Button -->
-          {{> newBookmark}}
+          <!-- {{> newBookmark}} -->
           <!-- Floating Action Button end -->
 
-          <div>{{> React component=FoldersComponent foldersCollection=folders }}</div>
+          <!-- <div>{{> React component=FoldersComponent foldersCollection=folders }}</div> -->
 
         </div>
         <!--end container-->
       </section>
       <!-- END CONTENT -->
       <!-- //////////////////////////////////////////////////////////////////////////// -->
-      {{> editPanel selectedBookmark=selectedBookmark}}
+      <!-- {{> editPanel selectedBookmark=selectedBookmark}} -->
     </div>
     <!-- END WRAPPER -->
   </div>
