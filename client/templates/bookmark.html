@@ -1,6 +1,13 @@
 <template name="bookmark">
   <div class="grid-item">
-    <div>{{>React component=BookmarkComponent id=_id title=shortTitle url=url thumbnail=thumbnail}}</div>
+    <div>
+      {{>React component=BookmarkComponent
+        id=_id
+        title=shortTitle
+        url=url
+        thumbnail=thumbnail
+      }}
+    </div>
 <!--     <div id="profile-card" class="card">
       <div class="card-image waves-effect waves-block waves-light">
         <a href="{{url}}" target="_blank" class="clickable-url">
