@@ -3,28 +3,82 @@
   @include transition;
   @include flex(0 0 25%);
   cursor: pointer;
+  width: 188px;
+  height: 290px;
+
   .inner {
     background: rgba($light-gray, .9);
     border-radius: $base-border-radius;
     margin: 0 $margin/2 $margin $margin/2;
-    line-height: 1.75em;
+    line-height: 1em;
     overflow: hidden;
     padding: $base-spacing/2;
+    padding-bottom: $base-spacing/4;
     min-height: 5em;
     animation-duration: .3s;
     animation-name: fadeIn;
 
     h4 {
       height: 30px;
+      font-size: 13px;
     }
 
-    .bookmark-url {
-      font-size: 12px;
+    .bookmark-content {
+      width: 148px;
+      height: 148px;
 
+      .bookmark-actions {
+        list-style: none;
+        padding: 0 20px;
+        margin: 0;
+
+        li{
+          a {
+            // border-bottom: 1px solid rgba($light-asphalt, .5);
+            -webkit-transition: all 0.15s ease-out 0s;
+            -moz-transition: all 0.15s ease-out 0s;
+            transition: all 0.15s ease-out 0s;
+            color: rgba(#000, 0.5);
+            background: rgba(#000, 0.15);
+            border-radius: 3px;
+            padding: .3em .5em;
+            line-height: 1.8em;
+            margin-top: 5px;
+          }
+          a:hover {
+            color: #333;
+          }
+        }
+      }
+    }
+
+    .bookmark-footer {
+      margin-top: 5px;
+      .bookmark-url-wrapper {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 130px;
+        height: 35px;
+        display: inline-block;
+
+        .bookmark-url {
+          font-size: 12px;
+        }
+      }
     }
 
     .bookmark-actions-toggle {
       float: right;
+      margin-top: 10px;
+      padding: 2px;
+      i {
+        color: rgba(#000, 0.5);
+      }
+      i:hover{
+        color: #333;
+      }
+
     }
+
   }
 }

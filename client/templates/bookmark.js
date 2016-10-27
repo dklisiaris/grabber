@@ -5,7 +5,7 @@ import {Bookmark} from '/imports/ui/components/bookmark';
 
 Template.bookmark.helpers({
   thumbnail: function () {
-    defaultImage = "http://www.theemailcompany.com/wp-content/uploads/2016/02/no-image-placeholder-big.jpg";
+    defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
     // console.log(this.image);
 
     return (this.image === undefined || this.image === null || this.image === '') ? defaultImage : this.image;
@@ -25,7 +25,7 @@ Template.bookmark.helpers({
   },
   BookmarkComponent() {
     return Bookmark;
-  },
+  }
 });
 
 Template.bookmark.events({

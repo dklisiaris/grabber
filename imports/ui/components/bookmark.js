@@ -1,22 +1,31 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 
 export class Bookmark extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showing_actions: false
+      isShowingActions: false
     };
+
+    this._handleActionsToggle = this._handleActionsToggle.bind(this);
+    this._handleRemoveAction = this._handleRemoveAction.bind(this);
   }
 
   componentDidMount() {
 
   }
 
-
+  /**
+  * Helpers
+  */
   _shortUrl() {
     return this.props.url.replace(/.*?:\/\//g,"").replace("www.","");
   }
 
+  /**
+  * Renderers
+  */
   _renderBookmarkActions() {
     const bookmarkActions = (
       <ul className="bookmark-actions">
@@ -30,7 +39,7 @@ export class Bookmark extends React.Component {
           <a href="#!" data-activates="chat-out" className="-text edit-bookmark"><i className="fa fa-pencil"></i> Edit</a>
         </li>
         <li>
-          <a href="#!" className="-text remove-bookmark"><i className="fa fa-trash"></i> Remove</a>
+          <a href="#!" onClick={this._handleRemoveAction} ><i className="fa fa-trash"></i> Remove</a>
         </li>
       </ul>
     );
@@ -47,7 +56,7 @@ export class Bookmark extends React.Component {
   }
 
   _renderThumbOrActions() {
-    if(this.state.showing_actions){
+    if(this.state.isShowingActions){
       return this._renderBookmarkActions();
     }
     else {
@@ -55,8 +64,24 @@ export class Bookmark extends React.Component {
     }
   }
 
-  _handleActionsToggle() {
+  /**
+  * Handlers
+  */
+  _handleActionsToggle(e) {
+    e.preventDefault();
 
+    this.setState(prevState => ({
+      isShowingActions: !prevState.isShowingActions
+    }));
+  }
+
+  _handleRemoveAction(e) {
+    e.preventDefault();
+
+    Meteor.call("removeBookmark", this.props.id);
+
+    let wall = new freewall('#grid');
+    wall.fitWidth();
   }
 
 
@@ -65,11 +90,17 @@ export class Bookmark extends React.Component {
       <div id={this.props.id} className="bookmark-card">
         <div className="inner">
           <h4>{this.props.title}</h4>
+          <div className="bookmark-content">
           {this._renderThumbOrActions()}
-          <span className="bookmark-url">{this._shortUrl()}</span>
-          <span className="bookmark-actions-toggle">
-            <i className="fa fa-cog"></i>
-          </span>
+          </div>
+          <div className="bookmark-footer">
+            <div className="bookmark-url-wrapper">
+              <span className="bookmark-url">{this._shortUrl()}</span>
+            </div>
+            <span className="bookmark-actions-toggle" onClick={this._handleActionsToggle}>
+              <i className={this.state.isShowingActions ? 'fa fa-undo' : 'fa fa-cog'}></i>
+            </span>
+          </div>
         </div>
 
       </div>
