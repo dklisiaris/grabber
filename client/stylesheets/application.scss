@@ -36,13 +36,6 @@
 @import "base/animations";
 @import "base/forms";
 
-@import "module/loading";
-@import "module/login";
-@import "module/signup";
-
-@import "module/sessions";
-@import "module/main_header";
-@import "module/boards";
-@import "module/bookmarks";
+@import "module/module";
 
 @import "state/navbar";

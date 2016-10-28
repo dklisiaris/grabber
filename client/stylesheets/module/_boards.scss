@@ -52,6 +52,30 @@
       }
     }
   }
+  .drop-down {
+    @include transition;
+    position: absolute;
+    // right: 0;
+    top: 12%;
+    list-style: none;
+    padding: $base-spacing/2;
+    background: rgba($light-gray, .9);
+    border-radius: $base-border-radius;
+    min-width: 20em;
+    display: none;
+    animation-duration: .3s;
+    animation-name: fadeIn;
+    z-index: 99;
+    &.active {
+      display: block;
+    }
+    form {
+      input {
+        @include fill-parent;
+        margin-bottom: .5em;
+      }
+    }
+  }
 }
 .boards.show {
   .fa-spin {
