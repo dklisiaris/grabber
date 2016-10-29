@@ -1,6 +1,6 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
-import PageClick from 'react-page-click';
+import {ReactPageClick} from 'react-page-click';
 
 export class NewFolderBtn extends React.Component {
   constructor(props) {
@@ -48,17 +48,19 @@ export class NewFolderBtn extends React.Component {
 
   _renderNewFolderForm() {
     return (
-      <span>
-        <ul className="drop-down active">
-          <li>
-            <form onSubmit={this._handleAddNewSubmit}>
-              <h4>Add new folder</h4>
-              <input ref="title" type="text" required={true} placeholder="Folder name"/>
-              <button type="submit">Add folder</button> or <a onClick={this._handleCancelClick} href="#">cancel</a>
-            </form>
-          </li>
-        </ul>
-      </span>
+      <ReactPageClick notify={this._handleCancelClick}>
+        <span>
+          <ul className="drop-down active">
+            <li>
+              <form onSubmit={this._handleAddNewSubmit}>
+                <h4>Add new folder</h4>
+                <input ref="title" type="text" required={true} placeholder="Folder name"/>
+                <button type="submit">Add folder</button> or <a onClick={this._handleCancelClick} href="#">cancel</a>
+              </form>
+            </li>
+          </ul>
+        </span>
+      </ReactPageClick>
     );
   }
 
