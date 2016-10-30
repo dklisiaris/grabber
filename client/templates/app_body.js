@@ -32,6 +32,9 @@ Template.appBody.helpers({
   },
   folders: function () {
     return Folders.find({}, {sort: {views: -1}});
+  },
+  currentFolder: function(){
+    return Folders.findOne(FlowRouter.getParam('_id'));
   }
 
 });
@@ -264,10 +267,14 @@ Template.appBody.onRendered(function () {
 });
 
 Template.appBody.onCreated(function() {
-  var self = this;
+  const self = this;
   self.autorun(function() {
-    if(FlowRouter.getRouteName() === 'folder'){
-      self.subscribe('bookmarks', FlowRouter.getParam('_id'));
+    if(FlowRouter.getRouteName() === 'folder' || FlowRouter.getRouteName() === 'test'){
+      let currentFolderId = FlowRouter.getParam('_id');
+
+      self.subscribe('currentFolder', currentFolderId);
+      self.subscribe('bookmarks', currentFolderId);
+      this.currentFolderId = new ReactiveVar(currentFolderId);
     }
   });
 });
