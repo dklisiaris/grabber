@@ -2,16 +2,16 @@ import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
 
-export class NewFolderBtn extends React.Component {
+export class NewBookmarkBtn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isFormOpen: false
     };
 
-    this._handleAddNewClick    = this._handleAddNewClick.bind(this);
-    this._handleCancelClick     = this._handleCancelClick.bind(this);
-    this._handleAddNewSubmit = this._handleAddNewSubmit.bind(this);
+    this._handleAddNewClick   = this._handleAddNewClick.bind(this);
+    this._handleCancelClick   = this._handleCancelClick.bind(this);
+    this._handleAddNewSubmit  = this._handleAddNewSubmit.bind(this);
   }
 
   _handleAddNewClick(e) {
@@ -30,15 +30,13 @@ export class NewFolderBtn extends React.Component {
 
   _handleAddNewSubmit(e) {
     e.preventDefault();
-    let folderTitle = this.refs.title.value;
 
-    if(Meteor.userId()){
-      Meteor.call("addFolder", folderTitle, null, true, function(err, folderId) {
-        // Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);
-      });
-    } else {
-      Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
-    }
+    let url = this.refs.bookmarkUrl.value;
+    let currentFolder = FlowRouter.getParam('_id');
+
+    Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {
+      Meteor.call("refreshBookmark", bookmarkId);
+    });
     this.setState({isFormOpen: false});
   }
 
@@ -55,9 +53,9 @@ export class NewFolderBtn extends React.Component {
           <ul className="drop-down active">
             <li>
               <form onSubmit={this._handleAddNewSubmit}>
-                <h4>Add new folder</h4>
-                <input ref="title" type="text" required={true} placeholder="Folder name"/>
-                <button type="submit">Add folder</button> or <a onClick={this._handleCancelClick} href="#">cancel</a>
+                <h4>Add new bookmark</h4>
+                <input ref="bookmarkUrl" type="text" required={true} placeholder="Bookmark Url"/>
+                <button type="submit">Add Bookmark</button> or <a onClick={this._handleCancelClick} href="#">cancel</a>
               </form>
             </li>
           </ul>

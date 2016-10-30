@@ -1,5 +1,4 @@
 <template name="appBody">
-
   <!-- //////////////////////////////////////////////////////////////////////////// -->
   <!-- START MAIN -->
   <div id="main">
@@ -13,21 +12,26 @@
         <!--start container-->
         <div class="container">
           <div class="section">
+<!--             <div>
+            {{> React component=BookmarksHeader title='Folder Name' iconClass='fa fa-folder-o'}}
+            </div> -->
+            {{> folderActions}}
 
-            <!-- {{> folderActions}} -->
-
-            {{#if isEqual currentRouteName 'folder'}}
+<!--             {{#if isEqual currentRouteName 'folder'}}
             <form class="new-bookmark">
               <input type="text" name="bookmark" placeholder="Click to add a new URL address" />
             </form>
-            {{/if}}
+            {{/if}} -->
 
             {{#if Template.subscriptionsReady}}
-              <div id="grid">
+              <div class="main-container">
+                {{> React component=BookmarksView bookmarksCollection=bookmarks }}
+              </div>
+<!--               <div id="grid">
                 {{#each bookmarks}}
                   {{> bookmark}}
                 {{/each}}
-              </div>
+              </div> -->
             {{else}}
               {{> loader}}
             {{/if}}
@@ -50,5 +54,4 @@
     <!-- END WRAPPER -->
   </div>
   <!-- END MAIN -->
-
 </template>

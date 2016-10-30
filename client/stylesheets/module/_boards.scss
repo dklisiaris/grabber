@@ -52,6 +52,9 @@
       }
     }
   }
+}
+
+.boards.index, .boards.show {
   .drop-down {
     @include transition;
     position: absolute;
@@ -77,16 +80,17 @@
     }
   }
 }
+
 .boards.show {
   .fa-spin {
     color: #fff;
   }
   .view-header {
-    position: relative;
-    h3 {
-      margin: 0;
-      color: #fff;
-    }
+    // position: relative;
+    // h3 {
+    //   margin: 0;
+    //   color: #fff;
+    // }
     .board-users {
       @include transform(translateY(-50%));
       list-style: none;

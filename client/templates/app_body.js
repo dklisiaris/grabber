@@ -3,6 +3,10 @@ Session.setDefault(SELECTED_BOOKMARK_KEY, null);
 
 import './app_body.html';
 import {FoldersView} from '/imports/ui/views/folders';
+import {BookmarksView} from '/imports/ui/views/bookmarks';
+import {BookmarksHeader} from '/imports/ui/components/bookmarks-header';
+
+
 
 Template.appBody.helpers({
   bookmarks: function() {
@@ -18,6 +22,13 @@ Template.appBody.helpers({
 
   FoldersComponent() {
     return FoldersView;
+  },
+
+  BookmarksView() {
+    return BookmarksView;
+  },
+  BookmarksHeader() {
+    return BookmarksHeader;
   },
   folders: function () {
     return Folders.find({}, {sort: {views: -1}});

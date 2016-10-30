@@ -23,6 +23,12 @@ export class Bookmark extends React.Component {
     return this.props.url.replace(/.*?:\/\//g,"").replace("www.","");
   }
 
+  _thumbnail() {
+    defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
+
+    return (this.props.image === undefined || this.props.image === null || this.props.image === '') ? defaultImage : this.props.image;
+  }
+
   /**
   * Renderers
   */
@@ -49,7 +55,7 @@ export class Bookmark extends React.Component {
   _renderBookmarkThumb() {
     const bookmarkThumb = (
       <a href={this.props.url} target="_blank" className="clickable-url">
-        <img src={this.props.thumbnail} alt="thumbnail" width="100%"/>
+        <img src={this._thumbnail()} alt="thumbnail" width="100%"/>
       </a>
     );
     return bookmarkThumb;

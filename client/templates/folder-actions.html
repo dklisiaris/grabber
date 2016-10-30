@@ -17,23 +17,23 @@
         </form>
       {{else}}
         <div class="row">
-          <div class="col s10 m8 l6">              
+          <div class="col s10 m8 l6">
           <h5 data-tooltip="Click to rename folder" data-tooltip-left="-150" class="js-edit-folder clickable">{{name}} <small>({{privacy private}})</small></h5>
           </div>
           <div class="col s2 m4 l6">
             <button class="js-delete-folder btn-floating waves-effect waves-light red right" data-tooltip="Delete Folder">
-              <i class="mdi-action-delete"></i>
-            </button>  
-            
+              <i class="fa fa-trash"></i>
+            </button>
+
             {{#if private}}
             <button class="js-toggle-privacy btn-floating waves-effect waves-light light-green right" data-tooltip="Make folder public">
-              <i class="mdi-action-lock-outline"></i>
-            </button>   
+              <i class="fa fa-lock"></i>
+            </button>
             {{else}}
             <button class="js-toggle-privacy btn-floating waves-effect waves-light light-green right" data-tooltip="Make folder private">
-              <i class="mdi-action-lock-open"></i>
-            </button> 
-            {{/if}}              
+              <i class="fa fa-unlock"></i>
+            </button>
+            {{/if}}
           </div>
         </div>
       {{/if}}
