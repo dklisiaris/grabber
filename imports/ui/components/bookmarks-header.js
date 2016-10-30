@@ -12,6 +12,8 @@ export class BookmarksHeader extends React.Component {
     this._handleFolderNameClick      = this._handleFolderNameClick.bind(this);
     this._handleCancelClick          = this._handleCancelClick.bind(this);
     this._handleFolderNameFormSubmit = this._handleFolderNameFormSubmit.bind(this);
+    this._handlePrivacyBtnClick      = this._handlePrivacyBtnClick.bind(this);
+    this._handleDeleteBtnClick       = this._handleDeleteBtnClick.bind(this);
   }
 
   _handleFolderNameClick(e) {
@@ -38,6 +40,27 @@ export class BookmarksHeader extends React.Component {
     });
   }
 
+  _handlePrivacyBtnClick(e) {
+    e.preventDefault();
+    Meteor.call("setPrivacy", this.props.folder._id, !this.props.folder.private);
+  }
+
+  _handleDeleteBtnClick(e) {
+    e.preventDefault();
+
+    const message = "Are you sure you want to delete the folder " + this.props.folder.name + "?";
+    if (confirm(message)) {
+      // we must remove each item individually from the client
+      Bookmarks.find({folderId: this.props.folder._id}).forEach(function(bookmark) {
+        Meteor.call("removeBookmark", bookmark._id);
+      });
+      Meteor.call("removeFolder", this.props.folder._id);
+
+
+      Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
+    }
+  }
+
   _renderNewFolderForm() {
     return (
       <ReactPageClick notify={this._handleCancelClick}>
@@ -56,6 +79,23 @@ export class BookmarksHeader extends React.Component {
     );
   }
 
+  _renderPrivacyBtn() {
+    const iconClass = this.props.folder.private ? 'fa fa-lock' : 'fa fa-unlock';
+    return(
+      <a onClick={this._handlePrivacyBtnClick} className="add-new header-btn" href="#">
+        <i className={iconClass}></i>
+      </a>
+    );
+  }
+
+  _renderDeleteBtn() {
+    return(
+      <a onClick={this._handleDeleteBtnClick} className="add-new header-btn" href="#">
+        <i className="fa fa-trash"></i>
+      </a>
+    );
+  }
+
   render() {
     const headerTitle = () => (
       <span>
@@ -64,9 +104,16 @@ export class BookmarksHeader extends React.Component {
         </h3><NewBookmarkBtn/>
       </span>
     );
+    const headerContents = () => (
+      <span>
+      { this.state.isEditingFolderName ? this._renderNewFolderForm() : headerTitle() }
+      { this._renderPrivacyBtn() }
+      { this._renderDeleteBtn() }
+      </span>
+    );
     return (
       <header className="view-header">
-        { this.state.isEditingFolderName ? this._renderNewFolderForm() : headerTitle() }
+        { this.props.folder ? headerContents() : '' }
       </header>
     );
   }

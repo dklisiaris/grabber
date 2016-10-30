@@ -1,57 +1,9 @@
 <template name="appBody">
-  <!-- //////////////////////////////////////////////////////////////////////////// -->
-  <!-- START MAIN -->
-  <div id="main">
-    <!-- START WRAPPER -->
-    <div class="wrapper">
-      <!-- {{> sidebar}} -->
-      <!-- //////////////////////////////////////////////////////////////////////////// -->
-      <!-- START CONTENT -->
-      <section id="content">
-
-        <!--start container-->
-        <div class="container">
-          <div class="section">
-<!--             <div>
-            {{> React component=BookmarksHeader title='Folder Name' iconClass='fa fa-folder-o'}}
-            </div> -->
-            {{> folderActions}}
-
-<!--             {{#if isEqual currentRouteName 'folder'}}
-            <form class="new-bookmark">
-              <input type="text" name="bookmark" placeholder="Click to add a new URL address" />
-            </form>
-            {{/if}} -->
-
-            {{#if Template.subscriptionsReady}}
-              <div class="main-container">
-                {{> React component=BookmarksView bookmarksCollection=bookmarks folder=currentFolder }}
-              </div>
-<!--               <div id="grid">
-                {{#each bookmarks}}
-                  {{> bookmark}}
-                {{/each}}
-              </div> -->
-            {{else}}
-              {{> loader}}
-            {{/if}}
-
-          </div>
-
-          <!-- Floating Action Button -->
-          <!-- {{> newBookmark}} -->
-          <!-- Floating Action Button end -->
-
-          <!-- <div>{{> React component=FoldersComponent foldersCollection=folders }}</div> -->
-
-        </div>
-        <!--end container-->
-      </section>
-      <!-- END CONTENT -->
-      <!-- //////////////////////////////////////////////////////////////////////////// -->
-      <!-- {{> editPanel selectedBookmark=selectedBookmark}} -->
+  {{#if Template.subscriptionsReady}}
+    <div class="main-container">
+      {{> React component=BookmarksView bookmarksCollection=bookmarks folder=currentFolder }}
     </div>
-    <!-- END WRAPPER -->
-  </div>
-  <!-- END MAIN -->
+  {{else}}
+    {{> loader}}
+  {{/if}}
 </template>
