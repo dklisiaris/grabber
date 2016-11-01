@@ -58,8 +58,6 @@
   .drop-down {
     @include transition;
     position: absolute;
-    // right: 0;
-    top: 12%;
     list-style: none;
     padding: $base-spacing/2;
     background: rgba($light-gray, .9);

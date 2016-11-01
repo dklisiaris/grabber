@@ -16,6 +16,13 @@ publicRoutes.route('/signin', {
   }
 });
 
+publicRoutes.route('/register', {
+  name: 'register',
+  action: function(params, queryParams) {
+    BlazeLayout.render('noHeader', {yield: "reactSignup"});
+  }
+});
+
 
 publicRoutes.route('/signup', {
   name: 'signup',

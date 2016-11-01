@@ -23,7 +23,7 @@ const login = () => {
       // } else {
       //   browserHistory.push('/');
       // }
-      Meteor.setTimeout(function(){ FlowRouter.go('home'); }, 10);
+      Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
     }
   });
 };

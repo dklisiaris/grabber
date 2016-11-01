@@ -37,7 +37,7 @@ export class Login extends React.Component {
            </div>
            <button type="submit">Sign in</button>
          </form>
-         <Link to="/signup">Create new account</Link>
+         <a href="/register">Create new account</a>
        </main>
      </div>
     );

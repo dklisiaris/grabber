@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import 'jquery-validation';
 import { browserHistory } from 'react-router';
+import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Bert } from 'meteor/themeteorchef:bert';
 import { getInputValue } from './get-input-value';
@@ -8,8 +9,9 @@ import { getInputValue } from './get-input-value';
 let component;
 
 const getUserData = () => ({
-  email: getInputValue(component.refs.emailAddress),
+  email: getInputValue(component.refs.email),
   password: getInputValue(component.refs.password),
+  passwordConfirmation: getInputValue(component.refs.passwordConfirmation),
   profile: {
     name: {
       first: getInputValue(component.refs.firstName),
@@ -25,7 +27,8 @@ const signUp = () => {
     if (error) {
       Bert.alert(error.reason, 'danger');
     } else {
-      browserHistory.push('/');
+      // browserHistory.push('/');
+      Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
       Bert.alert('Welcome!', 'success');
     }
   });
@@ -40,7 +43,7 @@ const validate = () => {
       lastName: {
         required: true,
       },
-      emailAddress: {
+      email: {
         required: true,
         email: true,
       },
@@ -56,7 +59,7 @@ const validate = () => {
       lastName: {
         required: 'Last name?',
       },
-      emailAddress: {
+      email: {
         required: 'Need an email address here.',
         email: 'Is this email address legit?',
       },
