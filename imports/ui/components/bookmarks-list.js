@@ -26,6 +26,7 @@ export class BookmarksList extends React.Component{
               title={bookmark.title}
               url={bookmark.url}
               image={bookmark.image}
+              folderId={this.props.folder._id}
             />
             </div>
           ))}

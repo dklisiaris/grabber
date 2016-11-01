@@ -1,15 +1,21 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import {ReactPageClick} from 'react-page-click';
 
 export class Bookmark extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isShowingActions: false
+      isShowingActions: false,
+      isModalOpen: false
     };
 
-    this._handleActionsToggle = this._handleActionsToggle.bind(this);
-    this._handleRemoveAction = this._handleRemoveAction.bind(this);
+    this._handleActionsToggle   = this._handleActionsToggle.bind(this);
+    this._handleRemoveAction    = this._handleRemoveAction.bind(this);
+    this._handleBookmarkRefresh = this._handleBookmarkRefresh.bind(this);
+    this._handleBookmarkEdit    = this._handleBookmarkEdit.bind(this);
+    this._handleCloseModal      = this._handleCloseModal.bind(this);
+    this._handleBookmarkUpdate  = this._handleBookmarkUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -36,13 +42,13 @@ export class Bookmark extends React.Component {
     const bookmarkActions = (
       <ul className="bookmark-actions">
         <li>
-          <a href="#!" target="_blank" className="-text clickable-url"><i className="fa fa-eye"></i> View</a>
+          <a href={this.props.url} target="_blank"><i className="fa fa-eye"></i> View</a>
         </li>
         <li>
-          <a href="#!" className="-text refresh-bookmark"><i className="fa fa-refresh"></i> Refresh</a>
+          <a href="#!" onClick={this._handleBookmarkRefresh}><i className="fa fa-refresh"></i> Refresh</a>
         </li>
         <li>
-          <a href="#!" data-activates="chat-out" className="-text edit-bookmark"><i className="fa fa-pencil"></i> Edit</a>
+          <a href="#!" onClick={this._handleBookmarkEdit}><i className="fa fa-pencil"></i> Edit</a>
         </li>
         <li>
           <a href="#!" onClick={this._handleRemoveAction} ><i className="fa fa-trash"></i> Remove</a>
@@ -70,6 +76,38 @@ export class Bookmark extends React.Component {
     }
   }
 
+  _renderModal() {
+    if(this.state.isModalOpen){
+      return(
+        <div className="md-overlay">
+          <div className="md-modal">
+            <ReactPageClick notify={this._handleCloseModal}>
+              <div className="md-content card-modal">
+                <a className="close" href="#" onClick={this._handleCloseModal}>
+                  <i className="fa fa-close"/>
+                </a>
+                <div className="info">
+                  <form onSubmit={this._handleBookmarkUpdate}>
+                    <h4>Edit bookmark</h4>
+                    <img src={this._thumbnail()} alt="thumbnail" width="128px"/>
+                    <h5>Title</h5>
+                    <input ref="bookmarkTitle" type="text" required={true} defaultValue={this.props.title}/>
+                    <h5>Url</h5>
+                    <input ref="bookmarkUrl" type="text" required={true} defaultValue={this.props.url}/>
+                    <h5>Image</h5>
+                    <input ref="bookmarkImage" type="text" defaultValue={this.props.image}/>
+                    <button type="submit">Update bookmark</button> or <a onClick={this._handleCloseModal} href="#">cancel</a>
+                  </form>
+                </div>
+              </div>
+            </ReactPageClick>
+          </div>
+        </div>
+      );
+    }
+  }
+
+
   /**
   * Handlers
   */
@@ -90,6 +128,37 @@ export class Bookmark extends React.Component {
     wall.fitWidth();
   }
 
+  _handleBookmarkRefresh(e) {
+    e.preventDefault();
+
+    Meteor.call("refreshBookmark", this.props.id);
+
+    this.setState({isShowingActions: false});
+  }
+
+  _handleBookmarkEdit(e) {
+    e.preventDefault();
+    this.setState({isModalOpen: true});
+  }
+
+  _handleCloseModal(e) {
+    e.preventDefault();
+    this.setState({isModalOpen: false});
+  }
+
+  _handleBookmarkUpdate(e) {
+    e.preventDefault();
+    let data = {
+      title: this.refs.bookmarkTitle.value,
+      url: this.refs.bookmarkUrl.value,
+      image: this.refs.bookmarkImage.value,
+      folderId: this.props.folderId
+    };
+    Meteor.call("updateBookmark", this.props.id, data);
+
+    this.setState({isModalOpen: false});
+  }
+
 
   render() {
     return (
@@ -108,8 +177,16 @@ export class Bookmark extends React.Component {
             </span>
           </div>
         </div>
-
+        {this._renderModal()}
       </div>
     );
   }
 }
+
+Bookmark.propTypes = {
+  id:       React.PropTypes.string,
+  title:    React.PropTypes.string,
+  url:      React.PropTypes.string,
+  image:    React.PropTypes.string,
+  folderId: React.PropTypes.string
+};

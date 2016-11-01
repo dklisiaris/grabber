@@ -6,7 +6,7 @@ export const BookmarksView = ({bookmarksCollection, folder}) => (
   <div className="view-container boards index">
     <section>
       <BookmarksHeader folder={folder}/>
-      <BookmarksList bookmarks={bookmarksCollection} />
+      <BookmarksList bookmarks={bookmarksCollection} folder={folder} />
     </section>
   </div>
 );
