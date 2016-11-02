@@ -10,7 +10,7 @@ let component;
 const login = () => {
   const email = getInputValue(component.refs.email);
   const password = getInputValue(component.refs.password);
-
+console.log(email, password);
   Meteor.loginWithPassword(email, password, (error) => {
     if (error) {
       Bert.alert(error.reason, 'warning');
@@ -31,7 +31,7 @@ const login = () => {
 const validate = () => {
   $(component.refs.login).validate({
     rules: {
-      emailAddress: {
+      email: {
         required: true,
         email: true,
       },
@@ -40,7 +40,7 @@ const validate = () => {
       },
     },
     messages: {
-      emailAddress: {
+      email: {
         required: 'Need an email address here.',
         email: 'Is this email address legit?',
       },

@@ -51,6 +51,11 @@ const validate = () => {
         required: true,
         minlength: 6,
       },
+      passwordConfirmation: {
+        required: true,
+        minlength: 6,
+        equalTo: "#password"
+      },
     },
     messages: {
       firstName: {
@@ -67,6 +72,11 @@ const validate = () => {
         required: 'Need a password here.',
         minlength: 'Use at least six characters, please.',
       },
+      passwordConfirmation: {
+        required: 'Need a password here.',
+        minlength: 'Use at least six characters, please.',
+        equalTo: 'Passwords do not match.'
+      }
     },
     submitHandler() { signUp(); },
   });

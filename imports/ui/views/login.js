@@ -18,7 +18,7 @@ export class Login extends React.Component {
          <header>
            <div className="logo" />
          </header>
-         <form id="sign_in_form">
+         <form ref="login" id="sign_in_form" onSubmit={this.handleSubmit}>
            <div className="field">
              <input
                ref="email"
