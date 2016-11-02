@@ -23,8 +23,6 @@ export class Signup extends React.Component {
     event.preventDefault();
 
     const inputData = {
-      firstName: this.refs.firstName.value,
-      lastName: this.refs.lastName.value,
       email: this.refs.email.value,
       password: this.refs.password.value,
       passwordConfirmation: this.refs.passwordConfirmation.value,
@@ -36,6 +34,7 @@ export class Signup extends React.Component {
         password: inputData.password
       }, function(error) {
         if (error) {
+          console.log(error);
           return false;
         }
 
@@ -57,18 +56,17 @@ export class Signup extends React.Component {
     if (! inputData.password) {
       errors.password = 'Password required';
     }
-
-    if (inputData.passwordConfirmation !== inputData.password) {
-      errors.passwordConfirmation = 'Please confirm your password';
+    else if (inputData.password.length < 6) {
+      errors.password = 'Password must be at least 6 characters.';
     }
 
-    if (inputData.password.length < 6) {
-      errors.password = 'Password must be at least 6 characters.'
+    if (inputData.passwordConfirmation !== inputData.password) {
+      errors.passwordConfirmation = 'Passwords do not match';
     }
 
     this.setState({errors: errors});
 
-    return (errors.length === 0);
+    return (Object.keys(errors).length === 0);
 
   }
 
@@ -81,14 +79,6 @@ export class Signup extends React.Component {
            <div className="logo" />
          </header>
          <form ref="signup" id="sign_up_form" onSubmit={this._handleSubmit}>
-           <div className="field">
-             <input ref="firstName" id="firstName" type="text" placeholder="First name" required={true} />
-             {renderErrorsFor(errors, 'firstName')}
-           </div>
-           <div className="field">
-             <input ref="lastName" id="lastName" type="text" placeholder="Last name" required={true} />
-             {renderErrorsFor(errors, 'lastName')}
-           </div>
            <div className="field">
              <input ref="email" id="email" type="email" placeholder="Email" required={true} />
              {renderErrorsFor(errors, 'email')}

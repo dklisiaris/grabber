@@ -10,7 +10,7 @@ let component;
 const login = () => {
   const email = getInputValue(component.refs.email);
   const password = getInputValue(component.refs.password);
-console.log(email, password);
+
   Meteor.loginWithPassword(email, password, (error) => {
     if (error) {
       Bert.alert(error.reason, 'warning');

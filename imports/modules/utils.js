@@ -4,11 +4,11 @@ import { _ } from 'meteor/underscore';
 export function renderErrorsFor(errors, ref) {
   if (!errors) return false;
 
-  return _.map(errors, (error, i) => {
-    if (error[ref]) {
+  return _.map(errors, (error, key) => {
+    if (key == ref && error) {
       return (
-        <div key={i} className="error">
-          {error[ref]}
+        <div key={key} className="error">
+          {error}
         </div>
       );
     }
