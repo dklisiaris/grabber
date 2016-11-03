@@ -1,9 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-
 import { Link } from 'react-router';
-import { handleSignup } from '../../modules/signup';
 import { renderErrorsFor } from '../../modules/utils';
 
 export class Signup extends React.Component {
@@ -13,10 +11,6 @@ export class Signup extends React.Component {
       errors: {}
     };
     this._handleSubmit = this._handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    // handleSignup({ component: this });
   }
 
   _handleSubmit(event) {

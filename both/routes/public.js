@@ -33,7 +33,8 @@ publicRoutes.route('/signup', {
 
 publicRoutes.route('/', {
   name: 'home',
-  action: function(params, queryParams) {
-    BlazeLayout.render('onlyHeader', {yield: "appBody"});
+  action: function(){
+    Meteor.setTimeout(function(){ FlowRouter.redirect('/folders'); }, 10);
   }
+
 });

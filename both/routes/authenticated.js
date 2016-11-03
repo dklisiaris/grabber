@@ -36,6 +36,6 @@ authenticatedRoutes.route('/logout',{
 
 function checkLoggedIn(context, redirect){
     if (!Meteor.userId()) {
-      redirect('/login');
+      redirect('/signin');
   }
 }
