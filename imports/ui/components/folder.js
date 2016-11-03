@@ -3,7 +3,6 @@ import {Meteor} from 'meteor/meteor';
 
 const _handleClick = (id) => {
   const f_url = 'folders/' + id;
-  console.log(id);
   Meteor.setTimeout(() => { FlowRouter.go('folder', { _id: id }); }, 10);
 }
 

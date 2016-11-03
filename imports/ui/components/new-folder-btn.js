@@ -9,8 +9,8 @@ export class NewFolderBtn extends React.Component {
       isFormOpen: false
     };
 
-    this._handleAddNewClick    = this._handleAddNewClick.bind(this);
-    this._handleCancelClick     = this._handleCancelClick.bind(this);
+    this._handleAddNewClick  = this._handleAddNewClick.bind(this);
+    this._handleCancelClick  = this._handleCancelClick.bind(this);
     this._handleAddNewSubmit = this._handleAddNewSubmit.bind(this);
   }
 
