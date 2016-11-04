@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
+import { Meteor } from 'meteor/meteor';
 import { renderErrorsFor } from '../../modules/utils';
 
 export class Login extends React.Component {
@@ -25,8 +27,14 @@ export class Login extends React.Component {
           console.log(error);
           return false;
         }
-
-        Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
+        else {
+          const { location } = this.props;
+          if (location.state && location.state.nextPathname) {
+            browserHistory.push(location.state.nextPathname);
+          } else {
+            browserHistory.push('/');
+          }
+        }
       });
     }
   }
@@ -77,7 +85,7 @@ export class Login extends React.Component {
            </div>
            <button type="submit">Sign in</button>
          </form>
-         <a href="/register">Create new account</a>
+         <Link to="/signup">Create new account</Link>
        </main>
      </div>
     );

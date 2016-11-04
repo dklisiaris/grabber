@@ -101,7 +101,7 @@ export class BookmarksHeader extends React.Component {
       <span>
         <h3 className="clickable" onClick={this._handleFolderNameClick} >
           {this.props.folder.name}
-        </h3><NewBookmarkBtn/>
+        </h3><NewBookmarkBtn folderId={this.props.folder._id} />
       </span>
     );
     const headerContents = () => (

@@ -1,12 +1,12 @@
 import React from 'react';
-import {BookmarksList} from '/imports/ui/components/bookmarks-list';
-import {BookmarksHeader} from '/imports/ui/components/bookmarks-header';
+import BookmarksList from '/imports/ui/containers/bookmarks-list';
+import BookmarksHeader from '/imports/ui/containers/bookmarks-header';
 
-export const BookmarksView = ({bookmarksCollection, folder}) => (
+export const BookmarksView = ({params}) => (
   <div className="view-container boards index">
     <section>
-      <BookmarksHeader folder={folder}/>
-      <BookmarksList bookmarks={bookmarksCollection} folder={folder} />
+      <BookmarksHeader currentFolderId={params.id}/>
+      <BookmarksList currentFolderId={params.id} />
     </section>
   </div>
 );

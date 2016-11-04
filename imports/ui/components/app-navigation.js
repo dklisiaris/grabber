@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import Gravatar from 'react-gravatar';
 import { ReactPageClick } from 'react-page-click';
 
@@ -11,7 +12,7 @@ export class AppNavigation extends React.Component {
     };
     this._openFoldersDropdown  = this._openFoldersDropdown.bind(this);
     this._closeFoldersDropdown = this._closeFoldersDropdown.bind(this);
-
+    this._logout = this._logout.bind(this);
   }
 
   _closeFoldersDropdown() {
@@ -22,19 +23,32 @@ export class AppNavigation extends React.Component {
     this.setState({isFoldersDropdownOpen: true});
   }
 
-  // _getUsername() {
-  //   let username = this.props.user.username;
-  //   if(!username){
-  //     username = this.props.user.emails[0].address;
-  //     username = username.substring(0, username.indexOf('@'));
-  //   }
-  //   return username;
-  // }
+  _logout() {
+    Meteor.logout();
+    browserHistory.push('/login');
+  }
+
+  _getEmail() {
+    if(Meteor.user()){
+      return Meteor.user().emails[0].address;
+    }
+  }
+
+  _getUsername() {
+    if(Meteor.user()){
+      let username = Meteor.user().username;
+      const email = Meteor.user().emails[0].address;
+      if(!username){
+        username = email.substring(0, email.indexOf('@'));
+      }
+      return username;
+    }
+  }
 
   _renderFolderItem(folder) {
     const onClick = (e) => {
       e.preventDefault();
-      Meteor.setTimeout(() => { FlowRouter.go('folder', { _id: id }); }, 10);
+      browserHistory.push('/folders' + '/' + folder._id);
     };
 
     return (
@@ -65,7 +79,7 @@ export class AppNavigation extends React.Component {
           </ul>
           <ul className="options">
             <li>
-              <a href="/folders" onClick={this._closeFoldersDropdown}>View all boards</a>
+              <Link to="/folders" onClick={this._closeFoldersDropdown}>View all boards</Link>
             </li>
           </ul>
         </div>
@@ -77,7 +91,7 @@ export class AppNavigation extends React.Component {
   _renderCurrentUser() {
     return(
       <a className="current-user">
-        <Gravatar className="react-gravatar" email={this.props.email} default="retro" /> {this.props.username}
+        <Gravatar className="react-gravatar" email={this._getEmail()} default="retro" /> {this._getUsername()}
       </a>
     );
   }
@@ -102,7 +116,7 @@ export class AppNavigation extends React.Component {
               {this._renderCurrentUser()}
             </li>
             <li>
-              <a href="/logout"><i className="fa fa-sign-out"/> Sign out</a>
+              <a onClick={this._logout}><i className="fa fa-sign-out"/> Sign out</a>
             </li>
           </ul>
         </nav>

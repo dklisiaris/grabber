@@ -3,10 +3,7 @@ import {Bookmark} from '/imports/ui/components/bookmark';
 
 export class BookmarksList extends React.Component{
   componentDidMount() {
-    setInterval(
-      () => this._enableGrid(),
-      10
-    );
+    setInterval(() => this._enableGrid(), 10);
   }
 
   _enableGrid() {
@@ -26,7 +23,7 @@ export class BookmarksList extends React.Component{
               title={bookmark.title}
               url={bookmark.url}
               image={bookmark.image}
-              folderId={this.props.folder._id}
+              folderId={bookmark.folderId}
             />
             </div>
           ))}

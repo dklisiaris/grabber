@@ -31,7 +31,6 @@ alanning:roles
 fourseven:scss
 francocatena:compass
 
-kadira:flow-router
 arillo:flow-router-helpers
 kadira:blaze-layout
 lookback:tooltips

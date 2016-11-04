@@ -1,9 +1,9 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
+import {browserHistory} from 'react-router';
 
 const _handleClick = (id) => {
-  const f_url = 'folders/' + id;
-  Meteor.setTimeout(() => { FlowRouter.go('folder', { _id: id }); }, 10);
+  browserHistory.push('/folders/' + id);
 }
 
 export const Folder = ({id, name}) => (

@@ -32,9 +32,9 @@ export class NewBookmarkBtn extends React.Component {
     e.preventDefault();
 
     let url = this.refs.bookmarkUrl.value;
-    let currentFolder = FlowRouter.getParam('_id');
+    let currentFolderId = this.props.folderId;
 
-    Meteor.call("addBookmark", url, currentFolder, function(err, bookmarkId) {
+    Meteor.call("addBookmark", url, currentFolderId, function(err, bookmarkId) {
       Meteor.call("refreshBookmark", bookmarkId);
     });
     this.setState({isFormOpen: false});

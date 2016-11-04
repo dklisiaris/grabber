@@ -2,6 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 import { renderErrorsFor } from '../../modules/utils';
 
 export class Signup extends React.Component {
@@ -28,12 +29,21 @@ export class Signup extends React.Component {
         password: inputData.password
       }, function(error) {
         if (error) {
-          console.log(error);
-          return false;
+          Bert.alert(error.reason, 'danger');
+        } else {
+          Meteor.call("addFolder", 'Home', 'Description', true);
+          browserHistory.push('/');
+          Bert.alert('Welcome!', 'success');
         }
 
-        Meteor.call("addFolder", 'Home', 'Description', true);
-        Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
+
+        // Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
+        // const { location } = component.props;
+        // if (location.state && location.state.nextPathname) {
+        //   browserHistory.push(location.state.nextPathname);
+        // } else {
+        //   browserHistory.push('/');
+        // }
       });
     }
 
@@ -87,7 +97,7 @@ export class Signup extends React.Component {
            </div>
            <button type="submit">Sign Up</button>
          </form>
-         <a href="/signin">Have account? Log In</a>
+         <Link to="/login">Have account? Log In</Link>
        </main>
      </div>
     );
