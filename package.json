@@ -1,7 +1,7 @@
 {
   "name": "boomabu",
-  "version": "0.0.3",
-  "description": "Boomabu is a bookmark manager with social features.",
+  "version": "0.0.4",
+  "description": "Boomabu is a collaborative bookmark manager.",
   "main": "index.js",
   "dependencies": {
     "bcrypt": "^0.8.7",

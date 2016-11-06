@@ -29,13 +29,13 @@ export class AppNavigation extends React.Component {
   }
 
   _getEmail() {
-    if(Meteor.user()){
+    if(this.props.hasUser){
       return Meteor.user().emails[0].address;
     }
   }
 
   _getUsername() {
-    if(Meteor.user()){
+    if(this.props.hasUser){
       let username = Meteor.user().username;
       const email = Meteor.user().emails[0].address;
       if(!username){
@@ -97,30 +97,35 @@ export class AppNavigation extends React.Component {
   }
 
   render() {
-    return (
-      <header className="main-header">
-        <nav id="boards_nav">
-          <ul>
-            <li>
-              <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/> Folders</a>
-              {this._renderFolders()}
-            </li>
-          </ul>
-        </nav>
-        <Link to='/'>
-          <span className='logo'/>
-        </Link>
-        <nav className="right">
-          <ul>
-            <li>
-              {this._renderCurrentUser()}
-            </li>
-            <li>
-              <a onClick={this._logout}><i className="fa fa-sign-out"/> Sign out</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-    );
+    if(this.props.hasUser){
+      return (
+        <header className="main-header">
+          <nav id="boards_nav">
+            <ul>
+              <li>
+                <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/> Folders</a>
+                {this._renderFolders()}
+              </li>
+            </ul>
+          </nav>
+          <Link to='/'>
+            <span className='logo'/>
+          </Link>
+          <nav className="right">
+            <ul>
+              <li>
+                {this._renderCurrentUser()}
+              </li>
+              <li>
+                <a onClick={this._logout}><i className="fa fa-sign-out"/> Sign out</a>
+              </li>
+            </ul>
+          </nav>
+        </header>
+      );
+    }
+    else{
+      return false;
+    }
   }
 }

@@ -6,7 +6,7 @@ const composer = (props, onData) => {
   const subscription = Meteor.subscribe( 'privateFolders' );
   if ( subscription.ready() ) {
     const folders = Folders.find().fetch();
-    onData(null, {folders});
+    onData(null, {folders: folders, hasUser: Meteor.user()});
   }
 };
 

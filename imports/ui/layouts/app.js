@@ -8,18 +8,10 @@ export class App extends React.Component {
     children: React.PropTypes.element.isRequired,
   }
 
-  _renderNavigation(){
-    if(Meteor.userId()){
-      return(
-        <AppNavigation />
-      );
-    }
-  }
-
   render(){
     return(
       <div id="app">
-        {this._renderNavigation()}
+        <AppNavigation />
         <div className="main-container">
           {this.props.children}
         </div>

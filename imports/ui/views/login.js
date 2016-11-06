@@ -16,6 +16,7 @@ export class Login extends React.Component {
   _handleSubmit(event) {
     event.preventDefault();
 
+    const { location } = this.props;
     const inputData = {
       email: this.refs.email.value,
       password: this.refs.password.value,
@@ -24,11 +25,9 @@ export class Login extends React.Component {
     if(this._validateInputData(inputData)){
       Meteor.loginWithPassword(inputData.email, inputData.password, function(error) {
         if (error) {
-          console.log(error);
-          return false;
+          Bert.alert(error.reason, 'warning');
         }
         else {
-          const { location } = this.props;
           if (location.state && location.state.nextPathname) {
             browserHistory.push(location.state.nextPathname);
           } else {
