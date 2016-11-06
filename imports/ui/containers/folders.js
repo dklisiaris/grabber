@@ -1,6 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
-import {FoldersList} from '/imports/ui/components/folders-list';
 import { Meteor } from 'meteor/meteor';
+import {FoldersList} from '/imports/ui/components/folders-list';
+import {Loading} from '/imports/ui/components/loading';
 
 const composer = ( props, onData ) => {
   const subscription = Meteor.subscribe( 'privateFolders' );
@@ -10,4 +11,4 @@ const composer = ( props, onData ) => {
   }
 };
 
-export default composeWithTracker( composer )( FoldersList );
+export default composeWithTracker( composer, Loading )( FoldersList );

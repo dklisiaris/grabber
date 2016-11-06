@@ -1,5 +1,6 @@
 import { composeWithTracker } from 'react-komposer';
 import {BookmarksList} from '/imports/ui/components/bookmarks-list';
+import {Loading} from '/imports/ui/components/loading';
 import { Meteor } from 'meteor/meteor';
 
 const composer = ( props, onData ) => {
@@ -10,4 +11,4 @@ const composer = ( props, onData ) => {
   }
 };
 
-export default composeWithTracker( composer )( BookmarksList );
+export default composeWithTracker( composer, Loading )( BookmarksList );

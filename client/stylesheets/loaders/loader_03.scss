@@ -28,6 +28,15 @@ $pulse-duration: 750ms;
     border: .25rem solid $off-white;
     border-top-color: $white;
     animation: spin $spin-duration infinite linear;
+
+    position: relative;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+
   &--double {
     border-style: double;
     border-width: .5rem;

@@ -1,11 +1,3 @@
-Meteor.publish('allFolders', function() {
-  return Folders.find();
-});
-
-Meteor.publish('allBookmarks', function() {
-  return Bookmarks.find();
-});
-
 
 Meteor.publish('defaultFolders', function() {
   return Folders.find({isDefault: true, private: false});
