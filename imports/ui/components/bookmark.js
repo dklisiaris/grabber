@@ -1,7 +1,12 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
-import {removeBookmark, refreshBookmark, updateBookmark} from '../../api/bookmarks/methods';
+import {
+  removeBookmark,
+  refreshBookmark,
+  updateBookmark,
+  incBookmarkViews
+} from '../../api/bookmarks/methods';
 
 export class Bookmark extends React.Component {
   constructor(props) {
@@ -17,6 +22,7 @@ export class Bookmark extends React.Component {
     this._handleBookmarkEdit    = this._handleBookmarkEdit.bind(this);
     this._handleCloseModal      = this._handleCloseModal.bind(this);
     this._handleBookmarkUpdate  = this._handleBookmarkUpdate.bind(this);
+    this._handeBookmarkClick    = this._handeBookmarkClick.bind(this);
   }
 
   componentDidMount() {
@@ -43,7 +49,9 @@ export class Bookmark extends React.Component {
     const bookmarkActions = (
       <ul className="bookmark-actions">
         <li>
-          <a href={this.props.url} target="_blank"><i className="fa fa-eye"></i> View</a>
+          <a onClick={this._handeBookmarkClick} href={this.props.url} target="_blank">
+            <i className="fa fa-eye"></i> View
+          </a>
         </li>
         <li>
           <a href="#!" onClick={this._handleBookmarkRefresh}><i className="fa fa-refresh"></i> Refresh</a>
@@ -61,7 +69,7 @@ export class Bookmark extends React.Component {
 
   _renderBookmarkThumb() {
     const bookmarkThumb = (
-      <a href={this.props.url} target="_blank" className="clickable-url">
+      <a onClick={this._handeBookmarkClick} href={this.props.url} target="_blank" className="clickable-url">
         <img src={this._thumbnail()} alt="thumbnail" width="100%"/>
       </a>
     );
@@ -170,6 +178,9 @@ export class Bookmark extends React.Component {
     this.setState({isModalOpen: false});
   }
 
+  _handeBookmarkClick(e) {
+    incBookmarkViews.call({bookmarkId: this.props.id}, null);
+  }
 
   render() {
     return (

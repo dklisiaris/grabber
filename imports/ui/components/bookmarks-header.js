@@ -4,7 +4,12 @@ import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
 import Bookmarks from '../../api/bookmarks/bookmarks';
 import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
-import {removeFolder, renameFolder, setFolderPrivacy} from '../../api/folders/methods';
+import {
+  removeFolder,
+  renameFolder,
+  setFolderPrivacy,
+  incFolderViews
+} from '../../api/folders/methods';
 
 export class BookmarksHeader extends React.Component {
   constructor(props) {
@@ -18,6 +23,8 @@ export class BookmarksHeader extends React.Component {
     this._handleFolderNameFormSubmit = this._handleFolderNameFormSubmit.bind(this);
     this._handlePrivacyBtnClick      = this._handlePrivacyBtnClick.bind(this);
     this._handleDeleteBtnClick       = this._handleDeleteBtnClick.bind(this);
+
+    incFolderViews.call({folderId: this.props.folder._id}, null);
   }
 
   _handleFolderNameClick(e) {
