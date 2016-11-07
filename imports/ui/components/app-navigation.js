@@ -48,6 +48,7 @@ export class AppNavigation extends React.Component {
   _renderFolderItem(folder) {
     const onClick = (e) => {
       e.preventDefault();
+      this._closeFoldersDropdown();
       browserHistory.push('/folders' + '/' + folder._id);
     };
 
