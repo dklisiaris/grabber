@@ -1,7 +1,12 @@
 import Bookmarks from './bookmarks';
 
-Meteor.methods({
-  addBookmark: function (url, folderId) {
+export const addBookmark = new ValidatedMethod({
+  name: 'bookmarks.add',
+  validate: new SimpleSchema({
+    url: { type: String },
+    folderId: { type: String },
+  }).validator(),
+  run({ url, folderId }) {
     return Bookmarks.insert({
       title: url,
       url: url,
@@ -10,20 +15,60 @@ Meteor.methods({
       createdAt: new Date()
     });
   },
+});
 
-  removeBookmark: function (bookmarkId) {
+export const removeBookmark = new ValidatedMethod({
+  name: 'bookmarks.remove',
+  validate: new SimpleSchema({
+    bookmarkId: { type: String },
+  }).validator(),
+  run({ bookmarkId }) {
     Bookmarks.remove(bookmarkId);
   },
+});
 
-  updateBookmark: function (bookmarkId, data) {
+export const removeBookmarksInFolder = new ValidatedMethod({
+  name: 'bookmarks.removeInFolder',
+  validate: new SimpleSchema({
+    folderId: { type: String },
+  }).validator(),
+  run({ folderId }) {
+    Bookmarks.remove({folderId});
+  },
+});
+
+export const updateBookmark = new ValidatedMethod({
+  name: 'bookmarks.update',
+  validate: new SimpleSchema({
+    bookmarkId: { type: String },
+    data: {type: Object},
+    "data.title": { type: String },
+    "data.url": { type: String },
+    "data.image": { type: String, optional: true },
+    "data.folderId": { type: String },
+
+  }).validator(),
+  run({ bookmarkId, data }) {
     return Bookmarks.update(bookmarkId, data);
   },
+});
 
-  incBookmarkViews: function (bookmarkId) {
+export const incBookmarkViews = new ValidatedMethod({
+  name: 'bookmarks.incViews',
+  validate: new SimpleSchema({
+    bookmarkId: { type: String },
+  }).validator(),
+  run({ bookmarkId }) {
     Bookmarks.update(bookmarkId, {$inc: {views: 1}});
   },
+});
 
-  refreshBookmark: function (bookmarkId) {
+export const refreshBookmark = new ValidatedMethod({
+  name: 'bookmarks.refresh',
+  validate: new SimpleSchema({
+    bookmarkId: { type: String },
+  }).validator(),
+  run({ bookmarkId }) {
     bookmark = Bookmarks.findOne(bookmarkId);
     this.unblock();
 
@@ -51,6 +96,5 @@ Meteor.methods({
         console.log(response);
       }
     });
-  }
-
+  },
 });

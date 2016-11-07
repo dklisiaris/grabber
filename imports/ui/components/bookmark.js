@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
-import '../../api/bookmarks/methods';
+import {removeBookmark, refreshBookmark, updateBookmark} from '../../api/bookmarks/methods';
 
 export class Bookmark extends React.Component {
   constructor(props) {
@@ -123,16 +123,23 @@ export class Bookmark extends React.Component {
   _handleRemoveAction(e) {
     e.preventDefault();
 
-    Meteor.call("removeBookmark", this.props.id);
+    removeBookmark.call({bookmarkId: this.props.id}, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      } else {
+        let wall = new freewall('#grid');
+        wall.fitWidth();
+      }
+    });
 
-    let wall = new freewall('#grid');
-    wall.fitWidth();
+
   }
 
   _handleBookmarkRefresh(e) {
     e.preventDefault();
 
-    Meteor.call("refreshBookmark", this.props.id);
+    // Meteor.call("refreshBookmark", this.props.id);
+    refreshBookmark.call({bookmarkId: this.props.id}, null);
 
     this.setState({isShowingActions: false});
   }
@@ -155,7 +162,10 @@ export class Bookmark extends React.Component {
       image: this.refs.bookmarkImage.value,
       folderId: this.props.folderId
     };
-    Meteor.call("updateBookmark", this.props.id, data);
+    // Meteor.call("updateBookmark", this.props.id, data);
+    updateBookmark.call({bookmarkId: this.props.id, data: data}, (error) => {
+      if(error) Bert.alert(error.reason, 'danger');
+    });
 
     this.setState({isModalOpen: false});
   }

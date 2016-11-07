@@ -1,7 +1,10 @@
 import React from 'react';
 import {NewBookmarkBtn} from '/imports/ui/components/new-bookmark-btn';
 import {ReactPageClick} from 'react-page-click';
-import '../../api/folders/methods';
+import { browserHistory } from 'react-router';
+import Bookmarks from '../../api/bookmarks/bookmarks';
+import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
+import {removeFolder, renameFolder, setFolderPrivacy} from '../../api/folders/methods';
 
 export class BookmarksHeader extends React.Component {
   constructor(props) {
@@ -34,7 +37,10 @@ export class BookmarksHeader extends React.Component {
   _handleFolderNameFormSubmit(e) {
     e.preventDefault();
 
-    Meteor.call("renameFolder", this.props.folder._id, this.refs.folderName.value);
+    renameFolder.call({
+      folderId: this.props.folder._id,
+      newName: this.refs.folderName.value
+    }, null);
 
     this.setState({
       isEditingFolderName: false
@@ -43,7 +49,11 @@ export class BookmarksHeader extends React.Component {
 
   _handlePrivacyBtnClick(e) {
     e.preventDefault();
-    Meteor.call("setPrivacy", this.props.folder._id, !this.props.folder.private);
+
+    setFolderPrivacy.call({
+      folderId: this.props.folder._id,
+      isPrivate: !this.props.folder.private
+    }, null);
   }
 
   _handleDeleteBtnClick(e) {
@@ -51,14 +61,20 @@ export class BookmarksHeader extends React.Component {
 
     const message = "Are you sure you want to delete the folder " + this.props.folder.name + "?";
     if (confirm(message)) {
-      // we must remove each item individually from the client
-      Bookmarks.find({folderId: this.props.folder._id}).forEach(function(bookmark) {
-        Meteor.call("removeBookmark", bookmark._id);
+      // Remove all bookmarks in folder, then remove folder, then go to folders
+      removeBookmarksInFolder.call({folderId: this.props.folder._id}, (error) => {
+        if (error) {
+          Bert.alert(error.reason, 'danger');
+        } else {
+          removeFolder.call({folderId: this.props.folder._id}, (error) => {
+            if (error) {
+              Bert.alert(error.reason, 'danger');
+            } else {
+              browserHistory.push('/folders');
+            }
+          });
+        }
       });
-      Meteor.call("removeFolder", this.props.folder._id);
-
-
-      Meteor.setTimeout(function(){ FlowRouter.go('folders'); }, 10);
     }
   }
 

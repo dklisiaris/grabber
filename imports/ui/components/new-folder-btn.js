@@ -1,7 +1,8 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
-import '../../api/folders/methods';
+import { browserHistory } from 'react-router';
+import {addFolder} from '../../api/folders/methods';
 
 export class NewFolderBtn extends React.Component {
   constructor(props) {
@@ -34,11 +35,17 @@ export class NewFolderBtn extends React.Component {
     let folderTitle = this.refs.title.value;
 
     if(Meteor.userId()){
-      Meteor.call("addFolder", folderTitle, null, true, function(err, folderId) {
-        // Meteor.setTimeout(function(){ FlowRouter.go('/folders/' + folderId); }, 10);
+      addFolder.call({
+        name: folderTitle,
+        description: null,
+        isPrivate: true
+      }, (error) => {
+        if(error){
+          Bert.alert(error.reason, 'danger');
+        }
       });
     } else {
-      Meteor.setTimeout(function(){ FlowRouter.go('/signin'); }, 10);
+      browserHistory.push('/login');
     }
     this.setState({isFormOpen: false});
   }

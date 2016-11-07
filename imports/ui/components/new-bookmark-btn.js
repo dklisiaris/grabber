@@ -1,7 +1,7 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
-import '../../api/bookmarks/methods';
+import {addBookmark, refreshBookmark} from '../../api/bookmarks/methods';
 
 export class NewBookmarkBtn extends React.Component {
   constructor(props) {
@@ -35,9 +35,18 @@ export class NewBookmarkBtn extends React.Component {
     let url = this.refs.bookmarkUrl.value;
     let currentFolderId = this.props.folderId;
 
-    Meteor.call("addBookmark", url, currentFolderId, function(err, bookmarkId) {
-      Meteor.call("refreshBookmark", bookmarkId);
+    addBookmark.call({url: url, folderId: currentFolderId}, (error, bookmarkId) => {
+      if(error) {
+        Bert.alert(error.reason, 'danger');
+      }
+      else {
+        refreshBookmark.call({bookmarkId}, (error) => {
+          if(error) Bert.alert(error.reason, 'danger');
+        });
+      }
     });
+
+
     this.setState({isFormOpen: false});
   }
 
