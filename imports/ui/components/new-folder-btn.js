@@ -1,6 +1,7 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
+import '../../api/folders/methods';
 
 export class NewFolderBtn extends React.Component {
   constructor(props) {

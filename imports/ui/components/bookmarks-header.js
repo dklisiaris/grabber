@@ -1,6 +1,7 @@
 import React from 'react';
 import {NewBookmarkBtn} from '/imports/ui/components/new-bookmark-btn';
 import {ReactPageClick} from 'react-page-click';
+import '../../api/folders/methods';
 
 export class BookmarksHeader extends React.Component {
   constructor(props) {

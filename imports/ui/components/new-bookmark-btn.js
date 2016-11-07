@@ -1,6 +1,7 @@
 import React from 'react';
 import {Meteor} from 'meteor/meteor';
 import {ReactPageClick} from 'react-page-click';
+import '../../api/bookmarks/methods';
 
 export class NewBookmarkBtn extends React.Component {
   constructor(props) {
