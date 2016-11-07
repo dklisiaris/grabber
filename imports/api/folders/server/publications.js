@@ -15,9 +15,7 @@ Meteor.publish('publicFolders', () => {
 });
 
 Meteor.publish('privateFolders', (userId) => {
-  if (userId) {
-    return Folders.find({isDefault: false, createdBy: userId});
-  }
+  return Folders.find({isDefault: false, createdBy: userId});
 });
 
 Meteor.publish('currentFolder', (folderId) => {
