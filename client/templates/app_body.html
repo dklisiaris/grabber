@@ -1,9 +1,0 @@
-<template name="appBody">
-  {{#if Template.subscriptionsReady}}
-    <div class="main-container">
-      {{> React component=BookmarksView bookmarksCollection=bookmarks folder=currentFolder }}
-    </div>
-  {{else}}
-    {{> loader}}
-  {{/if}}
-</template>

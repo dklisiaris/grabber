@@ -1,6 +1,6 @@
 {
   "name": "boomabu",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Boomabu is a collaborative bookmark manager.",
   "main": "index.js",
   "dependencies": {
@@ -11,8 +11,6 @@
     "jquery-validation": "^1.15.1",
     "meteor-node-stubs": "^0.2.3",
     "normalize-scss": "^5.0.4",
-    "qtip": "0.0.4",
-    "qtip2": "^3.0.2",
     "react": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.2.1",
     "react-dom": "^15.3.0",
@@ -20,9 +18,7 @@
     "react-komposer": "^1.13.1",
     "react-mounter": "^1.2.0",
     "react-page-click": "^3.0.0",
-    "react-router": "^2.6.1",
-    "sweetalert": "^1.1.3",
-    "tooltipster": "^1.0.9"
+    "react-router": "^2.6.1"
   },
   "devDependencies": {},
   "scripts": {
