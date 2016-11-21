@@ -12,6 +12,7 @@
     "meteor-node-stubs": "^0.2.3",
     "normalize-scss": "^5.0.4",
     "react": "^15.3.2",
+    "react-absolute-grid": "^2.0.1",
     "react-addons-pure-render-mixin": "^15.2.1",
     "react-dom": "^15.3.0",
     "react-gravatar": "^2.5.2",

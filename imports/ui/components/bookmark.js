@@ -134,13 +134,8 @@ export class Bookmark extends React.Component {
     removeBookmark.call({bookmarkId: this.props.id}, (error) => {
       if (error) {
         Bert.alert(error.reason, 'danger');
-      } else {
-        let wall = new freewall('#grid');
-        wall.fitWidth();
       }
     });
-
-
   }
 
   _handleBookmarkRefresh(e) {

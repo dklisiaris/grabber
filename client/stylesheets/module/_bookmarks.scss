@@ -3,13 +3,13 @@
   @include transition;
   @include flex(0 0 25%);
   cursor: pointer;
-  width: 188px;
-  height: 290px;
+  width: 172px;
+  height: 260px;
 
   .inner {
     background: rgba($light-gray, .9);
     border-radius: $base-border-radius;
-    margin: 0 $margin/2 $margin $margin/2;
+    // margin: 0 $margin/2 $margin $margin/2;
     line-height: 1em;
     overflow: hidden;
     padding: $base-spacing/2;
