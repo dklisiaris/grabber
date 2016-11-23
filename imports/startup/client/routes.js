@@ -6,6 +6,7 @@ import { Meteor } from 'meteor/meteor';
 import {App} from '/imports/ui/layouts/app';
 import {Login} from '/imports/ui/views/login';
 import {Signup} from '/imports/ui/views/signup';
+import {ChangePassword} from '/imports/ui/views/change-password';
 import {FoldersView} from '/imports/ui/views/folders';
 import {BookmarksView} from '/imports/ui/views/bookmarks';
 import {NotFound} from '/imports/ui/views/not-found';
@@ -26,6 +27,7 @@ Meteor.startup( () => {
       <Route path="/" component={ App }>
         <Route name="login" path="/login" component={ Login } />
         <Route name="signup" path="/signup" component={ Signup } />
+        <Route name="change-password" path="/password/change" component={ ChangePassword } />
         <Route name="folders" path="/folders" component={ FoldersView } onEnter={ authenticate } />
         <Route name="folder" path="/folders/:id" component={ BookmarksView } onEnter={ authenticate } />
         <Route name="not-found" path="*" component={ NotFound } />

@@ -8,10 +8,13 @@ export class AppNavigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isFoldersDropdownOpen: false
+      isFoldersDropdownOpen: false,
+      isUserOptionsOpen: false
     };
     this._openFoldersDropdown  = this._openFoldersDropdown.bind(this);
     this._closeFoldersDropdown = this._closeFoldersDropdown.bind(this);
+    this._openUserOptions      = this._openUserOptions.bind(this);
+    this._closeUserOptions     = this._closeUserOptions.bind(this);
     this._logout = this._logout.bind(this);
   }
 
@@ -21,6 +24,14 @@ export class AppNavigation extends React.Component {
 
   _openFoldersDropdown() {
     this.setState({isFoldersDropdownOpen: true});
+  }
+
+  _closeUserOptions() {
+    this.setState({isUserOptionsOpen: false});
+  }
+
+  _openUserOptions() {
+    this.setState({isUserOptionsOpen: true});
   }
 
   _logout() {
@@ -91,9 +102,25 @@ export class AppNavigation extends React.Component {
 
   _renderCurrentUser() {
     return(
-      <a className="current-user">
+      <a className="current-user" onClick={this._openUserOptions}>
         <Gravatar className="react-gravatar" email={this._getEmail()} default="retro" /> {this._getUsername()}
       </a>
+    );
+  }
+
+  _renderUserOptions() {
+    if (!this.state.isUserOptionsOpen) return false;
+    return (
+      <ReactPageClick notify={this._closeUserOptions}>
+        <div className="dropdown">
+          <header className="title"><i className="fa fa-cog"/> Settings</header>
+          <ul>
+            <li>
+              <Link onClick={this._closeUserOptions} to="/password/change">Change Password</Link>
+            </li>
+          </ul>
+        </div>
+      </ReactPageClick>
     );
   }
 
@@ -112,10 +139,11 @@ export class AppNavigation extends React.Component {
           <Link to='/'>
             <span className='logo'/>
           </Link>
-          <nav className="right">
+          <nav className="right nav-buttons">
             <ul>
               <li>
                 {this._renderCurrentUser()}
+                {this._renderUserOptions()}
               </li>
               <li>
                 <a onClick={this._logout}><i className="fa fa-sign-out"/> Sign out</a>
