@@ -1,7 +1,8 @@
 import React from 'react';
-import {NewBookmarkBtn} from '/imports/ui/components/new-bookmark-btn';
 import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
+import {NewBookmarkBtn} from './new-bookmark-btn';
+import {FolderMembers} from './folder-members';
 import Bookmarks from '../../api/bookmarks/bookmarks';
 import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
 import {
@@ -131,13 +132,14 @@ export class BookmarksHeader extends React.Component {
     const headerContents = () => (
       <span>
       { this.state.isEditingFolderName ? this._renderNewFolderForm() : headerTitle() }
-      { this._renderPrivacyBtn() }
-      { this._renderDeleteBtn() }
+      { !this.state.isEditingFolderName ? this._renderPrivacyBtn() : '' }
+      { !this.state.isEditingFolderName ? this._renderDeleteBtn() : '' }
       </span>
     );
     return (
       <header className="view-header">
         { this.props.folder ? headerContents() : '' }
+        <FolderMembers folderId={this.props.folder._id} />
       </header>
     );
   }
