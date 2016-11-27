@@ -20,13 +20,7 @@ export class Bookmark extends React.Component {
     this._handleRemoveAction    = this._handleRemoveAction.bind(this);
     this._handleBookmarkRefresh = this._handleBookmarkRefresh.bind(this);
     this._handleBookmarkEdit    = this._handleBookmarkEdit.bind(this);
-    this._handleCloseModal      = this._handleCloseModal.bind(this);
-    this._handleBookmarkUpdate  = this._handleBookmarkUpdate.bind(this);
     this._handeBookmarkClick    = this._handeBookmarkClick.bind(this);
-  }
-
-  componentDidMount() {
-
   }
 
   /**
@@ -85,38 +79,6 @@ export class Bookmark extends React.Component {
     }
   }
 
-  _renderModal() {
-    if(this.state.isModalOpen){
-      return(
-        <div className="md-overlay">
-          <div className="md-modal">
-            <ReactPageClick notify={this._handleCloseModal}>
-              <div className="md-content card-modal">
-                <a className="close" href="#" onClick={this._handleCloseModal}>
-                  <i className="fa fa-close"/>
-                </a>
-                <div className="info">
-                  <form onSubmit={this._handleBookmarkUpdate}>
-                    <h4>Edit bookmark</h4>
-                    <img src={this._thumbnail()} alt="thumbnail" width="128px"/>
-                    <h5>Title</h5>
-                    <input ref="bookmarkTitle" type="text" required={true} defaultValue={this.props.title}/>
-                    <h5>Url</h5>
-                    <input ref="bookmarkUrl" type="text" required={true} defaultValue={this.props.url}/>
-                    <h5>Image</h5>
-                    <input ref="bookmarkImage" type="text" defaultValue={this.props.image}/>
-                    <button type="submit">Update bookmark</button> or <a onClick={this._handleCloseModal} href="#">cancel</a>
-                  </form>
-                </div>
-              </div>
-            </ReactPageClick>
-          </div>
-        </div>
-      );
-    }
-  }
-
-
   /**
   * Handlers
   */
@@ -149,28 +111,7 @@ export class Bookmark extends React.Component {
 
   _handleBookmarkEdit(e) {
     e.preventDefault();
-    this.setState({isModalOpen: true});
-  }
-
-  _handleCloseModal(e) {
-    e.preventDefault();
-    this.setState({isModalOpen: false});
-  }
-
-  _handleBookmarkUpdate(e) {
-    e.preventDefault();
-    let data = {
-      title: this.refs.bookmarkTitle.value,
-      url: this.refs.bookmarkUrl.value,
-      image: this.refs.bookmarkImage.value,
-      folderId: this.props.folderId
-    };
-    // Meteor.call("updateBookmark", this.props.id, data);
-    updateBookmark.call({bookmarkId: this.props.id, data: data}, (error) => {
-      if(error) Bert.alert(error.reason, 'danger');
-    });
-
-    this.setState({isModalOpen: false});
+    this.props.editBookmarkHandler(this.props.id);
   }
 
   _handeBookmarkClick(e) {
@@ -194,7 +135,6 @@ export class Bookmark extends React.Component {
             </span>
           </div>
         </div>
-        {this._renderModal()}
       </div>
     );
   }
@@ -205,5 +145,6 @@ Bookmark.propTypes = {
   title:    React.PropTypes.string,
   url:      React.PropTypes.string,
   image:    React.PropTypes.string,
-  folderId: React.PropTypes.string
+  folderId: React.PropTypes.string,
+  editBookmarkHandler: React.PropTypes.func
 };
