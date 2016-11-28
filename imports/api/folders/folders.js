@@ -38,6 +38,10 @@ FoldersSchema = new SimpleSchema({
     type: String,
     label: "Creator of Folder"
   },
+  "invitedMembers": {
+    type: [String],
+    optional: true
+  },
   "createdAt": {
     type: Date,
     label: "Date of creation",

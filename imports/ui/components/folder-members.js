@@ -1,7 +1,8 @@
 import React from 'react';
-import {ReactPageClick} from 'react-page-click';
+import { ReactPageClick } from 'react-page-click';
 import { browserHistory } from 'react-router';
 import Gravatar from 'react-gravatar';
+import { addMemberToFolder } from '../../api/folders/methods';
 
 export class FolderMembers extends React.Component {
   constructor(props) {
@@ -35,10 +36,15 @@ export class FolderMembers extends React.Component {
     let email = this.refs.memberEmail.value;
     let currentFolderId = this.props.folderId;
 
-    console.log(email);
-    console.log(currentFolderId);
-
     this.setState({isFormOpen: false});
+
+    addMemberToFolder.call({ folderId: currentFolderId, memberEmail: email }, (error) => {
+      if (error) {
+        Bert.alert(error.reason, 'danger');
+      } else {
+        Bert.alert('User ' + email + ' has been invited to current folder.', 'success');
+      }
+    });
   }
 
   _renderUsers(){

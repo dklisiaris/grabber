@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Link } from 'react-router';
 import { browserHistory } from 'react-router';
 import { renderErrorsFor } from '../../modules/utils';
+import {addFolder} from '../../api/folders/methods';
 
 export class Signup extends React.Component {
   constructor(props) {
@@ -31,7 +32,7 @@ export class Signup extends React.Component {
         if (error) {
           Bert.alert(error.reason, 'danger');
         } else {
-          Meteor.call("addFolder", 'Home', 'Description', true);
+          addFolder.call({ name: 'Home', description: null, isPrivate: true }, null);
           browserHistory.push('/');
           Bert.alert('Welcome!', 'success');
         }

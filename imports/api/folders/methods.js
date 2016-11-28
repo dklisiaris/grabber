@@ -1,5 +1,6 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { Accounts } from 'meteor/accounts-base';
 import Folders from './folders';
 
 export const addFolder = new ValidatedMethod({
@@ -16,6 +17,7 @@ export const addFolder = new ValidatedMethod({
       private: isPrivate,
       views: 0,
       createdBy: Meteor.userId(),
+      invitedMembers: [],
       createdAt: new Date()
     });
   },
@@ -60,6 +62,20 @@ export const incFolderViews = new ValidatedMethod({
   }).validator(),
   run({ folderId }) {
     Folders.update(folderId, {$inc: {views: 1}});
+  },
+});
+
+export const addMemberToFolder = new ValidatedMethod({
+  name: 'folder.addMember',
+  validate: new SimpleSchema({
+    folderId: { type: String },
+    memberEmail: {type: String},
+  }).validator(),
+  run({ folderId, memberEmail }) {
+    const member = Accounts.findUserByEmail(memberEmail);
+    if(member._id){
+      Folders.update(folderId, {$push: {invitedMembers: member._id}});
+    }
   },
 });
 
