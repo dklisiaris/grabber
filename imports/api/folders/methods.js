@@ -1,6 +1,6 @@
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from 'meteor/meteor';
 import Folders from './folders';
 
 export const addFolder = new ValidatedMethod({
@@ -72,10 +72,14 @@ export const addMemberToFolder = new ValidatedMethod({
     memberEmail: {type: String},
   }).validator(),
   run({ folderId, memberEmail }) {
-    const member = Accounts.findUserByEmail(memberEmail);
-    if(member._id){
+    const member = Meteor.users.findOne({ "emails.address" : memberEmail });
+    if(member){
       Folders.update(folderId, {$push: {invitedMembers: member._id}});
     }
+    else {
+      throw 'Error: User not found.';
+    }
+
   },
 });
 

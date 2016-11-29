@@ -34,21 +34,17 @@ export class FolderMembers extends React.Component {
     e.preventDefault();
 
     let email = this.refs.memberEmail.value;
-    let currentFolderId = this.props.folderId;
+    let currentFolderId = this.props.folder._id;
 
     this.setState({isFormOpen: false});
 
     addMemberToFolder.call({ folderId: currentFolderId, memberEmail: email }, (error) => {
       if (error) {
-        Bert.alert(error.reason, 'danger');
+        Bert.alert(error, 'danger');
       } else {
         Bert.alert('User ' + email + ' has been invited to current folder.', 'success');
       }
     });
-  }
-
-  _renderUsers(){
-
   }
 
   _renderAddBtn() {
@@ -77,24 +73,31 @@ export class FolderMembers extends React.Component {
     );
   }
 
+  _renderMemberAvatar(member){
+    return (
+      <li key={member._id}>
+        <Gravatar className="react-gravatar" email={member.emails[0].address} title={member.emails[0].address} />
+      </li>
+    );
+  }
+
+  _renderMembers() {
+    return this.props.members.map((member) => {
+      if(_.contains(this.props.folder.invitedMembers, member._id)){
+        return this._renderMemberAvatar(member)
+      }
+    });
+  }
+
   render(){
+    console.log(this.props.folder.invitedMembers);
     return(
       <ul className="board-users">
         <li>
         {this.state.isFormOpen ? this._renderForm() : this._renderAddBtn()}
         </li>
-        <li >
-          <Gravatar className="react-gravatar" email="dklisiaris@hotmail.com"/>
-        </li>
-        <li >
-          <Gravatar className="react-gravatar" email="dklisiaris@gmail.com"/>
-        </li>
-        <li >
-          <Gravatar className="react-gravatar" email="dklisiaris@hotmail.com"/>
-        </li>
-        <li >
-          <Gravatar className="react-gravatar" email="dklisiaris@gmail.com"/>
-        </li>
+        {this._renderMemberAvatar(Meteor.user())}
+        {this._renderMembers()}
       </ul>
     );
   }

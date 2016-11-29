@@ -2,7 +2,7 @@ import React from 'react';
 import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
 import {NewBookmarkBtn} from './new-bookmark-btn';
-import {FolderMembers} from './folder-members';
+import FolderMembers from '../containers/folder-members';
 import Bookmarks from '../../api/bookmarks/bookmarks';
 import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
 import {
@@ -139,7 +139,7 @@ export class BookmarksHeader extends React.Component {
     return (
       <header className="view-header">
         { this.props.folder ? headerContents() : '' }
-        <FolderMembers folderId={this.props.folder._id} />
+        <FolderMembers folder={this.props.folder} />
       </header>
     );
   }

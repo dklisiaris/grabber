@@ -23,3 +23,12 @@ Meteor.publish('currentFolder', (folderId) => {
 
   return Folders.find(folderId);
 });
+
+Meteor.publish('allUsers', () => {
+  return Meteor.users.find();
+});
+
+Meteor.publish('invitedUsers', (folderId) => {
+  const invitedUsersIds = Folders.find(folderId).invitedUsers;
+  return Meteor.users.find("_id": { "$in": invitedUsersIds });
+});
