@@ -2,6 +2,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Meteor } from 'meteor/meteor';
 import Folders from './folders';
+import { addInvitedFolderToUser } from '../users/methods';
 
 export const addFolder = new ValidatedMethod({
   name: 'folders.add',
@@ -75,6 +76,7 @@ export const addMemberToFolder = new ValidatedMethod({
     const member = Meteor.users.findOne({ "emails.address" : memberEmail });
     if(member){
       Folders.update(folderId, {$push: {invitedMembers: member._id}});
+      addInvitedFolderToUser.call({folderId: folderId, userId: member._id}, null);
     }
     else {
       throw 'Error: User not found.';
