@@ -1,6 +1,7 @@
 import React from 'react';
 import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
+import ReactTooltip from 'react-tooltip'
 import {NewBookmarkBtn} from './new-bookmark-btn';
 import FolderMembers from '../containers/folder-members';
 import Bookmarks from '../../api/bookmarks/bookmarks';
@@ -106,16 +107,21 @@ export class BookmarksHeader extends React.Component {
 
   _renderPrivacyBtn() {
     const iconClass = this.props.folder.private ? 'fa fa-lock' : 'fa fa-unlock';
+    const tip = this.props.folder.private ? 'Private. Visible only by you and \
+      invited members.<br /> Click to make folder public (visible by anyone).' : 'Public. \
+      This folder is visible by anyone.<br /> \
+      Click to make folder private (Visible only by you and invited members.)';
     return(
-      <a onClick={this._handlePrivacyBtnClick} className="add-new header-btn" href="#">
+      <a ref="privacyBtn" onClick={this._handlePrivacyBtnClick} data-tip={tip} className="add-new header-btn" href="#">
         <i className={iconClass}></i>
       </a>
     );
   }
 
   _renderDeleteBtn() {
+    const tip = "Delete this folder.";
     return(
-      <a onClick={this._handleDeleteBtnClick} className="add-new header-btn" href="#">
+      <a onClick={this._handleDeleteBtnClick} data-tip={tip} className="add-new header-btn" href="#">
         <i className="fa fa-trash"></i>
       </a>
     );
@@ -140,6 +146,7 @@ export class BookmarksHeader extends React.Component {
       <header className="view-header">
         { this.props.folder ? headerContents() : '' }
         <FolderMembers folder={this.props.folder} />
+        <ReactTooltip place="right" multiline={true} effect="solid" />
       </header>
     );
   }

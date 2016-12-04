@@ -90,7 +90,6 @@ export class FolderMembers extends React.Component {
   }
 
   render(){
-    console.log(this.props.folder.invitedMembers);
     return(
       <ul className="board-users">
         <li>

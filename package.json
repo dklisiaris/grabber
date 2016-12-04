@@ -1,6 +1,6 @@
 {
   "name": "boomabu",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "description": "Boomabu is a collaborative bookmark manager.",
   "main": "index.js",
   "dependencies": {
@@ -19,7 +19,8 @@
     "react-komposer": "^1.13.1",
     "react-mounter": "^1.2.0",
     "react-page-click": "^3.0.0",
-    "react-router": "^2.6.1"
+    "react-router": "^2.6.1",
+    "react-tooltip": "^3.2.2"
   },
   "devDependencies": {},
   "scripts": {
