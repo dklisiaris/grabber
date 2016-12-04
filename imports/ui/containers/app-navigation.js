@@ -5,10 +5,19 @@ import {Loading} from '/imports/ui/components/loading';
 import Folders from '/imports/api/folders/folders';
 
 const composer = (props, onData) => {
-  const subscription = Meteor.subscribe('privateFolders', Meteor.userId());
-  if ( subscription.ready() ) {
-    const folders = Folders.find().fetch();
-    onData(null, {folders: folders, hasUser: Meteor.user()});
+  const userId = Meteor.userId();
+  const subscription1 = Meteor.subscribe('userData', userId);
+
+  if (subscription1.ready()) {
+    const invitedFoldersIds =  Meteor.user().profile.invitedFolders;
+    const subscription2 = Meteor.subscribe('accessedFolders', userId, invitedFoldersIds);
+
+    if(subscription2.ready()){
+      const folders = Folders.find({createdBy: userId}).fetch();
+      const invitedFolders = Folders.find({"_id": {$in: invitedFoldersIds}}).fetch();
+
+      onData(null, {folders: folders, invitedFolders: invitedFolders, hasUser: Meteor.user()});
+    }
   }
 };
 

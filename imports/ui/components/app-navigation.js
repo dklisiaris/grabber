@@ -78,16 +78,20 @@ export class AppNavigation extends React.Component {
       return this._renderFolderItem(folder);
     });
 
+    const invitedFolders = this.props.invitedFolders.map((folder) => {
+      return this._renderFolderItem(folder);
+    });
+
     return (
       <ReactPageClick notify={this._closeFoldersDropdown}>
         <div className="dropdown">
-          <header className="title"><i className="fa fa-user"/> Owned boards</header>
+          <header className="title"><i className="fa fa-user"/> Owned folders</header>
           <ul>
             {ownedFolders}
           </ul>
-          <header className="title"><i className="fa fa-user"/> Invited boards</header>
+          <header className="title"><i className="fa fa-user"/> Invited folders</header>
           <ul>
-            {ownedFolders}
+            {invitedFolders}
           </ul>
           <ul className="options">
             <li>

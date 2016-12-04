@@ -18,6 +18,15 @@ Meteor.publish('privateFolders', (userId) => {
   return Folders.find({isDefault: false, createdBy: userId});
 });
 
+Meteor.publish('accessedFolders', (userId, invitedFolderIds) => {
+  return Folders.find({
+    $or: [
+      {isDefault: false, createdBy: userId},
+      {_id: {$in: invitedFolderIds}}
+    ]
+  });
+});
+
 Meteor.publish('currentFolder', (folderId) => {
   check(folderId, String);
 

@@ -6,6 +6,10 @@ Meteor.publish('allUsers', () => {
   return Users.find();
 });
 
+Meteor.publish('userData', (userId) => {
+  return Meteor.users.find(userId, {fields: {profile: 1}});
+});
+
 Meteor.publish('userMiniProfile', (userId) => {
   return Users.find(userId, {
     fields: {
@@ -16,3 +20,10 @@ Meteor.publish('userMiniProfile', (userId) => {
   });
 });
 
+Meteor.publish('userInvitedFolders', (userId) => {
+  return Users.find(userId, {
+    fields: {
+      'profile.invitedFolders': 1,
+    },
+  });
+});
