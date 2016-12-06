@@ -35,6 +35,7 @@ export class AppNavigation extends React.Component {
   }
 
   _logout() {
+    this._closeUserOptions();
     Meteor.logout();
     browserHistory.push('/login');
   }
@@ -117,10 +118,13 @@ export class AppNavigation extends React.Component {
     return (
       <ReactPageClick notify={this._closeUserOptions}>
         <div className="dropdown">
-          <header className="title"><i className="fa fa-cog"/> Settings</header>
+          <header className="title"><i className="fa fa-cog"/> Options</header>
           <ul>
             <li>
               <Link onClick={this._closeUserOptions} to="/password/change">Change Password</Link>
+            </li>
+            <li>
+              <Link onClick={this._logout}>Sign Out</Link>
             </li>
           </ul>
         </div>
@@ -148,9 +152,6 @@ export class AppNavigation extends React.Component {
               <li>
                 {this._renderCurrentUser()}
                 {this._renderUserOptions()}
-              </li>
-              <li>
-                <a onClick={this._logout}><i className="fa fa-sign-out"/> Sign out</a>
               </li>
             </ul>
           </nav>

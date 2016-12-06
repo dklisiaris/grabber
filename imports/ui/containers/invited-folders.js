@@ -7,7 +7,9 @@ import Folders from '/imports/api/folders/folders';
 const composer = ( props, onData ) => {
   const subscription = Meteor.subscribe('invitedFolders', Meteor.userId());
   if ( subscription.ready() ) {
-    const folders = Folders.find({isDefault: false, createdBy: {$ne: Meteor.userId()}}).fetch();
+    const folders = Folders.find({
+      isDefault: false, createdBy: {$ne: Meteor.userId()}
+    }).fetch();
     onData( null, { folders } );
   }
 };

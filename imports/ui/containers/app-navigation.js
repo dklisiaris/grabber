@@ -9,14 +9,19 @@ const composer = (props, onData) => {
   const subscription1 = Meteor.subscribe('userData', userId);
 
   if (subscription1.ready()) {
-    const invitedFoldersIds =  Meteor.user().profile.invitedFolders;
-    const subscription2 = Meteor.subscribe('accessedFolders', userId, invitedFoldersIds);
+    if(Meteor.user()){
+      const invitedFoldersIds =  Meteor.user().profile.invitedFolders;
+      const subscription2 = Meteor.subscribe('accessedFolders', userId, invitedFoldersIds);
 
-    if(subscription2.ready()){
-      const folders = Folders.find({createdBy: userId}).fetch();
-      const invitedFolders = Folders.find({"_id": {$in: invitedFoldersIds}}).fetch();
+      if(subscription2.ready()){
+        const folders = Folders.find({createdBy: userId}).fetch();
+        const invitedFolders = Folders.find({"_id": {$in: invitedFoldersIds}}).fetch();
 
-      onData(null, {folders: folders, invitedFolders: invitedFolders, hasUser: Meteor.user()});
+        onData(null, {folders: folders, invitedFolders: invitedFolders, hasUser: true});
+      }
+    }
+    else{
+      onData(null, {folders: null, invitedFolders: null, hasUser: false});
     }
   }
 };
