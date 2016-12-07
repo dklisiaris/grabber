@@ -31,9 +31,20 @@ export class Bookmark extends React.Component {
   }
 
   _thumbnail() {
-    defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
+    const defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
+    const stripedUrl = this.props.url.replace(/.*?:\/\/(www\.)*/g, "").replace(/\/?$/, "");
+    const isHomePage = (stripedUrl.split('/').length === 1);
 
-    return (this.props.image === undefined || this.props.image === null || this.props.image === '') ? defaultImage : this.props.image;
+    if(isHomePage){
+      const dashedUrl = stripedUrl.replace(/\./g, "-" );
+      return "http://images.screenshots.com/" + stripedUrl + "/" + dashedUrl + "-small.jpg"
+    }
+    else if(this.props.image){
+      return this.props.image;
+    }
+    else{
+      return defaultImage;
+    }
   }
 
   /**
