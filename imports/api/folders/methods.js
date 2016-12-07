@@ -3,6 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Meteor } from 'meteor/meteor';
 import Folders from './folders';
 import { addInvitedFolderToUser } from '../users/methods';
+import {rateLimit} from '../../modules/rate-limit.js';
 
 export const addFolder = new ValidatedMethod({
   name: 'folders.add',
@@ -85,3 +86,15 @@ export const addMemberToFolder = new ValidatedMethod({
   },
 });
 
+rateLimit({
+  methods: [
+    addFolder,
+    removeFolder,
+    renameFolder,
+    setFolderPrivacy,
+    incFolderViews,
+    addMemberToFolder
+  ],
+  limit: 5,
+  timeRange: 1000,
+});

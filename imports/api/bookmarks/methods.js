@@ -1,4 +1,5 @@
 import Bookmarks from './bookmarks';
+import {rateLimit} from '../../modules/rate-limit.js';
 
 export const addBookmark = new ValidatedMethod({
   name: 'bookmarks.add',
@@ -49,7 +50,14 @@ export const updateBookmark = new ValidatedMethod({
 
   }).validator(),
   run({ bookmarkId, data }) {
-    return Bookmarks.update(bookmarkId, data);
+    return Bookmarks.update(bookmarkId, {
+      $set: {
+        title: data.title,
+        url: data.url,
+        image: data.image,
+        folderId: data.folderId
+      }
+    });
   },
 });
 
@@ -97,4 +105,17 @@ export const refreshBookmark = new ValidatedMethod({
       }
     });
   },
+});
+
+rateLimit({
+  methods: [
+    addBookmark,
+    removeBookmark,
+    removeBookmarksInFolder,
+    updateBookmark,
+    incBookmarkViews,
+    refreshBookmark
+  ],
+  limit: 5,
+  timeRange: 1000,
 });

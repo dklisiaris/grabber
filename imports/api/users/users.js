@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import rateLimit from '../../modules/rate-limit.js';
 
 const Users = Meteor.users;
 export default Users;
