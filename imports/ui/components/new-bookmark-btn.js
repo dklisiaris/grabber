@@ -51,12 +51,15 @@ export class NewBookmarkBtn extends React.Component {
   }
 
   _renderAddBtn() {
+    const tip = "Add a new bookmark.";
     return (
-      <a onClick={this._handleAddNewClick} className="add-new header-btn" href="#"><i className="fa fa-plus"/></a>
+      <a onClick={this._handleAddNewClick} className="add-new header-btn" href="#" data-tip={tip}>
+        <i className="fa fa-plus"/>
+      </a>
     );
   }
 
-  _renderNewFolderForm() {
+  _renderNewBookmarkForm() {
     return (
       <ReactPageClick notify={this._handleCancelClick}>
         <span>
@@ -77,7 +80,7 @@ export class NewBookmarkBtn extends React.Component {
   render(){
     return (
       <span>
-        {this.state.isFormOpen ? this._renderNewFolderForm() : this._renderAddBtn()}
+        {this.state.isFormOpen ? this._renderNewBookmarkForm() : this._renderAddBtn()}
       </span>
     );
   }

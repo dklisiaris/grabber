@@ -3,6 +3,7 @@ import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
 import ReactTooltip from 'react-tooltip'
 import {NewBookmarkBtn} from './new-bookmark-btn';
+import {LinkGrabberBtn} from './link-grabber-btn';
 import FolderMembers from '../containers/folder-members';
 import Bookmarks from '../../api/bookmarks/bookmarks';
 import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
@@ -27,6 +28,10 @@ export class BookmarksHeader extends React.Component {
     this._handleDeleteBtnClick       = this._handleDeleteBtnClick.bind(this);
 
     incFolderViews.call({folderId: this.props.folder._id}, null);
+  }
+
+  _isOwnFolder() {
+    return this.props.folder.createdBy === Meteor.userId();
   }
 
   _handleFolderNameClick(e) {
@@ -132,7 +137,9 @@ export class BookmarksHeader extends React.Component {
       <span>
         <h3 className="clickable" onClick={this._handleFolderNameClick} >
           {this.props.folder.name}
-        </h3><NewBookmarkBtn folderId={this.props.folder._id} />
+        </h3>
+        <NewBookmarkBtn folderId={this.props.folder._id} />
+        <LinkGrabberBtn folderId={this.props.folder._id} />
       </span>
     );
     const headerContents = () => (
@@ -142,6 +149,14 @@ export class BookmarksHeader extends React.Component {
       { !this.state.isEditingFolderName ? this._renderDeleteBtn() : '' }
       </span>
     );
+    const bookmarksHeader = () => {
+      if(this._isOwnFolder()){
+        return headerContents();
+      }
+      else{
+        return headerTitle();
+      }
+    }
     return (
       <header className="view-header">
         { this.props.folder ? headerContents() : '' }

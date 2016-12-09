@@ -1,5 +1,6 @@
 import Bookmarks from './bookmarks';
 import {rateLimit} from '../../modules/rate-limit.js';
+import cheerio from 'cheerio';
 
 export const addBookmark = new ValidatedMethod({
   name: 'bookmarks.add',
@@ -106,6 +107,30 @@ export const refreshBookmark = new ValidatedMethod({
     });
   },
 });
+
+export const grabBookmarks = new ValidatedMethod({
+  name: 'bookmarks.grab',
+  validate: new SimpleSchema({
+    targetUrl: { type: String },
+  }).validator(),
+  run({ targetUrl }) {
+    this.unblock();
+
+    if(Meteor.isServer){
+      HTTP.get(targetUrl, function(err,response){
+        if(response && response.statusCode === 200){
+          $ = cheerio.load(response.content);
+          console.log($('body').find('a').length);
+        }
+        else{
+          console.log(response);
+        }
+      });
+    }
+  },
+});
+
+
 
 rateLimit({
   methods: [
