@@ -129,10 +129,14 @@ export const grabBookmarks = new ValidatedMethod({
           $('body').find('a').each((i, elem) => {
             const link = $(elem).attr('href');
             if(externalOnly && !link.includes(hostname)){
-              console.log(link);
+              if(url.parse(link).hostname != null){
+                console.log(link);
+              }
             }
             else if(!externalOnly){
-              console.log(link);
+              if(url.parse(link).hostname != null){
+                console.log(link);
+              }
             }
           });
         }
