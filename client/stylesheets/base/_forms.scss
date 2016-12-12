@@ -5,3 +5,16 @@ form label.error {
   font-weight: normal;
   color: lighten( red, 20% );
 }
+
+form .checkbox-wrapper {
+  text-align: right;
+}
+
+form label {
+    font-size: 12px;
+}
+
+form input[type=checkbox] {
+    width: auto !important;
+    vertical-align: middle;
+}

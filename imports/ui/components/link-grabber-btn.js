@@ -35,10 +35,11 @@ export class LinkGrabberBtn extends React.Component {
     e.preventDefault();
 
     let target = this.refs.targetUrl.value;
+    let externalOnly = this.refs.externalOnly.checked;
     let currentFolderId = this.props.folderId;
 
-    // console.log(url);
-    grabBookmarks.call({targetUrl: target}, null)
+    // console.log(externalOnly);
+    grabBookmarks.call({targetUrl: target, externalOnly: externalOnly}, null)
     // addBookmark.call({url: url, folderId: currentFolderId}, (error, bookmarkId) => {
     //   if(error) {
     //     Bert.alert(error.reason, 'danger');
@@ -72,6 +73,12 @@ export class LinkGrabberBtn extends React.Component {
               <form onSubmit={this._handleAddNewSubmit}>
                 <h4>Grab all links from url</h4>
                 <input ref="targetUrl" type="text" required={true} placeholder="Target Url"/>
+                <div className="checkbox-wrapper">
+                <label>
+                  <input ref="externalOnly" type="checkbox" label="External Links Only" defaultChecked/>
+                    External Links Only
+                </label><br/>
+                </div>
                 <button type="submit">Grab Bookmarks</button> or <a onClick={this._handleCancelClick} href="#">cancel</a>
               </form>
             </li>

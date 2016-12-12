@@ -1,6 +1,7 @@
 import Bookmarks from './bookmarks';
 import {rateLimit} from '../../modules/rate-limit.js';
 import cheerio from 'cheerio';
+import url from 'url';
 
 export const addBookmark = new ValidatedMethod({
   name: 'bookmarks.add',
@@ -78,33 +79,35 @@ export const refreshBookmark = new ValidatedMethod({
     bookmarkId: { type: String },
   }).validator(),
   run({ bookmarkId }) {
-    bookmark = Bookmarks.findOne(bookmarkId);
+    const bookmark = Bookmarks.findOne(bookmarkId);
     this.unblock();
 
-    endpoint  = 'http://api.embed.ly/1/extract?';
-    key       = 'key=debadfdc8d8446589361951747d38242';
-    url       = '&url=' + bookmark.url ;
-    options   = '&maxwidth=500';
+    if(Meteor.isServer){
+      const endpoint  = 'http://api.embed.ly/1/extract?';
+      const key       = 'key=debadfdc8d8446589361951747d38242';
+      const url       = '&url=' + bookmark.url ;
+      const options   = '&maxwidth=500';
 
-    target = endpoint + key + url + options;
+      const target = endpoint + key + url + options;
 
-    HTTP.get(target, function(err,response){
-      if(response && response.statusCode === 200){
-        json = JSON.parse(response.content);
+      HTTP.get(target, function(err,response){
+        if(response && response.statusCode === 200){
+          const json = JSON.parse(response.content);
 
-        Bookmarks.update(bookmarkId, {
-          $set: {
-            url: decodeURIComponent(json.url),
-            title: json.title,
-            favicon: json.favicon_url,
-            image: (json.images[0] === undefined) ? null : json.images[0].url
-          }
-        });
-      }
-      else{
-        console.log(response);
-      }
-    });
+          Bookmarks.update(bookmarkId, {
+            $set: {
+              url: decodeURIComponent(json.url),
+              title: json.title,
+              favicon: json.favicon_url,
+              image: (json.images[0] === undefined) ? null : json.images[0].url
+            }
+          });
+        }
+        else{
+          console.log(response);
+        }
+      });
+    }
   },
 });
 
@@ -112,15 +115,26 @@ export const grabBookmarks = new ValidatedMethod({
   name: 'bookmarks.grab',
   validate: new SimpleSchema({
     targetUrl: { type: String },
+    externalOnly: { type: Boolean},
   }).validator(),
-  run({ targetUrl }) {
+  run({ targetUrl, externalOnly }) {
     this.unblock();
 
     if(Meteor.isServer){
+      const hostname = url.parse(targetUrl).hostname
+
       HTTP.get(targetUrl, function(err,response){
         if(response && response.statusCode === 200){
           $ = cheerio.load(response.content);
-          console.log($('body').find('a').length);
+          $('body').find('a').each((i, elem) => {
+            const link = $(elem).attr('href');
+            if(externalOnly && !link.includes(hostname)){
+              console.log(link);
+            }
+            else if(!externalOnly){
+              console.log(link);
+            }
+          });
         }
         else{
           console.log(response);
@@ -139,7 +153,8 @@ rateLimit({
     removeBookmarksInFolder,
     updateBookmark,
     incBookmarkViews,
-    refreshBookmark
+    refreshBookmark,
+    grabBookmarks
   ],
   limit: 5,
   timeRange: 1000,
