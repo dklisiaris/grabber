@@ -1,7 +1,7 @@
 {
   "name": "boomabu",
-  "version": "0.0.8",
-  "description": "Boomabu is a collaborative bookmark manager.",
+  "version": "0.0.9",
+  "description": "Grabber is a collaborative bookmark manager.",
   "main": "index.js",
   "dependencies": {
     "bcrypt": "^0.8.7",

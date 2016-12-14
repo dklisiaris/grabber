@@ -1,6 +1,6 @@
-# Boomabu
+# Grabber (ex Boomabu)
 
-A single-page bookmark manager application.
-It was built with [Meteor Js](http://meteor.com).
+A single-page collaborative bookmark manager application.
+It was built with [Meteor](http://meteor.com) and [React](https://facebook.github.io/react/).
 
-[Check it out!](http://boomabu.com).
+[Check it out!](http://grabber.link).
