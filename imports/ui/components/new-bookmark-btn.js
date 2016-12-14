@@ -80,7 +80,8 @@ export class NewBookmarkBtn extends React.Component {
   render(){
     return (
       <span>
-        {this.state.isFormOpen ? this._renderNewBookmarkForm() : this._renderAddBtn()}
+        {this._renderAddBtn()}
+        {this.state.isFormOpen ? this._renderNewBookmarkForm() : ''}
       </span>
     );
   }

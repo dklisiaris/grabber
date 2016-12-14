@@ -38,19 +38,11 @@ export class LinkGrabberBtn extends React.Component {
     let externalOnly = this.refs.externalOnly.checked;
     let currentFolderId = this.props.folderId;
 
-    // console.log(externalOnly);
-    grabBookmarks.call({targetUrl: target, externalOnly: externalOnly}, null)
-    // addBookmark.call({url: url, folderId: currentFolderId}, (error, bookmarkId) => {
-    //   if(error) {
-    //     Bert.alert(error.reason, 'danger');
-    //   }
-    //   else {
-    //     refreshBookmark.call({bookmarkId}, (error) => {
-    //       if(error) Bert.alert(error.reason, 'danger');
-    //     });
-    //   }
-    // });
-
+    grabBookmarks.call({
+      targetUrl: target,
+      externalOnly: externalOnly,
+      folderId: currentFolderId
+    }, null);
 
     this.setState({isFormOpen: false});
   }
@@ -91,7 +83,8 @@ export class LinkGrabberBtn extends React.Component {
   render(){
     return (
       <span>
-        {this.state.isFormOpen ? this._renderGrabberForm() : this._renderGrabBtn()}
+        {this._renderGrabBtn()}
+        {this.state.isFormOpen ? this._renderGrabberForm() : ''}
       </span>
     );
   }

@@ -20,6 +20,28 @@ export const addBookmark = new ValidatedMethod({
   },
 });
 
+export const addAndRefreshBookmark = new ValidatedMethod({
+  name: 'bookmarks.addAndRefresh',
+  validate: new SimpleSchema({
+    url: { type: String },
+    folderId: { type: String },
+  }).validator(),
+  run({ url, folderId }) {
+    addBookmark.call({url, folderId}, (error, bookmarkId) => {
+      if(!error) {
+        refreshBookmark.call({bookmarkId}, (error) => {
+          if(error) console.log(error);
+        });
+      }
+      else {
+        console.log(error);
+      }
+    });
+  },
+});
+
+
+
 export const removeBookmark = new ValidatedMethod({
   name: 'bookmarks.remove',
   validate: new SimpleSchema({
@@ -115,9 +137,10 @@ export const grabBookmarks = new ValidatedMethod({
   name: 'bookmarks.grab',
   validate: new SimpleSchema({
     targetUrl: { type: String },
-    externalOnly: { type: Boolean},
+    externalOnly: { type: Boolean },
+    folderId: { type: String },
   }).validator(),
-  run({ targetUrl, externalOnly }) {
+  run({ targetUrl, externalOnly, folderId }) {
     this.unblock();
 
     if(Meteor.isServer){
@@ -130,12 +153,18 @@ export const grabBookmarks = new ValidatedMethod({
             const link = $(elem).attr('href');
             if(externalOnly && !link.includes(hostname)){
               if(url.parse(link).hostname != null){
-                console.log(link);
+                addAndRefreshBookmark.call({
+                  url: link,
+                  folderId: folderId
+                }, null);
               }
             }
             else if(!externalOnly){
               if(url.parse(link).hostname != null){
-                console.log(link);
+                addAndRefreshBookmark.call({
+                  url: link,
+                  folderId: folderId
+                }, null);
               }
             }
           });
@@ -153,6 +182,7 @@ export const grabBookmarks = new ValidatedMethod({
 rateLimit({
   methods: [
     addBookmark,
+    addAndRefreshBookmark,
     removeBookmark,
     removeBookmarksInFolder,
     updateBookmark,
