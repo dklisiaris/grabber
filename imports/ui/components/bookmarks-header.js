@@ -13,6 +13,7 @@ import {
   setFolderPrivacy,
   incFolderViews
 } from '../../api/folders/methods';
+import {can} from '/imports/modules/permissions.js';
 
 export class BookmarksHeader extends React.Component {
   constructor(props) {
@@ -28,6 +29,16 @@ export class BookmarksHeader extends React.Component {
     this._handleDeleteBtnClick       = this._handleDeleteBtnClick.bind(this);
 
     incFolderViews.call({folderId: this.props.folder._id}, null);
+  }
+
+  componentWillMount(){
+    if(can.view.folder(this.props.currentFolderId)){
+      console.log("can view folder");
+    }
+    else{
+      console.log("cannot view folder");
+      // browserHistory.push('/not-found');
+    }
   }
 
   _isOwnFolder() {

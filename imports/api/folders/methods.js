@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import Folders from './folders';
 import { addInvitedFolderToUser } from '../users/methods';
 import {rateLimit} from '../../modules/rate-limit.js';
+import {can} from '../../modules/permissions.js';
 
 export const addFolder = new ValidatedMethod({
   name: 'folders.add',
@@ -61,6 +62,9 @@ export const setFolderPrivacy = new ValidatedMethod({
   run({ folderId, isPrivate }) {
     if(can.edit.folder(folderId)){
       Folders.update(folderId, {$set: {private: isPrivate}});
+    }
+    else {
+      console.log("cannot change privacy");
     }
   },
 });
