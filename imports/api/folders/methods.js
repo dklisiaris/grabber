@@ -13,15 +13,17 @@ export const addFolder = new ValidatedMethod({
     isPrivate: {type: Boolean},
   }).validator(),
   run({ name, description, isPrivate }) {
-    return Folders.insert({
-      name: name,
-      description: description,
-      private: isPrivate,
-      views: 0,
-      createdBy: Meteor.userId(),
-      invitedMembers: [],
-      createdAt: new Date()
-    });
+    if(can.create.folder()){
+      return Folders.insert({
+        name: name,
+        description: description,
+        private: isPrivate,
+        views: 0,
+        createdBy: Meteor.userId(),
+        invitedMembers: [],
+        createdAt: new Date()
+      });
+    }
   },
 });
 
@@ -31,7 +33,9 @@ export const removeFolder = new ValidatedMethod({
     folderId: { type: String },
   }).validator(),
   run({ folderId }) {
-    Folders.remove(folderId);
+    if(can.delete.folder(folderId)){
+      Folders.remove(folderId);
+    }
   },
 });
 
@@ -42,7 +46,9 @@ export const renameFolder = new ValidatedMethod({
     newName: {type: String},
   }).validator(),
   run({ folderId, newName }) {
-    Folders.update(folderId, {$set: {name: newName}});
+    if(can.edit.folder(folderId)){
+      Folders.update(folderId, {$set: {name: newName}});
+    }
   },
 });
 
@@ -53,7 +59,9 @@ export const setFolderPrivacy = new ValidatedMethod({
     isPrivate: {type: Boolean},
   }).validator(),
   run({ folderId, isPrivate }) {
-    Folders.update(folderId, {$set: {private: isPrivate}});
+    if(can.edit.folder(folderId)){
+      Folders.update(folderId, {$set: {private: isPrivate}});
+    }
   },
 });
 
@@ -75,7 +83,7 @@ export const addMemberToFolder = new ValidatedMethod({
   }).validator(),
   run({ folderId, memberEmail }) {
     const member = Meteor.users.findOne({ "emails.address" : memberEmail });
-    if(member){
+    if(member && can.edit.folder(folderId)){
       Folders.update(folderId, {$push: {invitedMembers: member._id}});
       addInvitedFolderToUser.call({folderId: folderId, userId: member._id}, null);
     }

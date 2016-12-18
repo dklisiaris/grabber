@@ -66,3 +66,7 @@ Folders.defaultName = function() {
 
   return nextName;
 };
+
+Folders.testHelper = () => {
+  console.log("test helper!");
+}

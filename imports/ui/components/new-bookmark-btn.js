@@ -39,7 +39,7 @@ export class NewBookmarkBtn extends React.Component {
       if(error) {
         Bert.alert(error.reason, 'danger');
       }
-      else {
+      else if(!error && bookmarkId) {
         refreshBookmark.call({bookmarkId}, (error) => {
           if(error) Bert.alert(error.reason, 'danger');
         });

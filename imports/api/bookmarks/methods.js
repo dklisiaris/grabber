@@ -1,5 +1,6 @@
 import Bookmarks from './bookmarks';
 import {rateLimit} from '../../modules/rate-limit.js';
+import {can} from '../../modules/permissions.js';
 import cheerio from 'cheerio';
 import url from 'url';
 
@@ -10,13 +11,15 @@ export const addBookmark = new ValidatedMethod({
     folderId: { type: String },
   }).validator(),
   run({ url, folderId }) {
-    return Bookmarks.insert({
-      title: url,
-      url: url,
-      folderId: folderId,
-      views: 0,
-      createdAt: new Date()
-    });
+    if(can.create.bookmark(folderId)){
+      return Bookmarks.insert({
+        title: url,
+        url: url,
+        folderId: folderId,
+        views: 0,
+        createdAt: new Date()
+      });
+    }
   },
 });
 
@@ -28,7 +31,7 @@ export const addAndRefreshBookmark = new ValidatedMethod({
   }).validator(),
   run({ url, folderId }) {
     addBookmark.call({url, folderId}, (error, bookmarkId) => {
-      if(!error) {
+      if(!error && bookmarkId) {
         refreshBookmark.call({bookmarkId}, (error) => {
           if(error) console.log(error);
         });
@@ -48,7 +51,9 @@ export const removeBookmark = new ValidatedMethod({
     bookmarkId: { type: String },
   }).validator(),
   run({ bookmarkId }) {
-    Bookmarks.remove(bookmarkId);
+    if(can.delete.bookmark(bookmarkId)){
+      Bookmarks.remove(bookmarkId);
+    }
   },
 });
 
@@ -58,7 +63,9 @@ export const removeBookmarksInFolder = new ValidatedMethod({
     folderId: { type: String },
   }).validator(),
   run({ folderId }) {
-    Bookmarks.remove({folderId});
+    if(can.delete.folder(folderId)){
+      Bookmarks.remove({folderId});
+    }
   },
 });
 
@@ -74,14 +81,16 @@ export const updateBookmark = new ValidatedMethod({
 
   }).validator(),
   run({ bookmarkId, data }) {
-    return Bookmarks.update(bookmarkId, {
-      $set: {
-        title: data.title,
-        url: data.url,
-        image: data.image,
-        folderId: data.folderId
-      }
-    });
+    if(can.edit.bookmark(bookmarkId)){
+      return Bookmarks.update(bookmarkId, {
+        $set: {
+          title: data.title,
+          url: data.url,
+          image: data.image,
+          folderId: data.folderId
+        }
+      });
+    }
   },
 });
 
