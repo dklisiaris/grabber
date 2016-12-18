@@ -3,9 +3,13 @@ import {BookmarksList} from '/imports/ui/components/bookmarks-list';
 import {Loading} from '/imports/ui/components/loading';
 import { Meteor } from 'meteor/meteor';
 import Bookmarks from '/imports/api/bookmarks/bookmarks';
+import {can} from '/imports/modules/permissions.js';
 
 const composer = ( props, onData ) => {
-  const subscription = Meteor.subscribe('bookmarks', props.currentFolderId);
+  const subscription = can.view.folder(props.currentFolderId) ?
+    Meteor.subscribe('bookmarks', props.currentFolderId) :
+    Meteor.subscribe('emptyBookmarks');
+
   if ( subscription.ready() ) {
     const bookmarks = Bookmarks.find().fetch();
     onData( null, { bookmarks } );

@@ -7,3 +7,7 @@ Meteor.publish('bookmarks', function(folderId) {
 
   return Bookmarks.find({folderId: folderId});
 });
+
+Meteor.publish('emptyBookmarks', function() {
+  return this.ready();
+});

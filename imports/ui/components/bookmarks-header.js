@@ -27,18 +27,16 @@ export class BookmarksHeader extends React.Component {
     this._handleFolderNameFormSubmit = this._handleFolderNameFormSubmit.bind(this);
     this._handlePrivacyBtnClick      = this._handlePrivacyBtnClick.bind(this);
     this._handleDeleteBtnClick       = this._handleDeleteBtnClick.bind(this);
-
-    incFolderViews.call({folderId: this.props.folder._id}, null);
   }
 
   componentWillMount(){
-    if(can.view.folder(this.props.currentFolderId)){
-      console.log("can view folder");
+    if(!can.view.folder(this.props.currentFolderId)){
+      browserHistory.push('/not-found');
     }
-    else{
-      console.log("cannot view folder");
-      // browserHistory.push('/not-found');
-    }
+  }
+
+  componentDidMount(){
+    incFolderViews.call({folderId: this.props.folder._id}, null);
   }
 
   _isOwnFolder() {
