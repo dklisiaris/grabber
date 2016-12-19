@@ -151,6 +151,11 @@ export class BookmarksHeader extends React.Component {
         <LinkGrabberBtn folderId={this.props.folder._id} />
       </span>
     );
+    const staticHeaderTitle = () => (
+      <span>
+        <h3>{this.props.folder ? this.props.folder.name : ''}</h3>
+      </span>
+    );
     const headerContents = () => (
       <span>
       { this.state.isEditingFolderName ? this._renderNewFolderForm() : headerTitle() }
@@ -168,8 +173,12 @@ export class BookmarksHeader extends React.Component {
     }
     return (
       <header className="view-header">
-        { this.props.folder ? headerContents() : '' }
-        <FolderMembers folder={this.props.folder} />
+        { this.props.folder && can.edit.folder(this.props.currentFolderId) ?
+            headerContents() : staticHeaderTitle()
+        }
+        { can.edit.folder(this.props.currentFolderId) ?
+          <FolderMembers folder={this.props.folder} /> : ''
+        }
         <ReactTooltip place="right" multiline={true} effect="solid" />
       </header>
     );
