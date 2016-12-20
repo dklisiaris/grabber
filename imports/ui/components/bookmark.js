@@ -7,6 +7,7 @@ import {
   updateBookmark,
   incBookmarkViews
 } from '../../api/bookmarks/methods';
+import {can} from '/imports/modules/permissions.js';
 
 export class Bookmark extends React.Component {
   constructor(props) {
@@ -82,11 +83,22 @@ export class Bookmark extends React.Component {
   }
 
   _renderThumbOrActions() {
-    if(this.state.isShowingActions){
+    if(this.state.isShowingActions && !this.props.readOnly){
       return this._renderBookmarkActions();
     }
     else {
       return this._renderBookmarkThumb();
+    }
+  }
+
+  _renderActionsToggleBtn() {
+    const actionsToggleBtn = (
+      <span className="bookmark-actions-toggle" onClick={this._handleActionsToggle}>
+        <i className={this.state.isShowingActions ? 'fa fa-undo' : 'fa fa-cog'}></i>
+      </span>
+    )
+    if(!this.props.readOnly){
+      return actionsToggleBtn;
     }
   }
 
@@ -141,9 +153,7 @@ export class Bookmark extends React.Component {
             <div className="bookmark-url-wrapper">
               <span className="bookmark-url">{this._shortUrl()}</span>
             </div>
-            <span className="bookmark-actions-toggle" onClick={this._handleActionsToggle}>
-              <i className={this.state.isShowingActions ? 'fa fa-undo' : 'fa fa-cog'}></i>
-            </span>
+            {this._renderActionsToggleBtn()}
           </div>
         </div>
       </div>
@@ -157,5 +167,6 @@ Bookmark.propTypes = {
   url:      React.PropTypes.string,
   image:    React.PropTypes.string,
   folderId: React.PropTypes.string,
-  editBookmarkHandler: React.PropTypes.func
+  editBookmarkHandler: React.PropTypes.func,
+  readOnly: React.PropTypes.bool,
 };

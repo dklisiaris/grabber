@@ -3,6 +3,7 @@ import {Bookmark} from '/imports/ui/components/bookmark';
 import {updateBookmark} from '../../api/bookmarks/methods';
 import AbsoluteGrid from 'react-absolute-grid';
 import {ReactPageClick} from 'react-page-click';
+import {can} from '/imports/modules/permissions.js';
 
 export class BookmarksList extends React.Component{
   constructor(props) {
@@ -102,7 +103,9 @@ export class BookmarksList extends React.Component{
           items={this.props.bookmarks}
           keyProp={'_id'}
           responsive={true}
-          displayObject={(<BookmarkDisplay editBookmarkHandler={this._openEditBookmarkModal} />)}
+          displayObject={(<BookmarkDisplay
+            editBookmarkHandler={this._openEditBookmarkModal}
+            readOnly={!can.edit.bookmarks(this.props.currentFolderId)} />)}
         />
         {this._renderModal()}
       </div>
@@ -112,7 +115,7 @@ export class BookmarksList extends React.Component{
 
 class BookmarkDisplay extends React.Component {
   render() {
-    const { item, index, itemsLength, editBookmarkHandler } = this.props;
+    const { item, index, itemsLength, editBookmarkHandler, readOnly } = this.props;
     return (
       <Bookmark
         id={item._id}
@@ -121,6 +124,7 @@ class BookmarkDisplay extends React.Component {
         image={item.image}
         folderId={item.folderId}
         editBookmarkHandler={editBookmarkHandler}
+        readOnly={readOnly}
       />
     );
   }

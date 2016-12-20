@@ -7,13 +7,14 @@ import {LinkGrabberBtn} from './link-grabber-btn';
 import FolderMembers from '../containers/folder-members';
 import Bookmarks from '../../api/bookmarks/bookmarks';
 import {removeBookmarksInFolder} from '../../api/bookmarks/methods';
+import {can} from '/imports/modules/permissions.js';
 import {
   removeFolder,
   renameFolder,
   setFolderPrivacy,
   incFolderViews
 } from '../../api/folders/methods';
-import {can} from '/imports/modules/permissions.js';
+
 
 export class BookmarksHeader extends React.Component {
   constructor(props) {
@@ -41,6 +42,10 @@ export class BookmarksHeader extends React.Component {
 
   _isOwnFolder() {
     return this.props.folder.createdBy === Meteor.userId();
+  }
+
+  _isInvitedFolder() {
+    return _.contains(this.props.folder.invitedMember, Meteor.userId());
   }
 
   _handleFolderNameClick(e) {
@@ -148,7 +153,8 @@ export class BookmarksHeader extends React.Component {
           {this.props.folder.name}
         </h3>
         <NewBookmarkBtn folderId={this.props.folder._id} />
-        <LinkGrabberBtn folderId={this.props.folder._id} />
+        {can.create.multipleBookmarks(this.props.currentFolderId)
+          ? <LinkGrabberBtn folderId={this.props.folder._id} /> : ''}
       </span>
     );
     const staticHeaderTitle = () => (
@@ -159,12 +165,18 @@ export class BookmarksHeader extends React.Component {
     const headerContents = () => (
       <span>
       { this.state.isEditingFolderName ? this._renderNewFolderForm() : headerTitle() }
-      { !this.state.isEditingFolderName ? this._renderPrivacyBtn() : '' }
-      { !this.state.isEditingFolderName ? this._renderDeleteBtn() : '' }
+
+      { !this.state.isEditingFolderName
+        && can.edit.privacy(this.props.currentFolderId)
+        ? this._renderPrivacyBtn() : '' }
+
+      { !this.state.isEditingFolderName
+        && can.delete.folder(this.props.currentFolderId)
+        ? this._renderDeleteBtn() : '' }
       </span>
     );
     const bookmarksHeader = () => {
-      if(this._isOwnFolder()){
+      if(this._isOwnFolder() || this._isInvitedFolder()){
         return headerContents();
       }
       else{
