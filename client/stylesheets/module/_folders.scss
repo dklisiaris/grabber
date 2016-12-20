@@ -1,0 +1,31 @@
+.folders-wrapper {
+  .folder {
+    $margin: 1em;
+    @include transition;
+    cursor: pointer;
+    width: 218px;
+    height: 90px;
+
+    .inner {
+      background: rgba($light-gray, .9);
+      border-radius: $base-border-radius;
+      margin: 0 $margin/2 $margin 0;
+      line-height: 1.25em;
+      overflow: hidden;
+      padding: $base-spacing/2;
+      height: 80px;
+      animation-duration: .3s;
+      animation-name: fadeIn;
+
+      .title-wrapper {
+        font-size: 16px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 195px;
+        height: 60px;
+        display: inline-block;
+      }
+    }
+  }
+}

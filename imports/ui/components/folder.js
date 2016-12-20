@@ -13,3 +13,13 @@ export const Folder = ({id, name}) => (
     </div>
   </div>
 );
+
+export const AbsFolder = ({id, name}) => (
+  <div id={id} className="folder" onClick={() => _handleClick(id)}>
+    <div className="inner">
+      <div className="title-wrapper">
+        <span>{name}</span>
+      </div>
+    </div>
+  </div>
+);
