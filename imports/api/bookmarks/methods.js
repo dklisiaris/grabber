@@ -2,7 +2,7 @@ import Bookmarks from './bookmarks';
 import {rateLimit} from '../../modules/rate-limit.js';
 import {can} from '../../modules/permissions.js';
 import cheerio from 'cheerio';
-import url from 'url';
+import {default as urlParser} from 'url';
 
 export const addBookmark = new ValidatedMethod({
   name: 'bookmarks.add',
@@ -12,13 +12,24 @@ export const addBookmark = new ValidatedMethod({
   }).validator(),
   run({ url, folderId }) {
     if(can.create.bookmark(folderId)){
-      return Bookmarks.insert({
-        title: url,
-        url: url,
+      // if(!urlParser.parse(url).hostname){
+      //   throw new Meteor.Error("url-invalid", "The url is not valid");
+      // }
+      if(!Bookmarks.findOne({
         folderId: folderId,
-        views: 0,
-        createdAt: new Date()
-      });
+        url: {$regex: "(https?:\/\/(www.)?)?" + url + "\/?$"}
+      })){
+        return Bookmarks.insert({
+          title: url,
+          url: url,
+          folderId: folderId,
+          views: 0,
+          createdAt: new Date()
+        });
+      }
+      else{
+        throw new Meteor.Error("url-found", "Url already saved in folder");
+      }
     }
   },
 });
@@ -136,6 +147,9 @@ export const refreshBookmark = new ValidatedMethod({
         }
         else{
           console.log(response);
+          if(response && response.statusCode === 400){
+            Bookmarks.remove(bookmarkId);
+          }
         }
       });
     }
@@ -153,7 +167,7 @@ export const grabBookmarks = new ValidatedMethod({
     this.unblock();
 
     if(Meteor.isServer){
-      const hostname = url.parse(targetUrl).hostname
+      const hostname = urlParser.parse(targetUrl).hostname
 
       HTTP.get(targetUrl, function(err,response){
         if(response && response.statusCode === 200){
@@ -161,7 +175,7 @@ export const grabBookmarks = new ValidatedMethod({
           $('body').find('a').each((i, elem) => {
             const link = $(elem).attr('href');
             if(externalOnly && !link.includes(hostname)){
-              if(url.parse(link).hostname != null){
+              if(urlParser.parse(link).hostname != null){
                 addAndRefreshBookmark.call({
                   url: link,
                   folderId: folderId
@@ -169,7 +183,7 @@ export const grabBookmarks = new ValidatedMethod({
               }
             }
             else if(!externalOnly){
-              if(url.parse(link).hostname != null){
+              if(urlParser.parse(link).hostname != null){
                 addAndRefreshBookmark.call({
                   url: link,
                   folderId: folderId

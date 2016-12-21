@@ -91,7 +91,7 @@ $header-height: $base-line-height * 1.8em;
         .dropdown {
           position: absolute;
           display: block;
-          z-index: 99;
+          z-index: 100;
           background: #fff;
           border-radius: $base-border-radius;
           left: 0;
@@ -161,7 +161,7 @@ $header-height: $base-line-height * 1.8em;
         .dropdown {
           position: absolute;
           display: block;
-          z-index: 99;
+          z-index: 100;
           background: #fff;
           border-radius: $base-border-radius;
           right: 0;
