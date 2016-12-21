@@ -83,7 +83,8 @@ export class FolderMembers extends React.Component {
 
   _renderMembers() {
     return this.props.members.map((member) => {
-      if(_.contains(this.props.folder.invitedMembers, member._id)){
+      if(_.contains(this.props.folder.invitedMembers, member._id)
+        || this.props.folder.createdBy == member._id){
         return this._renderMemberAvatar(member)
       }
     });
@@ -95,7 +96,6 @@ export class FolderMembers extends React.Component {
         <li>
         {this.state.isFormOpen ? this._renderForm() : this._renderAddBtn()}
         </li>
-        {this._renderMemberAvatar(Meteor.user())}
         {this._renderMembers()}
       </ul>
     );
