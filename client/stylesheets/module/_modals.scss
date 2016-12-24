@@ -22,7 +22,7 @@
     overflow-y: scroll;
 
     .md-content {
-      $width: 700px;
+      $width: 600px;
       @include pad($base-spacing);
       border-radius: $base-border-radius;
       background: $light-gray;
@@ -64,7 +64,7 @@
       }
     }
     .info {
-      @include span-columns(9);
+      @include span-columns(12);
     }
 
     .options {
