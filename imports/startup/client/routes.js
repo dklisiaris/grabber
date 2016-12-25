@@ -20,6 +20,11 @@ const authenticate = (nextState, replace) => {
   }
 };
 
+const logout = (nextState, replace) => {
+  Meteor.logout();
+  replace('/login');
+}
+
 Meteor.startup( () => {
   render(
     <Router history={ browserHistory }>
@@ -27,6 +32,7 @@ Meteor.startup( () => {
       <Route path="/" component={ App }>
         <Route name="login" path="/login" component={ Login } />
         <Route name="signup" path="/signup" component={ Signup } />
+        <Route name="logout" path="/logout" onEnter={ logout } />
         <Route name="change-password" path="/password/change" component={ ChangePassword } />
         <Route name="folders" path="/folders" component={ FoldersView } onEnter={ authenticate } />
         <Route name="folder" path="/folders/:id" component={ BookmarksView } onEnter={ authenticate } />
