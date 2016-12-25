@@ -11,7 +11,7 @@ $header-height: $base-line-height * 1.8em;
   .logo {
     @include transform(translate(-50%, -50%));
     display: inline-block;
-    background: url(/img/grabber-logo.png) 0 0 no-repeat;
+    background: url(/img/logos/grabber-logo.png) 0 0 no-repeat;
     background-size: contain;
     height: 32px;
     width: 110px;
