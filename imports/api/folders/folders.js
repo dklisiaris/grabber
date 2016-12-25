@@ -40,7 +40,7 @@ FoldersSchema = new SimpleSchema({
   },
   "invitedMembers": {
     type: [String],
-    optional: true
+    defaultValue: []
   },
   "createdAt": {
     type: Date,

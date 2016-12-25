@@ -59,7 +59,7 @@ UsersSchema = new SimpleSchema({
   },
   'profile.invitedFolders': {
     type: [String],
-    optional: true,
+    defaultValue: [],
   },
   'profile.starredFolders': {
     type: [String],

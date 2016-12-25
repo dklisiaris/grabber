@@ -36,8 +36,9 @@ export class AppNavigation extends React.Component {
 
   _logout() {
     this._closeUserOptions();
-    Meteor.logout();
-    browserHistory.push('/login');
+    Meteor.logout(()=>{
+      browserHistory.push('/login');
+    });
   }
 
   _getEmail() {
