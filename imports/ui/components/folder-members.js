@@ -92,7 +92,7 @@ export class FolderMembers extends React.Component {
 
   render(){
     return(
-      <ul className="board-users">
+      <ul className="folder-users">
         <li>
         {this.state.isFormOpen ? this._renderForm() : this._renderAddBtn()}
         </li>

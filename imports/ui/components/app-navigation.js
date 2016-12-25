@@ -96,7 +96,7 @@ export class AppNavigation extends React.Component {
           </ul>
           <ul className="options">
             <li>
-              <Link to="/folders" onClick={this._closeFoldersDropdown}>View all boards</Link>
+              <Link to="/folders" onClick={this._closeFoldersDropdown}>View all folders</Link>
             </li>
           </ul>
         </div>
@@ -136,7 +136,7 @@ export class AppNavigation extends React.Component {
     if(this.props.hasUser){
       return (
         <header className="main-header">
-          <nav id="boards_nav">
+          <nav id="folders_nav">
             <ul>
               <li>
                 <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/> Folders</a>

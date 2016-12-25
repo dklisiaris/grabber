@@ -34,6 +34,7 @@ $header-height: $base-line-height * 1.8em;
       list-style: none;
       display: inline-block;
       margin: 0;
+      padding: 0;
       -webkit-margin-before: 0;
       -webkit-padding-start: 0;
       li {
@@ -80,7 +81,7 @@ $header-height: $base-line-height * 1.8em;
       }
     }
 
-    &#boards_nav {
+    &#folders_nav {
       > ul > li {
         position: relative;
 

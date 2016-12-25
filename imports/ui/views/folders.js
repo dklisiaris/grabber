@@ -5,7 +5,7 @@ import {FoldersHeader} from '/imports/ui/components/folders-header';
 import {Loading} from '/imports/ui/components/loading';
 
 export const FoldersView = ({foldersCollection}) => (
-  <div className="view-container boards index">
+  <div className="view-container">
     <section>
       <FoldersHeader iconClass="fa fa-user" title="My Folders" showNewFolderBtn={true}/>
       <FoldersList />

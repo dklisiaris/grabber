@@ -38,6 +38,10 @@
       > header {
         margin-bottom: 1em;
       }
+
+      button {
+        cursor: pointer;
+      }
     }
   }
 
@@ -129,6 +133,7 @@
       .form-controls{
         @include span-columns(11);
       }
+
     }
     .comment {
       @include clearfix;
