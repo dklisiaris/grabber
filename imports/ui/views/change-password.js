@@ -94,7 +94,6 @@ export class ChangePassword extends React.Component {
            </div>
            <button type="submit">Change Password</button>
          </form>
-         <Link to="/login">Login with current password</Link>
        </main>
      </div>
     );
