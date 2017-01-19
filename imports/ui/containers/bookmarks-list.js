@@ -11,7 +11,7 @@ const composer = ( props, onData ) => {
     Meteor.subscribe('emptyBookmarks');
 
   if ( subscription.ready() ) {
-    const bookmarks = Bookmarks.find().fetch();
+    const bookmarks = Bookmarks.find({}, {sort: {views: -1}}).fetch();
     onData( null, { bookmarks } );
   }
 };

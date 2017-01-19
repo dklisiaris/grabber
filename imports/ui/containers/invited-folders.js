@@ -9,7 +9,7 @@ const composer = ( props, onData ) => {
   if ( subscription.ready() ) {
     const folders = Folders.find({
       isDefault: false, createdBy: {$ne: Meteor.userId()}
-    }).fetch();
+    }, {sort: {views: -1}}).fetch();
     onData( null, { folders } );
   }
 };

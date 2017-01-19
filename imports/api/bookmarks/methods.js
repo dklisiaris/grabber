@@ -3,6 +3,7 @@ import {rateLimit} from '../../modules/rate-limit.js';
 import {can} from '../../modules/permissions.js';
 import cheerio from 'cheerio';
 import {default as urlParser} from 'url';
+// import fs from 'fs-extra';
 
 export const addBookmark = new ValidatedMethod({
   name: 'bookmarks.add',
@@ -63,6 +64,8 @@ export const removeBookmark = new ValidatedMethod({
   }).validator(),
   run({ bookmarkId }) {
     if(can.delete.bookmark(bookmarkId)){
+      const bookmark = Bookmarks.findOne(bookmarkId);
+      removeWebshot(bookmark.folderId, bookmark._id);
       Bookmarks.remove(bookmarkId);
     }
   },
@@ -75,6 +78,7 @@ export const removeBookmarksInFolder = new ValidatedMethod({
   }).validator(),
   run({ folderId }) {
     if(can.delete.folder(folderId)){
+      removeWebshot(folderId, null);
       Bookmarks.remove({folderId});
     }
   },
@@ -152,6 +156,31 @@ export const refreshBookmark = new ValidatedMethod({
           }
         }
       });
+
+      const webshot = require('webshot');
+      const im = require('imagemagick');
+
+      const savePath = webshotPath(bookmark.folderId, bookmarkId);
+      const opts = {
+        phantomPath: require('phantomjs-prebuilt').path,
+        quality: 40
+      }
+
+      webshot(bookmark.url, savePath, opts, function(err) {
+        if(err){
+          console.log("Could't take webshot...")
+        }
+        else {
+          const im = require('imagemagick');
+          im.resize({
+            srcPath: savePath,
+            dstPath: savePath,
+            width:   160
+          }, function(err, stdout, stderr){
+            if (err) throw err;
+          });
+        }
+      });
     }
   },
 });
@@ -216,3 +245,22 @@ rateLimit({
   limit: 5,
   timeRange: 1000,
 });
+
+const webshotPath = (folderId, bookmarkId) => {
+  const basePath = process.env.PWD + '/.webshots/';
+  const folderName = folderId + '/';
+  const fileName = bookmarkId ? bookmarkId + '.png' : '';
+  return basePath + folderName + fileName;
+}
+
+const removeWebshot = (folderId, bookmarkId) => {
+  if(Meteor.isServer){
+    const fse = require('fs-extra');
+    const path = webshotPath(folderId, bookmarkId);
+    fse.remove(path, (err) => {
+      if(err && err.code == "ENOENT"){
+        console.log("Webshot does not exist");
+      }
+    });
+  }
+}
