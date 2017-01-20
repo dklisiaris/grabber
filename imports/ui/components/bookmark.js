@@ -8,6 +8,7 @@ import {
   incBookmarkViews
 } from '../../api/bookmarks/methods';
 import {can} from '/imports/modules/permissions.js';
+import ReactImageFallback from "react-image-fallback";
 
 export class Bookmark extends React.Component {
   constructor(props) {
@@ -33,19 +34,12 @@ export class Bookmark extends React.Component {
 
   _thumbnail() {
     const defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
-    const stripedUrl = this.props.url.replace(/.*?:\/\/(www\.)*/g, "").replace(/\/?$/, "");
-    const isHomePage = (stripedUrl.split('/').length === 1);
+    const webshotUrl = '/img/webshots/' + this.props.folderId + '/' + this.props.id + '.png';
 
-    if(isHomePage){
-      const dashedUrl = stripedUrl.replace(/\./g, "-" );
-      return "http://images.screenshots.com/" + stripedUrl + "/" + dashedUrl + "-small.jpg"
-    }
-    else if(this.props.image){
-      return this.props.image;
-    }
-    else{
-      return defaultImage;
-    }
+    return <ReactImageFallback
+      src={webshotUrl}
+      fallbackImage={[this.props.image, defaultImage]}
+      alt="thumbnail" width="100%" />
   }
 
   /**
@@ -74,9 +68,10 @@ export class Bookmark extends React.Component {
   }
 
   _renderBookmarkThumb() {
+    const webshotUrl = '/img/webshots/' + this.props.folderId + '/' + this.props.id + '.png';
     const bookmarkThumb = (
       <a onClick={this._handeBookmarkClick} href={this.props.url} target="_blank" className="clickable-url">
-        <img src={this._thumbnail()} alt="thumbnail" width="100%"/>
+        {this._thumbnail()}
       </a>
     );
     return bookmarkThumb;

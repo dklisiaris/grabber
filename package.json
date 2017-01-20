@@ -20,6 +20,7 @@
     "react-addons-pure-render-mixin": "^15.2.1",
     "react-dom": "^15.3.0",
     "react-gravatar": "^2.5.2",
+    "react-image-fallback": "^4.0.1",
     "react-komposer": "^1.13.1",
     "react-mounter": "^1.2.0",
     "react-page-click": "^3.0.0",

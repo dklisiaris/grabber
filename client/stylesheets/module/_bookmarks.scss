@@ -26,7 +26,7 @@
 
     .bookmark-content {
       width: 148px;
-      height: 148px;
+      height: 120px;
       overflow: hidden;
 
       .bookmark-actions {
@@ -36,6 +36,7 @@
 
         li{
           margin-top: 4px;
+          font-size: 15px;
           a {
             // border-bottom: 1px solid rgba($light-asphalt, .5);
             -webkit-transition: all 0.15s ease-out 0s;
@@ -44,8 +45,8 @@
             color: rgba(#000, 0.5);
             background: rgba(#000, 0.15);
             border-radius: 3px;
-            padding: .3em .5em;
-            line-height: 1.8em;
+            padding: .2em .5em;
+            line-height: 1.7em;
             margin-top: 5px;
           }
           a:hover {

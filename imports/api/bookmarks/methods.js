@@ -163,7 +163,11 @@ export const refreshBookmark = new ValidatedMethod({
       const savePath = webshotPath(bookmark.folderId, bookmarkId);
       const opts = {
         phantomPath: require('phantomjs-prebuilt').path,
-        quality: 40
+        quality: 40,
+        screenSize: {
+          width: 1024,
+          height: 800
+        }
       }
 
       webshot(bookmark.url, savePath, opts, function(err) {
@@ -247,7 +251,7 @@ rateLimit({
 });
 
 const webshotPath = (folderId, bookmarkId) => {
-  const basePath = process.env.PWD + '/.webshots/';
+  const basePath = process.env.PWD + '/public/img/webshots/';
   const folderName = folderId + '/';
   const fileName = bookmarkId ? bookmarkId + '.png' : '';
   return basePath + folderName + fileName;
