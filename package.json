@@ -26,6 +26,9 @@
     "react-page-click": "^3.0.0",
     "react-router": "^2.6.1",
     "react-tooltip": "^3.2.2",
+    "system": "^1.2.0",
+    "webpage": "^0.3.0",
+    "webserver": "^1.1.2",
     "webshot": "^0.18.0"
   },
   "devDependencies": {},
