@@ -22,6 +22,12 @@
       height: 30px;
       font-size: 13px;
       overflow: hidden;
+      a {
+        color: $base-font-color;
+      }
+      a:hover {
+        color: shade($base-font-color, 50);
+      }
     }
 
     .bookmark-content {

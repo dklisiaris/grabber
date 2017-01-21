@@ -141,7 +141,7 @@ export class Bookmark extends React.Component {
     return (
       <div id={this.props.id} className="bookmark-card" data-tip={this.props.title} data-for={this.props.id}>
         <div className="inner">
-          <h4>{this.props.title}</h4>
+          <h4><a href={this.props.url} target="_blank">{this.props.title}</a></h4>
           <div className="bookmark-content">
           {this._renderThumbOrActions()}
           </div>
