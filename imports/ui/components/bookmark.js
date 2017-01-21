@@ -8,6 +8,7 @@ import {
   incBookmarkViews
 } from '../../api/bookmarks/methods';
 import {can} from '/imports/modules/permissions.js';
+import {Loading} from '/imports/ui/components/loading';
 import ReactImageFallback from "react-image-fallback";
 import ReactTooltip from 'react-tooltip';
 
@@ -16,7 +17,8 @@ export class Bookmark extends React.Component {
     super(props);
     this.state = {
       isShowingActions: false,
-      isModalOpen: false
+      isModalOpen: false,
+      isLoading: false
     };
 
     this._handleActionsToggle   = this._handleActionsToggle.bind(this);
@@ -98,6 +100,30 @@ export class Bookmark extends React.Component {
     }
   }
 
+  _renderBookmarkInner() {
+    const innerContent = (
+      <div className="inner">
+        <h4><a href={this.props.url} target="_blank">{this.props.title}</a></h4>
+        <div className="bookmark-content">
+        {this._renderThumbOrActions()}
+        </div>
+        <div className="bookmark-footer">
+          <div className="bookmark-url-wrapper">
+            <span className="bookmark-url">{this._shortUrl()}</span>
+          </div>
+          {this._renderActionsToggleBtn()}
+        </div>
+      </div>
+    );
+    const innerLoading = (
+      <div className="inner">
+        <Loading/>
+      </div>
+    )
+
+    return !this.state.isLoading ? innerContent : innerLoading;
+  }
+
   /**
   * Handlers
   */
@@ -122,10 +148,13 @@ export class Bookmark extends React.Component {
   _handleBookmarkRefresh(e) {
     e.preventDefault();
 
-    // Meteor.call("refreshBookmark", this.props.id);
-    refreshBookmark.call({bookmarkId: this.props.id}, null);
+    this.setState({isLoading: true, isShowingActions: false});
 
-    this.setState({isShowingActions: false});
+    refreshBookmark.call({bookmarkId: this.props.id}, (err) => {
+      this.setState({isLoading: false})
+    });
+
+
   }
 
   _handleBookmarkEdit(e) {
@@ -140,18 +169,7 @@ export class Bookmark extends React.Component {
   render() {
     return (
       <div id={this.props.id} className="bookmark-card" data-tip={this.props.title} data-for={this.props.id}>
-        <div className="inner">
-          <h4><a href={this.props.url} target="_blank">{this.props.title}</a></h4>
-          <div className="bookmark-content">
-          {this._renderThumbOrActions()}
-          </div>
-          <div className="bookmark-footer">
-            <div className="bookmark-url-wrapper">
-              <span className="bookmark-url">{this._shortUrl()}</span>
-            </div>
-            {this._renderActionsToggleBtn()}
-          </div>
-        </div>
+        {this._renderBookmarkInner()}
         <ReactTooltip id={this.props.id} place="top" multiline={true} effect="solid" />
       </div>
     );
