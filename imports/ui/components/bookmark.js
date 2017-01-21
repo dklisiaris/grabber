@@ -9,6 +9,7 @@ import {
 } from '../../api/bookmarks/methods';
 import {can} from '/imports/modules/permissions.js';
 import ReactImageFallback from "react-image-fallback";
+import ReactTooltip from 'react-tooltip';
 
 export class Bookmark extends React.Component {
   constructor(props) {
@@ -138,7 +139,7 @@ export class Bookmark extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} className="bookmark-card">
+      <div id={this.props.id} className="bookmark-card" data-tip={this.props.title} data-for={this.props.id}>
         <div className="inner">
           <h4>{this.props.title}</h4>
           <div className="bookmark-content">
@@ -151,6 +152,7 @@ export class Bookmark extends React.Component {
             {this._renderActionsToggleBtn()}
           </div>
         </div>
+        <ReactTooltip id={this.props.id} place="top" multiline={true} effect="solid" />
       </div>
     );
   }

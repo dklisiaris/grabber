@@ -1,7 +1,7 @@
 import React from 'react';
 import {ReactPageClick} from 'react-page-click';
 import { browserHistory } from 'react-router';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 import {NewBookmarkBtn} from './new-bookmark-btn';
 import {LinkGrabberBtn} from './link-grabber-btn';
 import FolderMembers from '../containers/folder-members';
