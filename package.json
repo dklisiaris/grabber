@@ -1,6 +1,6 @@
 {
-  "name": "boomabu",
-  "version": "0.2.1",
+  "name": "grabber",
+  "version": "0.2.3",
   "description": "Grabber is a collaborative bookmark manager.",
   "main": "index.js",
   "dependencies": {
