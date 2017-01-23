@@ -4,6 +4,24 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 const Bookmarks = new Mongo.Collection('bookmarks');
 export default Bookmarks;
 
+const createThumb = (fileObj, readStream, writeStream) => {
+  gm(readStream, fileObj.name()).resize('160', '128').quality(40).stream().pipe(writeStream);
+};
+
+const imageStore = new FS.Store.GridFS("images", {
+  transformWrite: createThumb
+});
+
+export const Images = new FS.Collection("images", {
+  stores: [imageStore]
+});
+
+Images.allow({
+  download: () => {
+    return true
+  }
+});
+
 BookmarksSchema = new SimpleSchema({
   "title": {
     type: String,
@@ -21,6 +39,11 @@ BookmarksSchema = new SimpleSchema({
   "image": {
     type: String,
     label: "Bookmark icon",
+    optional: true
+  },
+  "webshotId": {
+    type: String,
+    label: "Id of Webshot image",
     optional: true
   },
   "views": {

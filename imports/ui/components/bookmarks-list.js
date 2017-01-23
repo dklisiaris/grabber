@@ -105,7 +105,8 @@ export class BookmarksList extends React.Component{
           responsive={true}
           displayObject={(<BookmarkDisplay
             editBookmarkHandler={this._openEditBookmarkModal}
-            readOnly={!can.edit.bookmarks(this.props.currentFolderId)} />)}
+            readOnly={!can.edit.bookmarks(this.props.currentFolderId)}
+            webshots={this.props.webshots} />)}
         />
         {this._renderModal()}
       </div>
@@ -115,7 +116,10 @@ export class BookmarksList extends React.Component{
 
 class BookmarkDisplay extends React.Component {
   render() {
-    const { item, index, itemsLength, editBookmarkHandler, readOnly } = this.props;
+    const { item, index, itemsLength, editBookmarkHandler, readOnly, webshots } = this.props;
+    const webshot = _.find(webshots, (ws) => { return ws._id == item.webshotId });
+    const webshotUrl = webshot ? webshot.url({store: "images", auth: false}) : null;
+
     return (
       <Bookmark
         id={item._id}
@@ -123,6 +127,7 @@ class BookmarkDisplay extends React.Component {
         url={item.url}
         image={item.image}
         folderId={item.folderId}
+        webshotUrl={webshotUrl}
         editBookmarkHandler={editBookmarkHandler}
         readOnly={readOnly}
       />

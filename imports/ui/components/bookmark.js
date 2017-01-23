@@ -9,7 +9,6 @@ import {
 } from '../../api/bookmarks/methods';
 import {can} from '/imports/modules/permissions.js';
 import {Loading} from '/imports/ui/components/loading';
-import ReactImageFallback from "react-image-fallback";
 import ReactTooltip from 'react-tooltip';
 
 export class Bookmark extends React.Component {
@@ -36,13 +35,15 @@ export class Bookmark extends React.Component {
   }
 
   _thumbnail() {
-    const defaultImage = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
-    const webshotUrl = '/img/webshots/' + this.props.folderId + '/' + this.props.id + '.png';
+    let thumbSrc = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
 
-    return <ReactImageFallback
-      src={webshotUrl}
-      fallbackImage={[this.props.image, defaultImage]}
-      alt="thumbnail" width="100%" />
+    if(this.props.webshotUrl){
+      thumbSrc = this.props.webshotUrl
+    }
+    else if (this.props.image){
+      thumbSrc = this.props.image
+    }
+    return <img src={thumbSrc} alt="thumbnail" width="100%" />
   }
 
   /**
@@ -71,7 +72,6 @@ export class Bookmark extends React.Component {
   }
 
   _renderBookmarkThumb() {
-    const webshotUrl = '/img/webshots/' + this.props.folderId + '/' + this.props.id + '.png';
     const bookmarkThumb = (
       <a onClick={this._handeBookmarkClick} href={this.props.url} target="_blank" className="clickable-url">
         {this._thumbnail()}
@@ -182,6 +182,7 @@ Bookmark.propTypes = {
   url:      React.PropTypes.string,
   image:    React.PropTypes.string,
   folderId: React.PropTypes.string,
+  webshotUrl:  React.PropTypes.string,
   editBookmarkHandler: React.PropTypes.func,
   readOnly: React.PropTypes.bool,
 };

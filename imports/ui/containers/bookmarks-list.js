@@ -3,6 +3,7 @@ import {BookmarksList} from '/imports/ui/components/bookmarks-list';
 import {Loading} from '/imports/ui/components/loading';
 import { Meteor } from 'meteor/meteor';
 import Bookmarks from '/imports/api/bookmarks/bookmarks';
+import {Images} from '/imports/api/bookmarks/bookmarks';
 import {can} from '/imports/modules/permissions.js';
 
 const composer = ( props, onData ) => {
@@ -12,7 +13,11 @@ const composer = ( props, onData ) => {
 
   if ( subscription.ready() ) {
     const bookmarks = Bookmarks.find({}, {sort: {views: -1}}).fetch();
-    onData( null, { bookmarks } );
+    const imagesSub = Meteor.subscribe('webshots', props.currentFolderId);
+    if ( imagesSub.ready() ) {
+      const webshots = Images.find({}).fetch();
+      onData( null, { bookmarks, webshots } );
+    }
   }
 };
 
