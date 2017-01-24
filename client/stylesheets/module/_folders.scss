@@ -5,6 +5,13 @@
     cursor: pointer;
     width: 218px;
     height: 90px;
+    @include media($xs-small-screen-up) {
+      width: 135px;
+    }
+    @include media($x-small-screen-up) {
+      width: 150px;
+    }
+
 
     .inner {
       background: rgba($light-gray, .9);

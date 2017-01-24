@@ -5,11 +5,40 @@ import {AbsFolder} from '/imports/ui/components/folder';
 import AbsoluteGrid from 'react-absolute-grid';
 
 export class FoldersList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { folderWidth: 218 };
+    this._updateFolderWidth = this._updateFolderWidth.bind(this);
+  }
+  componentWillMount() {
+      this._updateFolderWidth();
+  }
+  componentDidMount() {
+      window.addEventListener("resize", this._updateFolderWidth);
+  }
+  componentWillUnmount() {
+      window.removeEventListener("resize", this._updateFolderWidth);
+  }
+
+  _updateFolderWidth(){
+    const windowWidth = $(window).width();
+    let folderWidth = 218;
+    if (windowWidth < 768 && windowWidth > 320 ) {
+      folderWidth = 150;
+    }
+    else if (windowWidth <= 320) {
+      folderWidth = 135;
+    }
+    console.log(windowWidth);
+    console.log(folderWidth);
+    this.setState({ folderWidth: folderWidth });
+  }
+
   render() {
     return (
       <div className="folders-wrapper">
         <AbsoluteGrid
-          itemWidth={218}
+          itemWidth={this.state.folderWidth}
           itemHeight={90}
           items={this.props.folders}
           keyProp={'_id'}
