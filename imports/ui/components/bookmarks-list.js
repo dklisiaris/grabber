@@ -99,7 +99,7 @@ export class BookmarksList extends React.Component{
       <div className="bookmarks-wrapper" id="bookmarks-wrapper">
         <AbsoluteGrid
           itemWidth={172}
-          itemHeight={260}
+          itemHeight={230}
           items={this.props.bookmarks}
           keyProp={'_id'}
           responsive={true}
