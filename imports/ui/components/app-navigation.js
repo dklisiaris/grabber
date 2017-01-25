@@ -118,7 +118,7 @@ export class AppNavigation extends React.Component {
     if (!this.state.isUserOptionsOpen) return false;
     return (
       <ReactPageClick notify={this._closeUserOptions}>
-        <div className="dropdown">
+        <div className="dropdown right">
           <header className="title"><i className="fa fa-cog"/> Options</header>
           <ul>
             <li>
@@ -137,7 +137,7 @@ export class AppNavigation extends React.Component {
     if(this.props.hasUser){
       return (
         <header className="main-header">
-          <nav id="folders_nav">
+          <nav className="nav-buttons">
             <ul>
               <li>
                 <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/> Folders</a>
