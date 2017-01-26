@@ -87,12 +87,23 @@ export const addMemberToFolder = new ValidatedMethod({
   }).validator(),
   run({ folderId, memberEmail }) {
     const member = Meteor.users.findOne({ "emails.address" : memberEmail });
-    if(member && can.edit.folder(folderId)){
+    const folder = Folders.findOne(folderId);
+
+    if(!member){
+      throw 'Error: User not found.';
+    }
+    else if (member._id == folder.createdBy) {
+      throw 'Error: Cannot invite folder\'s creator.';
+    }
+    else if (_.contains(folder.invitedMembers, member._id)) {
+      throw 'Error: User is already invited to this folder.';
+    }
+    else if(can.edit.folder(folderId)){
       Folders.update(folderId, {$push: {invitedMembers: member._id}});
       addInvitedFolderToUser.call({folderId: folderId, userId: member._id}, null);
     }
     else {
-      throw 'Error: User not found.';
+      throw 'Error: Could not invite User.';
     }
 
   },

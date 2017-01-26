@@ -43,7 +43,7 @@ export class FolderMembers extends React.Component {
         Bert.alert(error, 'danger');
       } else {
         Bert.alert('User ' + email + ' has been invited to current folder.', 'success');
-        this.refs.memberEmail = "";
+        this.refs.memberEmail.value = "";
       }
     });
   }
