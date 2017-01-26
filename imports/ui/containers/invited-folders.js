@@ -1,7 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import { Meteor } from 'meteor/meteor';
 import {FoldersList} from '/imports/ui/components/folders-list';
-import {Loading} from '/imports/ui/components/loading';
+import {LoadingContent} from '/imports/ui/components/loading';
 import Folders from '/imports/api/folders/folders';
 
 const composer = ( props, onData ) => {
@@ -14,4 +14,4 @@ const composer = ( props, onData ) => {
   }
 };
 
-export default composeWithTracker( composer, Loading )( FoldersList );
+export default composeWithTracker( composer, LoadingContent )( FoldersList );

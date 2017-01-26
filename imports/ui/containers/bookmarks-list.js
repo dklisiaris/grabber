@@ -1,6 +1,6 @@
 import { composeWithTracker } from 'react-komposer';
 import {BookmarksList} from '/imports/ui/components/bookmarks-list';
-import {Loading} from '/imports/ui/components/loading';
+import {LoadingContent} from '/imports/ui/components/loading';
 import { Meteor } from 'meteor/meteor';
 import Bookmarks from '/imports/api/bookmarks/bookmarks';
 import {Images} from '/imports/api/bookmarks/bookmarks';
@@ -11,7 +11,7 @@ const composer = ( props, onData ) => {
     Meteor.subscribe('bookmarks', props.currentFolderId) :
     Meteor.subscribe('emptyBookmarks');
 
-  if ( subscription.ready() ) {
+  if ( subscription.ready()) {
     const bookmarks = Bookmarks.find({}, {sort: {views: -1}}).fetch();
     const imagesSub = Meteor.subscribe('webshots', props.currentFolderId);
     if ( imagesSub.ready() ) {
@@ -21,4 +21,4 @@ const composer = ( props, onData ) => {
   }
 };
 
-export default composeWithTracker( composer, Loading )( BookmarksList );
+export default composeWithTracker( composer, LoadingContent )( BookmarksList );

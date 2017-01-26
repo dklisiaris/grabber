@@ -1,7 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import { Meteor } from 'meteor/meteor';
 import { AppNavigation } from '../components/app-navigation';
-import {Loading} from '/imports/ui/components/loading';
+import {LoadingAppHeader} from '/imports/ui/components/loading';
 import Folders from '/imports/api/folders/folders';
 
 const composer = (props, onData) => {
@@ -26,4 +26,4 @@ const composer = (props, onData) => {
   }
 };
 
-export default composeWithTracker(composer, Loading)(AppNavigation);
+export default composeWithTracker(composer, LoadingAppHeader)(AppNavigation);
