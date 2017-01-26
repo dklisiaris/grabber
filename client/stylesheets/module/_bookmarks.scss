@@ -6,6 +6,15 @@
   width: 172px;
   height: 260px;
 
+  @include media($xs-small-screen-up) {
+    width: 132px;
+    height: 220px;
+  }
+  @include media($x-small-screen-up) {
+    width: 152px;
+    height: 240px;
+  }
+
   .inner {
     background: rgba($light-gray, .9);
     border-radius: $base-border-radius;
@@ -35,6 +44,15 @@
       height: 120px;
       overflow: hidden;
 
+      @include media($xs-small-screen-up) {
+        width: 108px;
+        height: 80px;
+      }
+      @include media($x-small-screen-up) {
+        width: 128px;
+        height: 100px;
+      }
+
       .bookmark-actions {
         list-style: none;
         padding: 0 20px;
@@ -43,6 +61,13 @@
         li{
           margin-top: 4px;
           font-size: 15px;
+
+          @include media($small-screen-down) {
+            @include span-columns(6);
+            @include omega(2n);
+            margin-top: 12px;
+          }
+
           a {
             // border-bottom: 1px solid rgba($light-asphalt, .5);
             -webkit-transition: all 0.15s ease-out 0s;
@@ -54,6 +79,12 @@
             padding: .2em .5em;
             line-height: 1.7em;
             margin-top: 5px;
+
+            .bookmark-action-text {
+              @include media($small-screen-down) {
+                display: none;
+              }
+            }
           }
           a:hover {
             color: #333;
@@ -70,6 +101,13 @@
         width: 130px;
         height: 35px;
         display: inline-block;
+
+        @include media($xs-small-screen-up) {
+          width: 90px;
+        }
+        @include media($x-small-screen-up) {
+          width: 110px;
+        }
 
         .bookmark-url {
           font-size: 12px;

@@ -29,9 +29,7 @@ export class FoldersList extends React.Component {
     else if (windowWidth <= 320) {
       folderWidth = 135;
     }
-    console.log(windowWidth);
-    console.log(folderWidth);
-    this.setState({ folderWidth: folderWidth });
+    this.setState({ folderWidth });
   }
 
   render() {

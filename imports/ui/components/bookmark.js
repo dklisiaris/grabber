@@ -54,17 +54,24 @@ export class Bookmark extends React.Component {
       <ul className="bookmark-actions">
         <li>
           <a onClick={this._handeBookmarkClick} href={this.props.url} target="_blank">
-            <i className="fa fa-eye"></i> View
+            <i className="fa fa-eye"></i>
+            <span className="bookmark-action-text"> View</span>
           </a>
         </li>
         <li>
-          <a href="#!" onClick={this._handleBookmarkRefresh}><i className="fa fa-refresh"></i> Refresh</a>
+          <a onClick={this._handleBookmarkRefresh}><i className="fa fa-refresh"></i>
+            <span className="bookmark-action-text"> Refresh</span>
+          </a>
         </li>
         <li>
-          <a href="#!" onClick={this._handleBookmarkEdit}><i className="fa fa-pencil"></i> Edit</a>
+          <a onClick={this._handleBookmarkEdit}><i className="fa fa-pencil"></i>
+            <span className="bookmark-action-text"> Edit</span>
+          </a>
         </li>
         <li>
-          <a href="#!" onClick={this._handleRemoveAction} ><i className="fa fa-trash"></i> Remove</a>
+          <a onClick={this._handleRemoveAction} ><i className="fa fa-trash"></i>
+            <span className="bookmark-action-text"> Remove</span>
+          </a>
         </li>
       </ul>
     );

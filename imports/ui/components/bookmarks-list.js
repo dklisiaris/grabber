@@ -10,12 +10,39 @@ export class BookmarksList extends React.Component{
     super(props);
     this.state = {
       isModalOpen: false,
-      selectedBookmarkId: null
+      selectedBookmarkId: null,
+      bookmarkWidth: 172,
+      bookmarkHeight: 230
     };
 
     this._openEditBookmarkModal = this._openEditBookmarkModal.bind(this);
     this._closeEditBookmarkModal = this._closeEditBookmarkModal.bind(this);
     this._handleBookmarkUpdate = this._handleBookmarkUpdate.bind(this);
+    this._updateBookmarkSize = this._updateBookmarkSize.bind(this);
+  }
+  componentWillMount() {
+      this._updateBookmarkSize();
+  }
+  componentDidMount() {
+      window.addEventListener("resize", this._updateBookmarkSize);
+  }
+  componentWillUnmount() {
+      window.removeEventListener("resize", this._updateBookmarkSize);
+  }
+
+  _updateBookmarkSize(){
+    const windowWidth = $(window).width();
+    let bookmarkWidth = 172;
+    let bookmarkHeight = 230;
+    if (windowWidth < 768 && windowWidth > 320 ) {
+      bookmarkWidth = 152;
+      bookmarkHeight = 210;
+    }
+    else if (windowWidth <= 320) {
+      bookmarkWidth = 132;
+      bookmarkHeight = 190;
+    }
+    this.setState({ bookmarkWidth, bookmarkHeight });
   }
 
   _openEditBookmarkModal(bookmarkId) {
@@ -98,8 +125,8 @@ export class BookmarksList extends React.Component{
     return (
       <div className="bookmarks-wrapper" id="bookmarks-wrapper">
         <AbsoluteGrid
-          itemWidth={172}
-          itemHeight={230}
+          itemWidth={this.state.bookmarkWidth}
+          itemHeight={this.state.bookmarkHeight}
           items={this.props.bookmarks}
           keyProp={'_id'}
           responsive={true}

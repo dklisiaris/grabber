@@ -35,6 +35,12 @@
       animation-duration: .3s;
       animation-name: fadeIn;
 
+      @include media($small-screen-down) {
+        $width: 300px;
+        width: $width;
+        margin-left: -$width/2;
+      }
+
       > header {
         margin-bottom: 1em;
       }
