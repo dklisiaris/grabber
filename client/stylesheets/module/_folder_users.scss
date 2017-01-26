@@ -23,7 +23,7 @@
         border-radius: $base-border-radius;
         width: 30px;
         height: 30px;
-        opacity: .2;
+        opacity: .7;
       }
       .add-new {
         @include transition;
@@ -44,27 +44,25 @@
           color: #fff;
           border-color: #fff;
         }
+        .btn-text {
+          @include media($small-screen-down) {
+            display: none;
+          }
+        }
       }
       .drop-down {
-        @include transition;
-        position: absolute;
-        right: 0;
         top: 100%;
-        list-style: none;
-        padding: $base-spacing/2;
-        background: rgba($light-gray, .9);
-        border-radius: $base-border-radius;
-        min-width: 20em;
-        display: none;
-        animation-duration: .3s;
-        animation-name: fadeIn;
-        &.active {
-          display: block;
-        }
-        form {
-          input {
-            @include fill-parent;
-            margin-bottom: .5em;
+        right: 0;
+
+        .users-list {
+          list-style: none;
+          padding: 0;
+          display: inline-block;
+          li {
+            float: left;
+          }
+          li + li {
+              margin-left: 5px;
           }
         }
       }

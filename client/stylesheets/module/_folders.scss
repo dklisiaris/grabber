@@ -32,6 +32,13 @@
         width: 195px;
         height: 60px;
         display: inline-block;
+
+        @include media($xs-small-screen-up) {
+          width: 110px;
+        }
+        @include media($x-small-screen-up) {
+          width: 125px;
+        }
       }
     }
   }

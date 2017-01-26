@@ -60,6 +60,16 @@ html {
             position: relative;
             top: -10px;
             padding-top: 13px;
+
+            @include media($small-screen-down) {
+              font-size: 1em;
+            }
+
+            &#folderName {
+              @include media($small-screen-down) {
+                width: 100%;
+              }
+            }
           }
 
           .header-btn {
@@ -85,6 +95,11 @@ html {
             &:hover {
               color: #fff;
               border-color: #fff;
+            }
+            &.add-bookmark {
+              @include media($small-screen-down) {
+                margin-left: 0;
+              }
             }
           }
         }

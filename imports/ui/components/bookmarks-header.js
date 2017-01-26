@@ -149,7 +149,7 @@ export class BookmarksHeader extends React.Component {
   render() {
     const headerTitle = () => (
       <span>
-        <h3 className="clickable" onClick={this._handleFolderNameClick} >
+        <h3 id="folderName" className="clickable" onClick={this._handleFolderNameClick} >
           {this.props.folder.name}
         </h3>
         <NewBookmarkBtn folderId={this.props.folder._id} />
@@ -159,7 +159,7 @@ export class BookmarksHeader extends React.Component {
     );
     const staticHeaderTitle = () => (
       <span>
-        <h3>{this.props.folder ? this.props.folder.name : ''}</h3>
+        <h3 id="folderName">{this.props.folder ? this.props.folder.name : ''}</h3>
       </span>
     );
     const headerContents = () => (

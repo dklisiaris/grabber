@@ -5,11 +5,16 @@
   padding: $base-spacing/2;
   background: rgba($light-gray, .9);
   border-radius: $base-border-radius;
-  min-width: 20em;
+  width: 20em;
   display: none;
   animation-duration: .3s;
   animation-name: fadeIn;
   z-index: 99;
+
+  @include media($small-screen-down) {
+    width: 288px;
+  }
+
   &.active {
     display: block;
   }

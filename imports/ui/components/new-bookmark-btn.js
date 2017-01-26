@@ -53,7 +53,7 @@ export class NewBookmarkBtn extends React.Component {
   _renderAddBtn() {
     const tip = "Add a new bookmark.";
     return (
-      <a onClick={this._handleAddNewClick} className="add-new header-btn" href="#" data-tip={tip}>
+      <a onClick={this._handleAddNewClick} className="add-new header-btn add-bookmark" href="#" data-tip={tip}>
         <i className="fa fa-plus"/>
       </a>
     );

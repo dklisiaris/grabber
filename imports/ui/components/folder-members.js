@@ -36,13 +36,14 @@ export class FolderMembers extends React.Component {
     let email = this.refs.memberEmail.value;
     let currentFolderId = this.props.folder._id;
 
-    this.setState({isFormOpen: false});
+    // this.setState({isFormOpen: false});
 
     addMemberToFolder.call({ folderId: currentFolderId, memberEmail: email }, (error) => {
       if (error) {
         Bert.alert(error, 'danger');
       } else {
         Bert.alert('User ' + email + ' has been invited to current folder.', 'success');
+        this.refs.memberEmail = "";
       }
     });
   }
@@ -50,7 +51,7 @@ export class FolderMembers extends React.Component {
   _renderAddBtn() {
     return (
       <a onClick={this._handleAddNewClick} className="header-btn" href="#">
-        <i className="fa fa-plus"></i>
+        <i className="fa fa-users"></i>
       </a>
     );
   }
@@ -61,8 +62,14 @@ export class FolderMembers extends React.Component {
         <span>
           <ul className="drop-down active">
             <li>
+              <h4>Members</h4>
+              <ul className="users-list">
+                {this._renderMembers()}
+              </ul>
+            </li>
+            <li>
               <form onSubmit={this._handleAddNewSubmit}>
-                <h4>Invite Members</h4>
+                <h4>Invite More</h4>
                 <input ref="memberEmail" type="email" required={true} placeholder="Member Email"/>
                 <button type="submit">Add Member</button> or <a onClick={this._handleCancelClick} href="#">Cancel</a>
               </form>
@@ -76,7 +83,9 @@ export class FolderMembers extends React.Component {
   _renderMemberAvatar(member){
     return (
       <li key={member._id}>
-        <Gravatar className="react-gravatar" email={member.emails[0].address} title={member.emails[0].address} />
+        <Gravatar className="react-gravatar"
+        email={member.emails[0].address} width="30" height="30"
+        title={member.emails[0].address} />
       </li>
     );
   }
@@ -96,7 +105,6 @@ export class FolderMembers extends React.Component {
         <li>
         {this.state.isFormOpen ? this._renderForm() : this._renderAddBtn()}
         </li>
-        {this._renderMembers()}
       </ul>
     );
   }

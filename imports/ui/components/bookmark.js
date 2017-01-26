@@ -110,7 +110,9 @@ export class Bookmark extends React.Component {
   _renderBookmarkInner() {
     const innerContent = (
       <div className="inner">
-        <h4><a href={this.props.url} target="_blank">{this.props.title}</a></h4>
+        <h4 data-tip={this.props.title} data-for={this.props.id}>
+          <a href={this.props.url} target="_blank">{this.props.title}</a>
+        </h4>
         <div className="bookmark-content">
         {this._renderThumbOrActions()}
         </div>
@@ -175,7 +177,7 @@ export class Bookmark extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id} className="bookmark-card" data-tip={this.props.title} data-for={this.props.id}>
+      <div id={this.props.id} className="bookmark-card">
         {this._renderBookmarkInner()}
         <ReactTooltip id={this.props.id} place="top" multiline={true} effect="solid" />
       </div>
