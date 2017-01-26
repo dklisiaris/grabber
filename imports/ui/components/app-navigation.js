@@ -109,7 +109,8 @@ export class AppNavigation extends React.Component {
   _renderCurrentUser() {
     return(
       <a className="current-user" onClick={this._openUserOptions}>
-        <Gravatar className="react-gravatar" email={this._getEmail()} default="retro" /> {this._getUsername()}
+        <Gravatar className="react-gravatar" email={this._getEmail()} default="retro" width="30px" height="30px" />
+         <span className="nav-btn-text"> {this._getUsername()}</span>
       </a>
     );
   }
@@ -140,7 +141,9 @@ export class AppNavigation extends React.Component {
           <nav className="nav-buttons">
             <ul>
               <li>
-                <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/> Folders</a>
+                <a onClick={this._openFoldersDropdown}><i className="fa fa-folder-o"/>
+                  <span className="nav-btn-text"> Folders</span>
+                </a>
                 {this._renderFolders()}
               </li>
             </ul>

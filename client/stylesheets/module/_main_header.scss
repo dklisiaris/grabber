@@ -48,11 +48,21 @@ $header-height: $base-line-height * 1.8em;
           padding: .3em .5em;
           line-height: 1em;
 
+          .nav-btn-text {
+            @include media($small-screen-down) {
+              display: none;
+            }
+          }
+
 
           &.current-user {
             position: relative;
             overflow: hidden;
             padding-left: 35px;
+
+            @include media($small-screen-down) {
+              padding-left: 23px;
+            }
 
             .react-gravatar {
               width: 30px;
