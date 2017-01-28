@@ -173,7 +173,11 @@ export const refreshBookmark = new ValidatedMethod({
       }
 
       webshot(bookmark.url, opts, function(err, renderStream) {
-        if(err) return console.log(err);
+        if(err){
+          console.log('Webshot failed');
+          console.log(err);
+          return err;
+        }
 
         let imageBuffers = [];
 
@@ -188,6 +192,7 @@ export const refreshBookmark = new ValidatedMethod({
           imageFile.folderId = bookmark.folderId;
           imageFile.bookmarkId = bookmarkId;
           Images.insert(imageFile, Meteor.bindEnvironment(function (err, result) {
+            console.log(result);
             Bookmarks.update(bookmarkId, {
               $set: {webshotId: result._id}
             });

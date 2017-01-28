@@ -41,4 +41,5 @@ ddp-rate-limiter
 cfs:standard-packages
 cfs:gridfs
 cfs:graphicsmagick
+cfs:micro-queue
 force-ssl

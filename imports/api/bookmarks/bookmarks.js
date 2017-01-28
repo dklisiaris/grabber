@@ -9,7 +9,7 @@ const createThumb = (fileObj, readStream, writeStream) => {
 };
 
 const imageStore = new FS.Store.GridFS("images", {
-  transformWrite: createThumb
+  // transformWrite: createThumb
 });
 
 export const Images = new FS.Collection("images", {

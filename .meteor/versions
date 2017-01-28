@@ -30,6 +30,7 @@ cfs:graphicsmagick@0.0.18
 cfs:gridfs@0.0.33
 cfs:http-methods@0.0.32
 cfs:http-publish@0.0.13
+cfs:micro-queue@0.0.6
 cfs:power-queue@0.9.11
 cfs:reactive-list@0.0.9
 cfs:reactive-property@0.0.4

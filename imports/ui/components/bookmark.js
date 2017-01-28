@@ -35,7 +35,7 @@ export class Bookmark extends React.Component {
   }
 
   _thumbnail() {
-    let thumbSrc = "http://www.mot.be/assets/images/blocks/placeholder_image_1.png";
+    let thumbSrc = '/img/no-image.png';
 
     if(this.props.webshotUrl){
       thumbSrc = this.props.webshotUrl
