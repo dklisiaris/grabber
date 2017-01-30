@@ -157,8 +157,6 @@ export const refreshBookmark = new ValidatedMethod({
       });
 
       const webshot = require('webshot');
-      const im = require('imagemagick');
-
       const opts = {
         phantomPath: require('phantomjs-prebuilt').path,
         quality: 40,
@@ -169,16 +167,13 @@ export const refreshBookmark = new ValidatedMethod({
         },
         userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)'
           + ' Ubuntu Chromium/55.0.2883.87 Chrome/55.0.2883.87 Safari/537.36'
-
       }
 
       webshot(bookmark.url, opts, function(err, renderStream) {
         if(err){
-          console.log('Webshot failed');
           console.log(err);
           return err;
         }
-
         let imageBuffers = [];
 
         renderStream.on('data', Meteor.bindEnvironment(function (data) {
@@ -192,7 +187,6 @@ export const refreshBookmark = new ValidatedMethod({
           imageFile.folderId = bookmark.folderId;
           imageFile.bookmarkId = bookmarkId;
           Images.insert(imageFile, Meteor.bindEnvironment(function (err, result) {
-            console.log(result);
             Bookmarks.update(bookmarkId, {
               $set: {webshotId: result._id}
             });
