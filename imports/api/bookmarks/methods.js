@@ -148,18 +148,42 @@ export const refreshBookmark = new ValidatedMethod({
             }
           });
         }
-        else{
+        else if(response && response.statusCode === 400){
           console.log(response);
-          if(response && response.statusCode === 400){
-            Bookmarks.remove(bookmarkId);
+          Bookmarks.remove(bookmarkId);
+        }
+        else if(response && _.contains([401, 403, 404, 500, 501, 503], response.statusCode)) {
+          console.log(response);
+          let bUrl = bookmark.url;
+          if(!urlParser.parse(bookmark.url).protocol){
+            bUrl = 'http://' + bUrl;
           }
+          HTTP.get(bUrl, function(err,response){
+            if(response && response.statusCode === 200){
+              $ = cheerio.load(response.content);
+              Bookmarks.update(bookmarkId, {
+                $set: {
+                  title: $('title').text(),
+                  favicon: $('link[rel="icon"]').first().attr('href'),
+                  image: $('img').first().attr('src'),
+                  url: urlParser.parse(bUrl).href
+                }
+              });
+            }
+            else{
+              console.log(response);
+              if(response && _.contains([400, 401, 403, 404, 500, 501, 503], response.statusCode)){
+                Bookmarks.remove(bookmarkId);
+              }
+            }
+          });
         }
       });
 
       const webshot = require('webshot');
       const opts = {
         phantomPath: require('phantomjs-prebuilt').path,
-        quality: 40,
+        quality: 80,
         streamType: 'jpg',
         screenSize: {
           width: 1024,

@@ -5,7 +5,7 @@ const Bookmarks = new Mongo.Collection('bookmarks');
 export default Bookmarks;
 
 const createThumb = (fileObj, readStream, writeStream) => {
-  gm(readStream, fileObj.name()).resize('160', '128').quality(40).stream().pipe(writeStream);
+  gm(readStream, fileObj.name()).resize('200', '160').quality(80).stream().pipe(writeStream);
 };
 
 const imageStore = new FS.Store.GridFS("images", {
