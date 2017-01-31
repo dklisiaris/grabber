@@ -70,6 +70,7 @@ export class Login extends React.Component {
                type="Email"
                id="user_email"
                placeholder="Email"
+               defaultValue="demo@grabber.link"
                required="true"/>
               {renderErrorsFor(errors, 'email')}
            </div>
@@ -79,6 +80,7 @@ export class Login extends React.Component {
                type="password"
                id="user_password"
                placeholder="Password"
+               defaultValue="demo@2017"
                required="true"/>
               {renderErrorsFor(errors, 'password')}
            </div>
