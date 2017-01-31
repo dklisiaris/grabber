@@ -80,7 +80,7 @@ export class Login extends React.Component {
                type="password"
                id="user_password"
                placeholder="Password"
-               defaultValue="demo@2017"
+               defaultValue="demo2017"
                required="true"/>
               {renderErrorsFor(errors, 'password')}
            </div>
